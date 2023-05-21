@@ -1,4 +1,4 @@
-import img from "../../../public/Footerimg.png";
+import img from "../../assets/Footerimg.png";
 
 export const Footer = () => {
   return (
