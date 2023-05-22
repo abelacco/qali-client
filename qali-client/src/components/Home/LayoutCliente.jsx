@@ -1,16 +1,14 @@
-import {Footer} from "../Footer/Footer";
+import { Footer } from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import React from "react";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, clase }) => {
   return (
-    <>
+    <div className={`${clase} flex flex-col`}>
       <Navbar />
-      <main>
-        {children}
-      </main>
+      {children}
       <Footer />
-    </>
+    </div>
   );
 };
 
