@@ -15,7 +15,7 @@ function SubmitButton({filtersValue}) {
 
   return (
     <>
-        <Button label='Buscar'/>
+        <Button label='Buscar' type='submit' onClick={handleSubmit}/>
     </>
   )
 }

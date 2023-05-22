@@ -7,14 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        'qali-blue': '#132B5B',
-        'qali-green': '#0FFFA9',
-        'qali-light-grey': '#D4D6E4',
-        'qali-grey': '#969696'
+        'qaliBlue': '#132B5B',
+        'qaliGreen': '#0FFFA9',
+        'qaliLightGrey': '#D4D6E4',
+        'qaliGrey': '#969696'
       }
     },
   },
   plugins: [],
+  safelist: [
+    'qaliBlue',
+    'qaliGreen',
+    'qaliLightGrey',
+    'qaliGrey',
+    
+  ]
 }
 
 
