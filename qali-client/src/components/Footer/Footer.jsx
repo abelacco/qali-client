@@ -116,7 +116,11 @@ export const Footer = () => {
             </ul>
           </div>
           <div className="w-full sm:w-1/2 md:w-1/4 py-4">
-            <img className="w-1/4 py-4 pl-0 inline-block" src={img} alt="Logo" />
+            <img
+              className="w-1/4 py-4 pl-0 inline-block"
+              src={img}
+              alt="Logo"
+            />
             <h2 className="text-gray-500 text-xl">Lima, Perú</h2>
           </div>
         </div>
