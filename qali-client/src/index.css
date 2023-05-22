@@ -2,3 +2,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.modalityButtonsCustom:hover{
+    background-color: #D4D6E4 !important;
+    color: #132B5B !important;
+}

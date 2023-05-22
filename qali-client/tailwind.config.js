@@ -5,9 +5,23 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'qaliBlue': '#132B5B',
+        'qaliGreen': '#0FFFA9',
+        'qaliLightGrey': '#D4D6E4',
+        'qaliGrey': '#969696'
+      }
+    },
   },
   plugins: [],
+  safelist: [
+    'qaliBlue',
+    'qaliGreen',
+    'qaliLightGrey',
+    'qaliGrey',
+    
+  ]
 }
 
 
