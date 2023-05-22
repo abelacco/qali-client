@@ -6,7 +6,6 @@ import { FormDoctor } from "./components/FormDoctor/FormDoctor.jsx";
 
 
 function App() {
-
   return (
     <>
       <Routes>

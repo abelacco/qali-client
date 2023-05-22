@@ -4,7 +4,7 @@ import img from "../../assets/Footerimg.png";
 
 const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 w-full bg-white text-gray-300 py-4 border-t-2 border-gray-400">
+    <footer className="w-full bg-white text-gray-300 py-4 border-t-2 border-gray-400">
       <div className="container mx-auto text-center max-w-1200">
         <div className="flex flex-wrap">
           <div className="w-full sm:w-1/2 md:w-1/4 py-4">

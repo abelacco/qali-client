@@ -4,11 +4,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        color1BlueNavbar: "#172554",
-        color2GreenQali: "#34d399",
-        color3GrayFooter: "#d1d5db",
-      },
+        'qaliBlue': '#132B5B',
+        'qaliGreen': '#0FFFA9',
+        'qaliLightGrey': '#D4D6E4',
+        'qaliGrey': '#969696'
+      }
     },
   },
   plugins: [],
-};
+  safelist: [
+    'qaliBlue',
+    'qaliGreen',
+    'qaliLightGrey',
+    'qaliGrey',
+    
+  ]
+}
+
+
