@@ -5,14 +5,14 @@ export const Footer = () => {
     <footer className="fixed bottom-0 left-0 w-full bg-white text-gray-300 py-4 border-t-2 border-gray-400">
       <div className="container mx-auto text-center max-w-1200">
         <div className="flex flex-wrap">
-          <div className="w-1/4 py-4">
+          <div className="w-full sm:w-1/2 md:w-1/4 py-4">
             <h1 className="text-4xl font-bold inline-block woff2">
               Sobre Qalï Pro
             </h1>
             <ul>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Quienes Somos
@@ -20,7 +20,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Contacto
@@ -28,7 +28,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Empleos
@@ -36,7 +36,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Términos y Condiciones
@@ -45,14 +45,14 @@ export const Footer = () => {
             </ul>
           </div>
 
-          <div className="w-1/4 py-4">
+          <div className="w-full sm:w-1/2 md:w-1/4 py-4">
             <h1 className="text-4xl font-bold inline-block woff2">
               Para los Pacientes
             </h1>
             <ul>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Especialistas
@@ -60,7 +60,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Enfermedades
@@ -68,7 +68,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Preguntas Frecuentes
@@ -76,7 +76,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Otros Servicios
@@ -84,15 +84,14 @@ export const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="w-1/4 py-4">
+          <div className="w-full sm:w-1/2 md:w-1/4 py-4">
             <h1 className="text-4xl font-bold inline-block woff2">
-              {" "}
               Para los Profesionales
             </h1>
             <ul>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Planes
@@ -100,7 +99,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Condiciones
@@ -108,7 +107,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-500 hover:text-gray-800 text-2xl"
+                  className="text-gray-500 hover:text-gray-800 text-xl"
                   href="#"
                 >
                   Preguntas Frecuentes
@@ -116,9 +115,9 @@ export const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className=" w-1/4 py-4pl-0 inline-block">
-            <img className="w-1/4 py-4pl-0 inline-block " src={img}></img>
-            <h2 className="text-gray-500 text-2xl">Lima, Perú</h2>
+          <div className="w-full sm:w-1/2 md:w-1/4 py-4">
+            <img className="w-1/4 py-4 pl-0 inline-block" src={img} alt="Logo" />
+            <h2 className="text-gray-500 text-xl">Lima, Perú</h2>
           </div>
         </div>
       </div>
