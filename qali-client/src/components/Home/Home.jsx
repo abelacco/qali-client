@@ -4,8 +4,12 @@ import Layout from './LayoutCliente'
 function Home() {
     return (
         <Layout>
-            <p>hola mundo</p>
+            <div className='bg'>
+                <h1>
+                    hola mundo
+                </h1>
 
+            </div>
         </Layout>
     )
 }
