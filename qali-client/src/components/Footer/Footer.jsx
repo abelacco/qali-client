@@ -1,6 +1,8 @@
 import img from "../../assets/Footerimg.png";
 
-export const Footer = () => {
+
+
+const Footer = () => {
   return (
     <footer className="fixed bottom-0 left-0 w-full bg-white text-gray-300 py-4 border-t-2 border-gray-400">
       <div className="container mx-auto text-center max-w-1200">
@@ -128,3 +130,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;

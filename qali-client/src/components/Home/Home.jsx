@@ -1,13 +1,12 @@
+import LayoutCliente from "./LayoutCliente"
 
-import { Footer } from '../Footer/Footer'
-import Navbar from '../Navbar/Navbar'
 
 function Home() {
     return (
         <>
-            <Navbar />
-            
-            <Footer />
+         <LayoutCliente> 
+            <h1>Hola Mundo</h1>
+         </LayoutCliente>
         </>
     )
 }
