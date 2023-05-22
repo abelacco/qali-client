@@ -1,14 +1,12 @@
 import React from 'react'
-import { Footer } from '../Footer/Footer'
-import Navbar from '../Navbar/Navbar'
+import Layout from './LayoutCliente'
 
 function Home() {
     return (
-        <>
-            <Navbar />
-            
-            <Footer />
-        </>
+        <Layout>
+            <p>hola mundo</p>
+
+        </Layout>
     )
 }
 
