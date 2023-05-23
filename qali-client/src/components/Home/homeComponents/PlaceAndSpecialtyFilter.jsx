@@ -14,7 +14,6 @@ function PlaceAndSpecialtyFilter({ filtersValue }) {
     const value = event.target.value;
     setSpecialty(value);
     setFValue({ ...fValue, especialidad: value });
-    console.log(value);
   };
 
   const handlePlace = (event) => {
