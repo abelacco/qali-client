@@ -1,4 +1,4 @@
-import { Footer } from "../Footer/Footer";
+import Footer  from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import React from "react";
 
