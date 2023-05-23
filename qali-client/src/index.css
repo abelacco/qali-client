@@ -28,4 +28,19 @@
 /* End SubmitButton */
 
 /* Start GoBackButton */
+.goBackButton{
+    display: flex;
+    gap: 10px;
+    padding: 10px 30px 10px 30px !important;
+    background-color: #0FFFA9;
+    border: 1px solid #132B5B;
+    color: #132B5B;
+    font-size: 1.2rem !important;
+    font-weight: bold;
+}
+
+.goBackButton:hover{
+    background-color: #132B5B !important;
+    color: white;
+}
 

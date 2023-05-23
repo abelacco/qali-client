@@ -10,8 +10,8 @@ function GoBackButton() {
     }
 
     return (
-        <Button className='goBackButton' onClick={handleClick}>
-            <i className='pi pi-angle-left'/>
+        <Button className='goBackButton' onClick={handleClick} size='small'>
+            <i className='pi pi-angle-left' style={{fontSize:"1.7rem"}}/>
             Cambiar especialidad
         </Button>
     )
