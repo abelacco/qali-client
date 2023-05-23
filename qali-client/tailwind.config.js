@@ -17,7 +17,6 @@ export default {
     'qaliGreen',
     'qaliLightGrey',
     'qaliGrey',
-    
   ]
 }
 
