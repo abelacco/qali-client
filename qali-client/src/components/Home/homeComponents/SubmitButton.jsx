@@ -10,12 +10,16 @@ function SubmitButton({filtersValue}) {
     const handleSubmit = ()=> {
         if (fValue.especialidad) {
             navigate("/especialistas")
-        };
+            //dispatch de filtros de especialistas
+        }else{
+          //dispara una alerta que indique que necesita al menos
+          //elegir una especialidad
+        }
     };
 
   return (
     <>
-        <Button label='Buscar' type='submit' onClick={handleSubmit}/>
+        <Button label='Buscar' type='submit' onClick={handleSubmit} className='submitButtonHome'/>
     </>
   )
 }
