@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Layout from './LayoutCliente'
+import Layout from '../Layouts/LayoutCliente'
 import ModalityButtons from './homeComponents/ModalityButtons'
 import PlaceAndProfessionalFilter from './homeComponents/PlaceAndSpecialtyFilter'
 import SubmitButton from './homeComponents/SubmitButton'
