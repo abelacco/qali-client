@@ -9,3 +9,7 @@
     background-color: #D4D6E4 !important;
     color: #132B5B !important;
 }
+
+.selectedButton {
+    background-color: #0FFFA9 !important;
+}
