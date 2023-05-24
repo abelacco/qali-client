@@ -2,8 +2,8 @@
 import { Routes, Route } from "react-router-dom";
 //Components
 import Home from "./components/Home/Home";
-import { FormDoctor } from "./components/FormDoctor/FormDoctor.jsx";
 import Especialistas from "./components/Especialistas/Especialistas";
+import  FormDoctor  from "./components/FormDoctor/FormDoctor.jsx";
 
 
 function App() {

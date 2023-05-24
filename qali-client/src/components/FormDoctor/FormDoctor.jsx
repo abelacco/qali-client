@@ -1,361 +1,470 @@
+import { useFormik } from "formik";
+import React, { useState } from "react";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
+import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
+import { Checkbox } from "primereact/checkbox";
+import { Divider } from "primereact/divider";
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import { Dialog } from "primereact/dialog";
+import { classNames } from "primereact/utils";
+import { CITIES, SPECIALTIES, PREFIJO } from "../../utils/constantes";
 
-export const FormDoctor = () => {
+const FormDoctor = () => {
+  const [formData, setFormData] = useState({});
+  const [showMessage, setShowMessage] = useState(false);
+  
+
+  /*   useEffect(() => {
+    .get().then(data => set(data));
+}, []); 
+ */
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
+      especialidad: null,
+      ciudad: null,
+      prefijo: null,
+      grado: "",
+      colegiatura: "",
+      accept: false,
+    },
+    validate: (data) => {
+      let errors = {};
+
+      if (!data.name) {
+        errors.name = "Nombres requeridos.";
+      }
+
+      if (!data.email) {
+        errors.email = "El correo es requerido.";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)
+      ) {
+        errors.email =
+          "Dirección de correo electrónico no válida. P.ej. ejemplo@email.com";
+      }
+
+      if (!data.password) {
+        errors.password = "Contraseña es requerida.";
+      }
+
+      if (!data.especialidad) {
+        errors.especialidad = "Especialidad es requerida.";
+      }
+      if (!data.grado) {
+        errors.grado = "Grado Académico es requerido.";
+      }
+      if (!data.ciudad) {
+        errors.ciudad = "Ciudad es requerida";
+      }
+
+      if (!data.accept) {
+        errors.accept = "Tienes que aceptar los términos y condiciones.";
+      }
+
+      return errors;
+    },
+    onSubmit: (data) => {
+      setFormData(data);
+      setShowMessage(true);
+
+      formik.resetForm();
+    },
+  });
+
+  const isFormFieldValid = (name) =>
+    !!(formik.touched[name] && formik.errors[name]);
+  const getFormErrorMessage = (name) => {
+    return (
+      isFormFieldValid(name) && (
+        <small className="p-error">{formik.errors[name]}</small>
+      )
+    );
+  };
+
+  const dialogFooter = (
+    <div className="flex justify-content-center">
+      <Button
+        label="OK"
+        className="p-button-text"
+        autoFocus
+        onClick={() => setShowMessage(false)}
+      />
+    </div>
+  );
+
+  const passwordHeader = <h6>Elige una Contraseña</h6>;
+  const passwordFooter = (
+    <React.Fragment>
+      <Divider />
+      <p className="mt-2">Sugerencias</p>
+      <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: "1.5" }}>
+        <li>Al menos una minúscula</li>
+        <li>Al menos una mayúscula</li>
+        <li>Al menos un número</li>
+        <li>Mínimo 8 caracteres</li>
+      </ul>
+    </React.Fragment>
+  );
+
   return (
     <>
       <Navbar />
       <br></br>
-      <h1 className="bg-color1BlueNavbar text-4xl text-white font-bold inline-block woff2 rounded-r-5 p-4">
+      <h1 className="bg-qaliBlue text-4xl text-white font-bold inline-block woff2 rounded-r-full p-4">
         Registrarme como
       </h1>
-
-      <div className="mt-6 space-y-6 p-4">
-        <>
-          <div className="flex items-center gap-x-3 font-bold">
-            <input
-              id="push-especialista"
-              name="push-notifications"
-              type="radio"
-              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-            />
-            <label
-              htmlFor="push-especialista"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Especialista
-            </label>
-          </div>
-          <div className="flex items-center gap-x-3">
-            <input
-              id="push-centro"
-              name="push-notifications"
-              type="radio"
-              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-            />
-            <label
-              htmlFor="push-email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Centro Médico (MPVII)
-            </label>
-          </div>
-          <div className="flex items-center gap-x-3">
-            <input
-              id="push-paciente"
-              name="push-notifications"
-              type="radio"
-              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-            />
-            <label
-              htmlFor="push-nothing"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Paciente
-            </label>
-          </div>
-        </>
-      </div>
-      <form>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <label
-                  for="especialidad"
-                  className="block text-sm font-medium leading-6 text-gray-900 p-4"
-                >
-                  Especialidad
-                </label>
-                <div className="mt-2 p-4">
-                  <select
-                    id="especialidad"
-                    name="especialidad"
-                    autocomplete="especialidad-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>Nutricionista</option>
-                    <option>Psicologa</option>
-                    <option>Otro</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  for="last-name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Last name
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="last-name"
-                    id="last-name"
-                    autocomplete="family-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-4">
-                <label
-                  for="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  for="country"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Country
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="country"
-                    name="country"
-                    autocomplete="country-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="col-span-full">
-                <label
-                  for="street-address"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Street address
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="street-address"
-                    id="street-address"
-                    autocomplete="street-address"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2 sm:col-start-1">
-                <label
-                  for="city"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  City
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    autocomplete="address-level2"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  for="region"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  State / Province
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="region"
-                    id="region"
-                    autocomplete="address-level1"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  for="postal-code"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  ZIP / Postal code
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="postal-code"
-                    id="postal-code"
-                    autocomplete="postal-code"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Notifications
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              We'll always let you know about important changes, but you pick
-              what else you want to hear about.
+      <div className="min-w-[450px]">
+        <Dialog
+          visible={showMessage}
+          onHide={() => setShowMessage(false)}
+          position="top"
+          footer={dialogFooter}
+          showHeader={false}
+          breakpoints={{ "960px": "80vw" }}
+          style={{ width: "40vw" }}
+        >
+          <div className="flex align-items-center flex-column pt-6 px-3">
+            <i
+              className="pi pi-check-circle"
+              style={{ fontSize: "5rem", color: "var(--green-500)" }}
+            ></i>
+            <h5>Registro exitoso!</h5>
+            <p style={{ lineHeight: 3.5, textIndent: "3rem" }}>
+              Su registro se ha Completado <b>{formData.name}</b>{" "}
+              <b>{formData.email}</b> ;
             </p>
+          </div>
+        </Dialog>
 
-            <div className="mt-10 space-y-10">
-              <fieldset>
-                <legend className="text-sm font-semibold leading-6 text-gray-900">
-                  By Email
-                </legend>
-                <div className="mt-6 space-y-6">
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="comments"
-                        name="comments"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label for="comments" className="font-medium text-gray-900">
-                        Comments
-                      </label>
-                      <p className="text-gray-500">
-                        Get notified when someones posts a comment on a posting.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="candidates"
-                        name="candidates"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label for="candidates" className="font-medium text-gray-900">
-                        Candidates
-                      </label>
-                      <p className="text-gray-500">
-                        Get notified when a candidate applies for a job.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="offers"
-                        name="offers"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label for="offers" className="font-medium text-gray-900">
-                        Offers
-                      </label>
-                      <p className="text-gray-500">
-                        Get notified when a candidate accepts or rejects an
-                        offer.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend className="text-sm font-semibold leading-6 text-gray-900">
-                  Push Notifications
-                </legend>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
-                  These are delivered via SMS to your mobile phone.
-                </p>
-                <div className="mt-6 space-y-6">
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="push-everything"
-                      name="push-notifications"
-                      type="radio"
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                    <label
-                      for="push-everything"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Everything
-                    </label>
-                  </div>
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="push-email"
-                      name="push-notifications"
-                      type="radio"
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                    <label
-                      for="push-email"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Same as email
-                    </label>
-                  </div>
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="push-nothing"
-                      name="push-notifications"
-                      type="radio"
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                    <label
-                      for="push-nothing"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      No push notifications
-                    </label>
-                  </div>
-                </div>
-              </fieldset>
+        {/* diseño form */}
+        <form onSubmit={formik.handleSubmit}>
+          <div className="mt-6 space-y-6 p-4">
+            <>
+              <div className="flex items-center gap-x-3 font-bold">
+                <input
+                  id="push-especialista"
+                  name="push-especialista"
+                  type="radio"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label
+                  htmlFor="push-especialista"
+                  className="block text-qaliLightGrey text-3xl leading-6 text-gray-400"
+                >
+                  Especialista
+                </label>
+              </div>
+              <div className="flex items-center gap-x-3 font-bold">
+                <input
+                  id="centro"
+                  name="centro"
+                  type="radio"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label
+                  htmlFor="push-centro"
+                  className="block text-qaliLightGrey text-3xl leading-6 text-gray-400"
+                >
+                  Centro Médico (MPVII)
+                </label>
+              </div>
+              <div className="flex items-center gap-x-3 font-bold">
+                <input
+                  id="push-paciente"
+                  name="push-notifications"
+                  type="radio"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label
+                  htmlFor="push-nothing"
+                  className="block text-qaliLightGrey text-3xl leading-6 text-gray-400"
+                >
+                  Paciente
+                </label>
+              </div>
+            </>
+          </div>
+
+          <br></br>
+          <div className="flex gap-2 p-2">
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="especialidad"
+                className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4"
+              >
+                Especialidad
+              </label>
+
+              <Dropdown
+                id="especialidad"
+                name="especialidad"
+                options={SPECIALTIES}
+                onChange={formik.handleChange}
+                value={formik.values.especialidad}
+                placeholder="Especialidad"
+                className="w-80"
+              />
+              {getFormErrorMessage("especialidad")}
+            </div>
+            <div className="flex gap-2">
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="name"
+                  className={classNames(
+                    "block",
+                    "text-qaliLightGrey",
+                    "text-3xl",
+                    "leading-6",
+                    "text-gray-900",
+                    "p-4",
+                    { "p-error": isFormFieldValid("name") }
+                  )}
+                >
+                  Nombre y Apellido
+                </label>
+
+                <InputText
+                  id="name"
+                  name="name"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  placeholder="Nombres"
+                  autoComplete="name"
+                  className={classNames("w-80", {
+                    "p-invalid": isFormFieldValid("name"),
+                  })}
+                />
+                {getFormErrorMessage("name")}
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="grado"
+                  className={classNames(
+                    "block",
+                    "text-qaliLightGrey",
+                    "text-3xl",
+                    "leading-6",
+                    "text-gray-900",
+                    "p-4",
+                    { "p-error": isFormFieldValid("grado") }
+                  )}
+                >
+                  Grado Académico
+                </label>
+                <InputText
+                  id="grado"
+                  name="grado"
+                  onChange={formik.handleChange}
+                  value={formik.values.grado}
+                  placeholder="GA"
+                  className={classNames("w-80", {
+                    "p-invalid": isFormFieldValid("grado"),
+                  })}
+                />
+                {getFormErrorMessage("grado")}
+              </div>
             </div>
           </div>
-        </div>
+          <br></br>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Save
-          </button>
-        </div>
-      </form>
+          <div className="flex gap-2 p-2">
+            <div className="sm:col-span-3">
+              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
+                Ciudad
+              </label>
+
+              <Dropdown
+                id="ciudad"
+                name="ciudad"
+                options={CITIES}
+                onChange={formik.handleChange}
+                value={formik.values.ciudad}
+                placeholder="Ciudad"
+                className="w-80"
+              />
+            </div>
+            <div className="flex gap-2">
+              <div className="sm:col-span-3">
+                <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
+                  Teléfono Móvil
+                </label>
+                <Dropdown
+                  id="prefijo"
+                  name="prefijo"
+                  options={PREFIJO}
+                  onChange={formik.handleChange}
+                  value={formik.values.prefijo}
+                  placeholder="Cod-área"
+                  className="w-40"
+                />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div className="sm:col-span-3">
+              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-7">
+                 {/* vacio para mantener el eje con los inputs */}
+                </label>
+                <div className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 ">
+                  <InputText
+                    id="phone"
+                    name="phone"
+                    onChange={formik.handleChange}
+                    value={formik.values.phone}
+                    placeholder="telefono"
+                    className="w-80"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <br></br>
+
+          <div className="flex gap-2 p-2">
+            <div className="sm:col-span-3">
+              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
+                Correo
+              </label>
+
+              <InputText
+                id="email"
+                name="email"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                placeholder="e@mail.com"
+                className="w-80"
+              />
+              {getFormErrorMessage("email")}
+            </div>
+            <div className="flex gap-2">
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="password"
+                  className={classNames(
+                    "block",
+                    "text-qaliLightGrey",
+                    "text-3xl",
+                    "leading-6",
+                    "text-gray-900",
+                    "p-4",
+                    { "p-error": isFormFieldValid("password") }
+                  )}
+                >
+                  Contraseña*
+                </label>
+                <Password
+                  id="password"
+                  name="password"
+                  onChange={formik.handleChange}
+                  toggleMask
+                  value={formik.values.password}
+                  placeholder="***************"
+                  className={classNames({
+                    "p-invalid": isFormFieldValid("password"),
+                  })}
+                  header={passwordHeader}
+                  footer={passwordFooter}
+                />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div className="sm:col-span-3">
+                <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
+                  Num.Colegiatura
+                </label>
+                <InputText
+                  id="colegiatura"
+                  name="colegiatura"
+                  onChange={formik.handleChange}
+                  value={formik.values.colegiatura}
+                  placeholder="Num.Colegiatura"
+                  className="w-80"
+                />
+              </div>
+            </div>
+          </div>
+
+          <br></br>
+
+          <div className="sm:col-span-3 sm:col-start-1">
+            <h1 className="text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
+              Escanear Diploma o Certificado
+            </h1>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                label="Buscar"
+                size="small"
+                className=" border-none bg-qaliGreen ml-4"
+              />
+            </div>
+          </div>
+
+          <div className="mt-6 space-y-6 p-4">
+            <>
+              <div className="flex items-center gap-x-3 font-bold">
+                <Checkbox
+                  name="accept"
+                  inputId="accept"
+                  checked={formik.values.accept}
+                  onChange={formik.handleChange}
+                  className={classNames({
+                    "p-invalid": isFormFieldValid("accept"),
+                  })}
+                />
+                <label
+                  htmlFor="accept"
+                  className={classNames(
+                    "h-4 w-1 border-gray-300 text-indigo-600 focus:ring-indigo-600",
+                    { "p-error": isFormFieldValid("accept") }
+                  )}
+                />
+                <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-400">
+                  Acepto los T&C del servicio de Qalï
+                </label>
+              </div>
+              <div className="flex items-center gap-x-3 font-bold">
+                <input
+                  id="push-centro"
+                  name="push-centro"
+                  type="radio"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-400"
+                />
+                <label
+                  htmlFor="push-centro"
+                  className="block text-qaliLightGrey text-3xl leading-6 text-gray-400"
+                >
+                  Acepto recibir información de Qalï
+                </label>
+              </div>
+            </>
+          </div>
+
+          <div className="flex gap-2">
+            <Button
+              label="Finalizar"
+              type="submit"
+              size="small"
+              className=" border-none bg-qaliGreen ml-auto"
+            />
+          </div>
+        </form>
+      </div>
+
       <Footer />
     </>
   );
 };
+
+export default FormDoctor;
+
+//"Toaster"
