@@ -5,11 +5,11 @@ import TitleAndFilter from './EspecialistasComponents/TitleAndFilter';
 
 function Especialistas() {
     return (
-        <Layout>
+        <Layout >
             <GoBackButton />
             <TitleAndFilter/>
         </Layout>
     )
 }
 
-export default Especialistas
+export default Especialistas;
