@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
-import userReducer from "./userSlice" // lo podemos importar con cualquier nombre
+import { configureStore } from '@reduxjs/toolkit';
+import clientReducer from './features/client/clientSlice';
 
 export const store = configureStore({
-  reducer: {
-    user: userReducer, // le ponemos cualquier nombre pero ponemos la importacion
-  },
+  reducer:{
+    client: clientReducer
+  }
 })
