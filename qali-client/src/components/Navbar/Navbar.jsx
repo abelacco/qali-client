@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="flex items-center justify-end mr-10"> 
         <a href="#" className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">HOME</a>
         <a href="#" className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">LOGIN</a>
-        <a href="#" className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">CREAR PERFIL PROFESIONAL</a>
+        <a href="#" className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">CREAR CUENTA</a>
       </div>
     </nav>
   );
