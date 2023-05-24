@@ -1,5 +1,5 @@
 import React from 'react'
-import ModalFilter from './ModalFilter'
+import ModalFilter from './ModalFilter/ModalFilter'
 
 function TitleAndFilter() {
     return (
