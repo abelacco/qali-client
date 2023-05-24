@@ -15,7 +15,7 @@ function Disponibilidad({filterValues}) {
     }
 
     return (
-        <div>
+        <div className='flex gap-4 p-4'>
             <Checkbox onChange={handleClick} checked={checked} />
             <label>Disponibilidad</label>
         </div>

@@ -5,9 +5,10 @@ import TitleAndFilter from './EspecialistasComponents/TitleAndFilter';
 
 function Especialistas() {
     return (
-        <Layout >
+        <Layout main={"max-w-screen-xl flex-grow m-auto"}>
             <GoBackButton />
             <TitleAndFilter/>
+            
         </Layout>
     )
 }

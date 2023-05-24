@@ -4,7 +4,7 @@ import { Dropdown } from 'primereact/dropdown';
 function Distrito() {
 
     return (
-        <div>
+        <div className='flex items-center border-b border-qaliLightGrey p-4 justify-between'>
             <label>Distrito</label>
             <Dropdown placeholder='Ingrese un distrito'/>
         </div>

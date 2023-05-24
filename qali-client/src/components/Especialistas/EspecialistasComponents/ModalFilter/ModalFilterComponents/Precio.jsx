@@ -16,9 +16,9 @@ function Precio({ filterValues }) {
     }
 
     return (
-        <div className='flex items-end justify-between '>
+        <div className='flex items-end justify-between border-b border-qaliLightGrey p-4'>
             <h3>Precio:</h3>
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-1 mr-6'>
                 <div className='flex justify-between'>
                     <p>min/{sliderValue[0]}</p>
                     <p>max/{sliderValue[1]}</p>

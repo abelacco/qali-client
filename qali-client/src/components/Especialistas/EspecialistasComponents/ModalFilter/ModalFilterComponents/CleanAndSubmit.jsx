@@ -21,8 +21,8 @@ function CleanAndSubmit({ filterValues }) {
 
 
     return (
-        <div className='flex gap-2'>
-            <Button label='Limpiar' onClick={handleClean} />
+        <div className='flex gap-2 '>
+            <Button label='Limpiar' onClick={handleClean} className='buttonModalClean' />
             <Button label='Aplicar Filtros' onClick={handleSubmit} />
         </div>
     )

@@ -14,20 +14,22 @@ function Home() {
     });
 
     return (
-        <Layout main={'h-full flex flex-col justify-center items-center'} contenedor={'bg-qaliBlue h-screen flex flex-col'}>
-            <div className='flex flex-col gap-3 flex-grow justify-center '>
-                <h1 className='mb-10 text-qaliLightGrey text-3xl'>
-                    Agenda tu cita en pocos segundos
-                </h1>
-                <ModalityButtons filtersValue={filtersValue} />
-                <div className='flex gap-2'>
-                    <PlaceAndProfessionalFilter filtersValue={filtersValue} />
-                    <SubmitButton filtersValue={filtersValue} />
+        <div className='h-screen bg-qaliBlue flex flex-col'>
+            <Layout main={'h-full max-w-screen-xl flex m-auto'}>
+                <div className='flex flex-col gap-3 flex-grow justify-center max-w-screen-xl'>
+                    <h1 className='mb-10 text-qaliLightGrey text-3xl'>
+                        Agenda tu cita en pocos segundos
+                    </h1>
+                    <ModalityButtons filtersValue={filtersValue} />
+                    <div className='flex gap-2'>
+                        <PlaceAndProfessionalFilter filtersValue={filtersValue} />
+                        <SubmitButton filtersValue={filtersValue} />
+                    </div>
                 </div>
-            </div>
-        </Layout>
+            </Layout>
+        </div>
     )
-    
+
 }
 
 export default Home
