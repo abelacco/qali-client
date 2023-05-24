@@ -14,9 +14,8 @@ import { CITIES, SPECIALTIES, PREFIJO } from "../../utils/constantes";
 
 const FormDoctor = () => {
   const [formData, setFormData] = useState({});
-  console.log(formData);
   const [showMessage, setShowMessage] = useState(false);
-  console.log(showMessage);
+  
 
   /*   useEffect(() => {
     .get().then(data => set(data));
@@ -198,7 +197,7 @@ const FormDoctor = () => {
             <div className="sm:col-span-3">
               <label
                 htmlFor="especialidad"
-                className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-4"
+                className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4"
               >
                 Especialidad
               </label>
@@ -223,7 +222,7 @@ const FormDoctor = () => {
                     "text-qaliLightGrey",
                     "text-3xl",
                     "leading-6",
-                    "text-gray-600",
+                    "text-gray-900",
                     "p-4",
                     { "p-error": isFormFieldValid("name") }
                   )}
@@ -255,7 +254,7 @@ const FormDoctor = () => {
                     "text-qaliLightGrey",
                     "text-3xl",
                     "leading-6",
-                    "text-gray-600",
+                    "text-gray-900",
                     "p-4",
                     { "p-error": isFormFieldValid("grado") }
                   )}
@@ -280,7 +279,7 @@ const FormDoctor = () => {
 
           <div className="flex gap-2 p-2">
             <div className="sm:col-span-3">
-              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-4">
+              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
                 Ciudad
               </label>
 
@@ -296,7 +295,7 @@ const FormDoctor = () => {
             </div>
             <div className="flex gap-2">
               <div className="sm:col-span-3">
-                <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-4">
+                <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
                   Teléfono Móvil
                 </label>
                 <Dropdown
@@ -312,10 +311,10 @@ const FormDoctor = () => {
             </div>
             <div className="flex gap-2">
               <div className="sm:col-span-3">
-              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-7">
-                 
+              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-7">
+                 {/* vacio para mantener el eje con los inputs */}
                 </label>
-                <div className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 ">
+                <div className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 ">
                   <InputText
                     id="phone"
                     name="phone"
@@ -332,7 +331,7 @@ const FormDoctor = () => {
 
           <div className="flex gap-2 p-2">
             <div className="sm:col-span-3">
-              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-4">
+              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
                 Correo
               </label>
 
@@ -355,7 +354,7 @@ const FormDoctor = () => {
                     "text-qaliLightGrey",
                     "text-3xl",
                     "leading-6",
-                    "text-gray-600",
+                    "text-gray-900",
                     "p-4",
                     { "p-error": isFormFieldValid("password") }
                   )}
@@ -379,7 +378,7 @@ const FormDoctor = () => {
             </div>
             <div className="flex gap-2">
               <div className="sm:col-span-3">
-                <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-4">
+                <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
                   Num.Colegiatura
                 </label>
                 <InputText
@@ -397,7 +396,7 @@ const FormDoctor = () => {
           <br></br>
 
           <div className="sm:col-span-3 sm:col-start-1">
-            <h1 className="text-qaliLightGrey text-3xl leading-6 text-gray-600 p-4">
+            <h1 className="text-qaliLightGrey text-3xl leading-6 text-gray-900 p-4">
               Escanear Diploma o Certificado
             </h1>
             <div className="flex gap-2">
