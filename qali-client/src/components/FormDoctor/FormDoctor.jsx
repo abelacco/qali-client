@@ -312,7 +312,10 @@ const FormDoctor = () => {
             </div>
             <div className="flex gap-2">
               <div className="sm:col-span-3">
-                <div className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-7">
+              <label className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 p-7">
+                 
+                </label>
+                <div className="block text-qaliLightGrey text-3xl leading-6 text-gray-600 ">
                   <InputText
                     id="phone"
                     name="phone"
