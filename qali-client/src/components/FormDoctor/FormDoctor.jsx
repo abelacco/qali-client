@@ -15,7 +15,13 @@ import { CITIES, SPECIALTIES, PREFIJO } from "../../utils/constantes";
 const FormDoctor = () => {
   const [formData, setFormData] = useState({});
   const [showMessage, setShowMessage] = useState(false);
-  
+  const [avatar, setAvatar] = useState(null);
+
+  const handleFileUpload = (event) => {
+    const file = event.currentTarget.files[0];
+
+    setAvatar(URL.createObjectURL(file));
+  };
 
   /*   useEffect(() => {
     .get().then(data => set(data));
@@ -27,12 +33,15 @@ const FormDoctor = () => {
       email: "",
       password: "",
       phone: "",
+      file: "",
+      upload: "",
       especialidad: null,
       ciudad: null,
       prefijo: null,
       grado: "",
       colegiatura: "",
       accept: false,
+      info: false,
     },
     validate: (data) => {
       let errors = {};
@@ -117,6 +126,7 @@ const FormDoctor = () => {
     <>
       <Navbar />
       <br></br>
+
       <h1 className="bg-qaliBlue text-4xl text-white font-bold inline-block woff2 rounded-r-full p-4">
         Registrarme como
       </h1>
@@ -147,6 +157,42 @@ const FormDoctor = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className="mt-6 space-y-6 p-4">
             <>
+              <div className="flex flex-col items-center gap-2">
+                <label className="block text-3xl leading-6 text-gray-40 ">
+                  Foto de Perfil
+                </label>
+                {avatar ? (
+                  <img src={avatar} alt="Avatar" className="h-28 w-28" />
+                ) : (
+                  <svg
+                    className="h-28 w-28 text-gray-300"
+                    viewBox="0 0 28 28"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                >
+                  <span>Subir Foto</span>
+                  <input
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    className="sr-only"
+                    onChange={handleFileUpload}
+                  />
+                </label>
+              </div>
+
               <div className="flex items-center gap-x-3 font-bold">
                 <input
                   id="push-especialista"
@@ -191,7 +237,7 @@ const FormDoctor = () => {
               </div>
             </>
           </div>
-{/*  text-qaliLightGrey  */}
+          {/*  text-qaliLightGrey  */}
           <br></br>
           <div className="flex gap-2 p-2">
             <div className="sm:col-span-3">
@@ -219,7 +265,7 @@ const FormDoctor = () => {
                   htmlFor="name"
                   className={classNames(
                     "block",
-                    
+
                     "text-3xl",
                     "leading-6",
                     "text-gray-900",
@@ -251,7 +297,7 @@ const FormDoctor = () => {
                   htmlFor="grado"
                   className={classNames(
                     "block",
-      
+
                     "text-3xl",
                     "leading-6",
                     "text-gray-900",
@@ -311,8 +357,8 @@ const FormDoctor = () => {
             </div>
             <div className="flex gap-2">
               <div className="sm:col-span-3">
-              <label className="block  text-3xl leading-6 text-gray-900 p-7">
-                 {/* vacio para mantener el eje con los inputs */}
+                <label className="block  text-3xl leading-6 text-gray-900 p-7">
+                  {/* vacio para mantener el eje con los inputs */}
                 </label>
                 <div className="block  text-3xl leading-6 text-gray-900 ">
                   <InputText
@@ -404,8 +450,23 @@ const FormDoctor = () => {
                 type="button"
                 label="Buscar"
                 size="small"
-                className=" border-none bg-qaliGreen ml-4"
+                className="border-none bg-qaliGreen ml-4"
+                onClick={() =>
+                  document.getElementById("file-upload-input").click()
+                }
               />
+              <input
+                id="file-upload-input"
+                name="file"
+                type="file"
+                className="sr-only"
+                onChange={(event) => {
+                  formik.setFieldValue("file", event.currentTarget.files[0]);
+                }}
+              />
+              {formik.values.file && (
+                <p>Archivo seleccionado: {formik.values.file.name}</p>
+              )}
             </div>
           </div>
 
@@ -417,6 +478,7 @@ const FormDoctor = () => {
                   inputId="accept"
                   checked={formik.values.accept}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className={classNames({
                     "p-invalid": isFormFieldValid("accept"),
                   })}
@@ -433,29 +495,36 @@ const FormDoctor = () => {
                 </label>
               </div>
               <div className="flex items-center gap-x-3 font-bold">
-                <input
-                  id="push-centro"
-                  name="push-centro"
-                  type="radio"
-                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-400"
+                <Checkbox
+                  name="info"
+                  inputId="info"
+                  checked={formik.values.info}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={classNames({
+                    "p-invalid": isFormFieldValid("info"),
+                  })}
                 />
                 <label
-                  htmlFor="push-centro"
-                  className="block  text-3xl leading-6 text-gray-400"
-                >
+                  htmlFor="info"
+                  className={classNames(
+                    "h-4 w-1 border-gray-300 text-indigo-600 focus:ring-indigo-600",
+                    { "p-error": isFormFieldValid("info") }
+                  )}
+                />
+                <label className="block  text-3xl leading-6 text-gray-400">
                   Acepto recibir información de Qalï
                 </label>
               </div>
             </>
-          </div>
-
-          <div className="flex gap-2">
-            <Button
-              label="Finalizar"
-              type="submit"
-              size="small"
-              className=" border-none bg-qaliGreen ml-auto"
-            />
+            <div className="flex gap-2 ">
+              <Button
+                label="Finalizar"
+                type="submit"
+                size="small"
+                className=" border-none bg-qaliGreen ml-auto"
+              />
+            </div>
           </div>
         </form>
       </div>
