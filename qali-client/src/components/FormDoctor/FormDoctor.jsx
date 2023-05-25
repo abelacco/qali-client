@@ -386,7 +386,7 @@ const FormDoctor = () => {
                 name="email"
                 onChange={formik.handleChange}
                 value={formik.values.email}
-                placeholder="tucorreoelectronico"
+                placeholder="tucorreoelectronico@gmail.com"
                 className="w-80"
               />
               {getFormErrorMessage("email")}

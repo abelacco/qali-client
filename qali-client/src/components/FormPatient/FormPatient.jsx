@@ -15,6 +15,13 @@ import { CITIES, PREFIJO } from "../../utils/constantes";
 const FormPatient = () => {
   const [formData, setFormData] = useState({});
   const [showMessage, setShowMessage] = useState(false);
+  const [avatar, setAvatar] = useState(null);
+
+  const handleFileUpload = (event) => {
+    const file = event.currentTarget.files[0];
+
+    setAvatar(URL.createObjectURL(file));
+  };
   
   const formik = useFormik({
     initialValues: {
@@ -155,6 +162,42 @@ const FormPatient = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className="mt-6 space-y-6 p-4">
             <>
+            <div className="flex flex-col items-center gap-2">
+                <label className="block text-3xl leading-6 text-gray-40 ">
+                  Foto de Perfil
+                </label>
+                {avatar ? (
+                  <img src={avatar} alt="Avatar" className="h-28 w-28" />
+                ) : (
+                  <svg
+                    className="h-28 w-28 text-gray-300"
+                    viewBox="0 0 28 28"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                >
+                  <span>Subir Foto</span>
+                  <input
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    className="sr-only"
+                    onChange={handleFileUpload}
+                  />
+                </label>
+              </div>
+
               <div className="flex items-center gap-x-3 font-bold">
                 <input
                   id="push-paciente"
@@ -395,7 +438,7 @@ const FormPatient = () => {
             </>
           </div>
   
-          <div className="flex gap-2">
+          <div className="flex gap-2 mb-5 mr-3">
             <Button
               label="Finalizar"
               type="submit"
