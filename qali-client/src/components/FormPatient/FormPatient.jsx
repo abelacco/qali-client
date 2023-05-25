@@ -10,9 +10,9 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Dialog } from "primereact/dialog";
 import { classNames } from "primereact/utils";
-import { CITIES, SPECIALTIES, PREFIJO } from "../../utils/constantes";
+import { CITIES, PREFIJO } from "../../utils/constantes";
 
-const FormDoctor = () => {
+const FormPatient = () => {
   const [formData, setFormData] = useState({});
   const [showMessage, setShowMessage] = useState(false);
   const [avatar, setAvatar] = useState(null);
@@ -22,26 +22,21 @@ const FormDoctor = () => {
 
     setAvatar(URL.createObjectURL(file));
   };
-
-  /*   useEffect(() => {
-    .get().then(data => set(data));
-}, []); 
- */
+  
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
       phone: "",
-      file: "",
-      upload: "",
       especialidad: null,
       ciudad: null,
       prefijo: null,
       grado: "",
       colegiatura: "",
       accept: false,
-      info: false,
+      acceptInformation: false,
     },
     validate: (data) => {
       let errors = {};
@@ -63,6 +58,12 @@ const FormDoctor = () => {
         errors.password = "Contraseña es requerida.";
       }
 
+      if (!data.confirmPassword) {
+        errors.confirmPassword = "Confirmar contraseña es requerido.";
+      } else if (data.confirmPassword !== data.password) {
+        errors.confirmPassword = "Las contraseñas no coinciden.";
+      }
+
       if (!data.especialidad) {
         errors.especialidad = "Especialidad es requerida.";
       }
@@ -80,6 +81,11 @@ const FormDoctor = () => {
       return errors;
     },
     onSubmit: (data) => {
+
+      if (data.password !== data.confirmPassword) {
+        //si no coinciden ver de dejar un mensaje de error o realizar alguna acción
+        return;
+      }
       setFormData(data);
       setShowMessage(true);
 
@@ -126,7 +132,6 @@ const FormDoctor = () => {
     <>
       <Navbar />
       <br></br>
-
       <h1 className="bg-qaliBlue text-4xl text-white font-bold inline-block woff2 rounded-r-full p-4">
         Registrarme como
       </h1>
@@ -152,12 +157,12 @@ const FormDoctor = () => {
             </p>
           </div>
         </Dialog>
-
+  
         {/* diseño form */}
         <form onSubmit={formik.handleSubmit}>
           <div className="mt-6 space-y-6 p-4">
             <>
-              <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-2">
                 <label className="block text-3xl leading-6 text-gray-40 ">
                   Foto de Perfil
                 </label>
@@ -195,34 +200,6 @@ const FormDoctor = () => {
 
               <div className="flex items-center gap-x-3 font-bold">
                 <input
-                  id="push-especialista"
-                  name="push-especialista"
-                  type="radio"
-                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                />
-                <label
-                  htmlFor="push-especialista"
-                  className="block text-3xl leading-6 text-gray-400"
-                >
-                  Especialista
-                </label>
-              </div>
-              <div className="flex items-center gap-x-3 font-bold">
-                <input
-                  id="centro"
-                  name="centro"
-                  type="radio"
-                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                />
-                <label
-                  htmlFor="push-centro"
-                  className="block  text-3xl leading-6 text-gray-400"
-                >
-                  Centro Médico (MPVII)
-                </label>
-              </div>
-              <div className="flex items-center gap-x-3 font-bold">
-                <input
                   id="push-paciente"
                   name="push-notifications"
                   type="radio"
@@ -237,35 +214,15 @@ const FormDoctor = () => {
               </div>
             </>
           </div>
-          {/*  text-qaliLightGrey  */}
+          {/* text-qaliLightGrey */}
           <br></br>
           <div className="flex gap-2 p-2">
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="especialidad"
-                className="block text-3xl leading-6 text-gray-900 p-4"
-              >
-                Especialidad
-              </label>
-
-              <Dropdown
-                id="especialidad"
-                name="especialidad"
-                options={SPECIALTIES}
-                onChange={formik.handleChange}
-                value={formik.values.especialidad}
-                placeholder="Especialidad"
-                className="w-80"
-              />
-              {getFormErrorMessage("especialidad")}
-            </div>
             <div className="flex gap-2">
               <div className="sm:col-span-3">
                 <label
                   htmlFor="name"
                   className={classNames(
                     "block",
-
                     "text-3xl",
                     "leading-6",
                     "text-gray-900",
@@ -275,7 +232,7 @@ const FormDoctor = () => {
                 >
                   Nombre y Apellido
                 </label>
-
+  
                 <InputText
                   id="name"
                   name="name"
@@ -290,45 +247,15 @@ const FormDoctor = () => {
                 {getFormErrorMessage("name")}
               </div>
             </div>
-
-            <div className="flex gap-2">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="grado"
-                  className={classNames(
-                    "block",
-
-                    "text-3xl",
-                    "leading-6",
-                    "text-gray-900",
-                    "p-4",
-                    { "p-error": isFormFieldValid("grado") }
-                  )}
-                >
-                  Grado Académico
-                </label>
-                <InputText
-                  id="grado"
-                  name="grado"
-                  onChange={formik.handleChange}
-                  value={formik.values.grado}
-                  placeholder="GA"
-                  className={classNames("w-80", {
-                    "p-invalid": isFormFieldValid("grado"),
-                  })}
-                />
-                {getFormErrorMessage("grado")}
-              </div>
-            </div>
           </div>
           <br></br>
-
+  
           <div className="flex gap-2 p-2">
             <div className="sm:col-span-3">
               <label className="block  text-3xl leading-6 text-gray-900 p-4">
                 Ciudad
               </label>
-
+  
               <Dropdown
                 id="ciudad"
                 name="ciudad"
@@ -374,13 +301,13 @@ const FormDoctor = () => {
             </div>
           </div>
           <br></br>
-
+  
           <div className="flex gap-2 p-2">
             <div className="sm:col-span-3">
               <label className="block  text-3xl leading-6 text-gray-900 p-4">
-              Correo electrónico
+                Correo electrónico
               </label>
-
+  
               <InputText
                 id="email"
                 name="email"
@@ -391,85 +318,76 @@ const FormDoctor = () => {
               />
               {getFormErrorMessage("email")}
             </div>
-            <div className="flex gap-2">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="password"
-                  className={classNames(
-                    "block",
-                    "text-qaliLightGrey",
-                    "text-3xl",
-                    "leading-6",
-                    "text-gray-900",
-                    "p-4",
-                    { "p-error": isFormFieldValid("password") }
-                  )}
-                >
-                  Contraseña*
-                </label>
-                <Password
-                  id="password"
-                  name="password"
-                  onChange={formik.handleChange}
-                  toggleMask
-                  value={formik.values.password}
-                  placeholder="***************"
-                  className={classNames({
-                    "p-invalid": isFormFieldValid("password"),
-                  })}
-                  header={passwordHeader}
-                  footer={passwordFooter}
-                />
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <div className="sm:col-span-3">
-                <label className="block  text-3xl leading-6 text-gray-900 p-4">
-                  Num.Colegiatura
-                </label>
-                <InputText
-                  id="colegiatura"
-                  name="colegiatura"
-                  onChange={formik.handleChange}
-                  value={formik.values.colegiatura}
-                  placeholder="Num.Colegiatura"
-                  className="w-80"
-                />
-              </div>
-            </div>
           </div>
-
+  
           <br></br>
+  
+          <div className="flex gap-2 p-2">
+  <div className="sm:col-span-3">
+    <div className="flex justify-between">
+      <div className="mr-12">
+        <label
+          htmlFor="password"
+          className={classNames(
+            "block",
+            "text-3xl",
+            "leading-6",
+            "text-gray-900",
+            "p-4",
+            { "p-error": isFormFieldValid("password") }
+          )}
+        >
+          Contraseña*
+        </label>
+        <Password
+          id="password"
+          name="password"
+          onChange={formik.handleChange}
+          toggleMask
+          value={formik.values.password}
+          placeholder="***************"
+          className={classNames({
+            "p-invalid": isFormFieldValid("password"),
+          })}
+          header={passwordHeader}
+          footer={passwordFooter}
+        />
+      </div>
+      <div>
+        <label
+          htmlFor="confirmPassword"
+          className={classNames(
+            "block",
+            "text-3xl",
+            "leading-6",
+            "text-gray-900",
+            "p-4",
+            { "p-error": isFormFieldValid("confirmPassword") }
+          )}
+        >
+          Confirmar Contraseña*
+        </label>
+        <Password
+          id="confirmPassword"
+          name="confirmPassword"
+          onChange={formik.handleChange}
+          toggleMask
+          value={formik.values.confirmPassword}
+          placeholder="***************"
+          className={classNames({
+            "p-invalid": isFormFieldValid("confirmPassword"),
+          })}
+          header={passwordHeader}
+          footer={passwordFooter}
+        />
+      </div>
+    </div>
+  </div>
+</div>
 
-          <div className="sm:col-span-3 sm:col-start-1">
-            <h1 className=" text-3xl leading-6 text-gray-900 p-4">
-              Escanear Diploma o Certificado
-            </h1>
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                label="Buscar"
-                size="small"
-                className="border-none bg-qaliGreen ml-4"
-                onClick={() =>
-                  document.getElementById("file-upload-input").click()
-                }
-              />
-              <input
-                id="file-upload-input"
-                name="file"
-                type="file"
-                className="sr-only"
-                onChange={(event) => {
-                  formik.setFieldValue("file", event.currentTarget.files[0]);
-                }}
-              />
-              {formik.values.file && (
-                <p>Archivo seleccionado: {formik.values.file.name}</p>
-              )}
-            </div>
-          </div>
-
+  
+          <br></br>
+  
           <div className="mt-6 space-y-6 p-4">
             <>
               <div className="flex items-center gap-x-3 font-bold">
@@ -478,7 +396,6 @@ const FormDoctor = () => {
                   inputId="accept"
                   checked={formik.values.accept}
                   onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
                   className={classNames({
                     "p-invalid": isFormFieldValid("accept"),
                   })}
@@ -491,49 +408,51 @@ const FormDoctor = () => {
                   )}
                 />
                 <label className="block  text-3xl leading-6 text-gray-400">
-                Acepto los terminos y condiciones del servicio de Qalï
+                  Acepto los terminos y condiciones del servicio de Qalï
                 </label>
               </div>
               <div className="flex items-center gap-x-3 font-bold">
                 <Checkbox
-                  name="info"
-                  inputId="info"
-                  checked={formik.values.info}
+                  name="acceptInformation"
+                  inputId="acceptInformation"
+                  checked={formik.values.acceptInformation}
                   onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
                   className={classNames({
-                    "p-invalid": isFormFieldValid("info"),
+                    "p-invalid": isFormFieldValid("acceptInformation"),
                   })}
                 />
                 <label
-                  htmlFor="info"
+                  htmlFor="acceptInformation"
                   className={classNames(
                     "h-4 w-1 border-gray-300 text-indigo-600 focus:ring-indigo-600",
-                    { "p-error": isFormFieldValid("info") }
+                    { "p-error": isFormFieldValid("acceptInformation") }
                   )}
                 />
-                <label className="block  text-3xl leading-6 text-gray-400">
+                <label
+                  htmlFor="acceptInformation"
+                  className="block text-3xl leading-6 text-gray-400"
+                >
                   Acepto recibir información de Qalï
                 </label>
               </div>
             </>
-            <div className="flex gap-2 ">
-              <Button
-                label="Finalizar"
-                type="submit"
-                size="small"
-                className=" border-none bg-qaliGreen ml-auto"
-              />
-            </div>
+          </div>
+  
+          <div className="flex gap-2 mb-5 mr-3">
+            <Button
+              label="Finalizar"
+              type="submit"
+              size="small"
+              className=" border-none bg-qaliGreen ml-auto"
+            />
           </div>
         </form>
       </div>
-
+  
       <Footer />
     </>
   );
+  
 };
 
-export default FormDoctor;
-
-//"Toaster"
+export default FormPatient;
