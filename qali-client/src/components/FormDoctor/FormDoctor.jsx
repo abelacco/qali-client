@@ -19,7 +19,7 @@ const FormDoctor = () => {
 
   const handleFileUpload = (event) => {
     const file = event.currentTarget.files[0];
-    // Aquí puedes agregar la lógica para cambiar el avatar con la foto seleccionada
+
     setAvatar(URL.createObjectURL(file));
   };
 
@@ -161,7 +161,7 @@ const FormDoctor = () => {
                 <label className="block text-3xl leading-6 text-gray-40 ">
                   Foto de Perfil
                 </label>
-                {avatar ? ( 
+                {avatar ? (
                   <img src={avatar} alt="Avatar" className="h-28 w-28" />
                 ) : (
                   <svg
