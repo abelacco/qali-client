@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,10 +16,14 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-950 w-full flex justify-between">
       <div className="flex items-center ml-2">
+        <Link to="/#">
         <img src='https://media.discordapp.net/attachments/1107828744804122664/1109682491339591762/image.png' alt="Logo" className="h-12 w-16 mr-2" /> 
+        </Link>
       </div>
-      <div className="flex items-center justify-end mr-10"> 
+      <div className="flex items-center justify-end mr-10">
+      <Link to="/#"> 
         <a href="#" className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">HOME</a>
+      </Link>
         <a href="#" className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">LOGIN</a>
         <button onClick={openModal} className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">CREAR CUENTA</button>
       </div>
@@ -50,9 +56,12 @@ const Navbar = () => {
                   <button className="mt-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     Paciente
                   </button>
+                  <Link to="/register">
                   <button className="mt-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     Especialista
                   </button>
+                  </Link>
+                  
                 </div>
               </div>
             </div>
