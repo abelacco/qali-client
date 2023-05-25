@@ -25,10 +25,10 @@ function PlaceAndSpecialtyFilter({ filtersValue }) {
   return (
     <div className='flex gap-2'>
       <Dropdown options={SPECIALTIES} onChange={handleSpecialty} value={specialty} placeholder='Ingrese una especialidad.'
-        className='w-80' showclear 
+        className='w-80' 
       />
       <Dropdown options={CITIES} onChange={handlePlace} value={place} placeholder='Ingrese una ciudad.'
-        className='w-64' showclear 
+        className='w-64' 
       />
     </div>
   )
