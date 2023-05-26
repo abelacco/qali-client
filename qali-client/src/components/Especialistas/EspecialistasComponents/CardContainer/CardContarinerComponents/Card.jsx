@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'primereact/button'
 import { useEventListener } from 'primereact/hooks';
-import InfoHover from './InfoHover';
+import InfoHover from './CardComponents/InfoHover';
+import ModalCitas from './CardComponents/ModalCitas';
 
 
 function Card({ name, image, speciality, location, price, date, rating }) {
@@ -65,12 +66,13 @@ function Card({ name, image, speciality, location, price, date, rating }) {
                     </div>
                 </Button>
 
-                <Button size='small' className='sacarCitaButton'>
+                {/* <Button size='small' className='sacarCitaButton'>
                     <div className='flex justify-evenly items-center flex-grow '>
                         <p>Sacar cita</p>
                         <i className='pi pi-angle-double-right text-qaliGreen'></i>
                     </div>
-                </Button>
+                </Button> */}
+                <ModalCitas/>
             </div>
 
         </div>
