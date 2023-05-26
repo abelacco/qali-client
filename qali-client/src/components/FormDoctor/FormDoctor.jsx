@@ -11,11 +11,14 @@ import { Password } from "primereact/password";
 import { Dialog } from "primereact/dialog";
 import { classNames } from "primereact/utils";
 import { CITIES, SPECIALTIES, PREFIJO } from "../../utils/constantes";
+import { useDispatch } from 'react-redux';
+import {createDoctorAsync } from '../../redux/store/doctor/doctorSlice';
 
 const FormDoctor = () => {
   const [formData, setFormData] = useState({});
   const [showMessage, setShowMessage] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const dispatch = useDispatch();
 
   const handleFileUpload = (event) => {
     const file = event.currentTarget.files[0];
@@ -23,10 +26,6 @@ const FormDoctor = () => {
     setAvatar(URL.createObjectURL(file));
   };
 
-  /*   useEffect(() => {
-    .get().then(data => set(data));
-}, []); 
- */
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -35,8 +34,8 @@ const FormDoctor = () => {
       phone: "",
       file: "",
       upload: "",
-      especialidad: null,
-      ciudad: null,
+      speciality: null,
+      location: null,
       prefijo: null,
       grado: "",
       colegiatura: "",
@@ -63,14 +62,14 @@ const FormDoctor = () => {
         errors.password = "Contraseña es requerida.";
       }
 
-      if (!data.especialidad) {
-        errors.especialidad = "Especialidad es requerida.";
+      if (!data.speciality) {
+        errors.speciality = "Especialidad es requerida.";
       }
       if (!data.grado) {
         errors.grado = "Grado Académico es requerido.";
       }
-      if (!data.ciudad) {
-        errors.ciudad = "Ciudad es requerida";
+      if (!data.location) {
+        errors.location = "Ciudad es requerida";
       }
 
       if (!data.accept) {
@@ -82,6 +81,7 @@ const FormDoctor = () => {
     onSubmit: (data) => {
       setFormData(data);
       setShowMessage(true);
+      dispatch(createDoctorAsync(data));
 
       formik.resetForm();
     },
@@ -253,7 +253,7 @@ const FormDoctor = () => {
                 name="especialidad"
                 options={SPECIALTIES}
                 onChange={formik.handleChange}
-                value={formik.values.especialidad}
+                value={formik.values.speciality}
                 placeholder="Especialidad"
                 className="w-80"
               />
@@ -334,7 +334,7 @@ const FormDoctor = () => {
                 name="ciudad"
                 options={CITIES}
                 onChange={formik.handleChange}
-                value={formik.values.ciudad}
+                value={formik.values.location}
                 placeholder="Ciudad"
                 className="w-80"
               />
