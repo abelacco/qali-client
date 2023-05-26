@@ -3,6 +3,7 @@ import Card from './CardContarinerComponents/Card';
 
 function CardsContainer() {
   const array = [1,2,3,4]
+  
   return (
     <div className='flex flex-wrap gap-8 justify-center'>
       {array.map(element => <Card

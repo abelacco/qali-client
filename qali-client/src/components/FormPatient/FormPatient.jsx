@@ -11,11 +11,14 @@ import { Password } from "primereact/password";
 import { Dialog } from "primereact/dialog";
 import { classNames } from "primereact/utils";
 import { CITIES, PREFIJO } from "../../utils/constantes";
+import { useDispatch } from 'react-redux';
+import {createPatientAsync  } from '../../redux/store/patient/patientSlice';
 
 const FormPatient = () => {
   const [formData, setFormData] = useState({});
   const [showMessage, setShowMessage] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const dispatch = useDispatch();
 
   const handleFileUpload = (event) => {
     const file = event.currentTarget.files[0];
@@ -30,11 +33,7 @@ const FormPatient = () => {
       password: "",
       confirmPassword: "",
       phone: "",
-      especialidad: null,
       ciudad: null,
-      prefijo: null,
-      grado: "",
-      colegiatura: "",
       accept: false,
       acceptInformation: false,
     },
@@ -64,12 +63,6 @@ const FormPatient = () => {
         errors.confirmPassword = "Las contraseñas no coinciden.";
       }
 
-      if (!data.especialidad) {
-        errors.especialidad = "Especialidad es requerida.";
-      }
-      if (!data.grado) {
-        errors.grado = "Grado Académico es requerido.";
-      }
       if (!data.ciudad) {
         errors.ciudad = "Ciudad es requerida";
       }
@@ -82,13 +75,13 @@ const FormPatient = () => {
     },
     onSubmit: (data) => {
 
-      if (data.password !== data.confirmPassword) {
-        //si no coinciden ver de dejar un mensaje de error o realizar alguna acción
-        return;
-      }
+      // if (data.password !== data.confirmPassword) {
+      //   //si no coinciden ver de dejar un mensaje de error o realizar alguna acción
+      //   return;
+      // }
       setFormData(data);
       setShowMessage(true);
-
+      dispatch(createPatientAsync(data));
       formik.resetForm();
     },
   });
