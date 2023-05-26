@@ -22,7 +22,7 @@ export const doctorSlice = createSlice({
     },
     getDoctorSuccess: (state, action) => {
       state.status = STATUS_API.SUCCEEDED;
-      state.doctors.push(action.payload);
+      state.doctors = action.payload;
     },
     getDoctorFailure: (state, action) => {
       state.status = STATUS_API.FAILED;
@@ -47,8 +47,8 @@ export const getDoctorAsync = (paginator , body) => async (dispatch) => {
   try {
     dispatch(getDoctorStart());
     const response = await getDoctor(paginator , body);
-    console.log("aaaaaaaaa",response);
-    dispatch(getDoctorFailure(response.data));
+    console.log("aaaaaaaaa",response.data);
+    dispatch(getDoctorSuccess(response.data));
   } catch (err) {
     dispatch(getDoctorFailure(err.toString()));
   }
