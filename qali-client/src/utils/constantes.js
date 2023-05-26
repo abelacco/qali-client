@@ -3,3 +3,9 @@ export const SPECIALTIES = ["Nutrición", "Psicología", "Psiquiatría", "Gineco
 export const PRESENCIAL = "presencial";
 export const ONLINE = "online"
 export const PREFIJO = ["+54", "+51", "+57", "+50", "+53", "+30"];
+export const STATUS_API = {
+    IDLE: "idle",
+    LOADING: "loading",
+    SUCCEEDED: "succeeded",
+    FAILED: "failed",
+}
