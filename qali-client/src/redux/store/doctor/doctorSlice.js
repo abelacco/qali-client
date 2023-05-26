@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getDoctor } from './doctorAPI';
 import { STATUS_API } from '../../../utils/constantes';
 
-export const patientSlice = createSlice({
-  name: 'patient',
+export const doctorSlice = createSlice({
+  name: 'doctor',
   initialState: { doctors: [], status: STATUS_API.IDLE, error: null },
   reducers: {
     // createPatientStart: (state) => {
@@ -31,7 +31,7 @@ export const patientSlice = createSlice({
   },
 });
 
-export const { getDoctorStart, getDoctorSuccess, getDoctorFailure } = patientSlice.actions;
+export const { getDoctorStart, getDoctorSuccess, getDoctorFailure } = doctorSlice.actions;
 
 // export const createPatientAsync = (patient) => async (dispatch) => {
 //   try {
@@ -43,7 +43,7 @@ export const { getDoctorStart, getDoctorSuccess, getDoctorFailure } = patientSli
 //   }
 // };
 
-export const getPatientAsync = (paginator , body) => async (dispatch) => {
+export const getDoctorAsync = (paginator , body) => async (dispatch) => {
   try {
     dispatch(getDoctorStart());
     const response = await getDoctor(paginator , body);
@@ -54,4 +54,4 @@ export const getPatientAsync = (paginator , body) => async (dispatch) => {
   }
 };
 
-export default patientSlice.reducer;
+export default doctorSlice.reducer;
