@@ -5,7 +5,7 @@
 
 
 /* Start ModalityButons */
-.modalityButtonsCustom:hover{
+.modalityButtonsCustom:hover {
     background-color: #D4D6E4 !important;
     color: #132B5B !important;
 }
@@ -13,22 +13,24 @@
 .selectedButton {
     background-color: #0FFFA9 !important;
 }
+
 /* End ModalityButons */
-    
+
 /* Start SubmitButton */
-.submitButtonHome{
+.submitButtonHome {
     background-color: #132B5B !important;
     border: 1px solid white;
 }
 
-.submitButtonHome:hover{
+.submitButtonHome:hover {
     background-color: #0FFFA9 !important;
     color: #132B5B !important;
 }
+
 /* End SubmitButton */
 
 /* Start GoBackButton */
-.goBackButton{
+.goBackButton {
     display: flex;
     gap: 10px;
     padding: 10px 30px 10px 30px !important;
@@ -39,9 +41,36 @@
     font-weight: bold;
 }
 
-.goBackButton:hover{
+.goBackButton:hover {
     background-color: #132B5B !important;
     color: white;
 }
+
 /* End GoBackButton */
 
+/* Start Card */
+.ratingCard .p-rating-item-active svg {
+    color: #0FFFA9 !important;
+}
+
+.verDetalleButton {
+    background-color: #969696;
+    border: none;
+    padding: 5px 0 5px 0 !important;
+}
+
+.verDetalleButton:hover {
+    background-color: #132B5B !important;
+}
+
+.sacarCitaButton {
+    background-color: #969696;
+    border: none;
+    padding: 5px 0 5px 0 !important;
+}
+
+.sacarCitaButton:hover {
+    background-color: #132B5B!important;
+}
+
+/* End Card */
