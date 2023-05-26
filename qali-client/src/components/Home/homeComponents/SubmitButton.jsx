@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { getPatientAsync } from '../../../redux/store/doctor/doctorSlice';
+import { getDoctorAsync } from '../../../redux/store/doctor/doctorSlice';
 
 function SubmitButton({filtersValue}) {
 
@@ -13,12 +13,11 @@ function SubmitButton({filtersValue}) {
 
     const handleSubmit = ()=> {
         if (fValue.especialidad) {
-            dispatch(getPatientAsync({
+            dispatch(getDoctorAsync({
                 page: 1,
                 limit: 10,
-            }))
+            }, fValue))
             navigate("/especialistas")
-            //dispatch de filtros de especialistas
         }else{
           //dispara una alerta que indique que necesita al menos
           //elegir una especialidad

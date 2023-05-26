@@ -4,7 +4,7 @@ import { STATUS_API } from '../../../utils/constantes';
 
 export const patientSlice = createSlice({
   name: 'patient',
-  initialState: { doctors: [], status: STATUS_API.IDLE, error: null },
+  initialState: { doctors: {}, status: STATUS_API.IDLE, error: null },
   reducers: {
     // createPatientStart: (state) => {
     //   state.status = STATUS_API.LOADING;
@@ -22,7 +22,7 @@ export const patientSlice = createSlice({
     },
     getDoctorSuccess: (state, action) => {
       state.status = STATUS_API.SUCCEEDED;
-      state.doctors.push(action.payload);
+      state.doctors = action.payload;
     },
     getDoctorFailure: (state, action) => {
       state.status = STATUS_API.FAILED;
@@ -43,12 +43,12 @@ export const { getDoctorStart, getDoctorSuccess, getDoctorFailure } = patientSli
 //   }
 // };
 
-export const getPatientAsync = (paginator , body) => async (dispatch) => {
+export const getDoctorAsync = (paginator , body) => async (dispatch) => {
   try {
     dispatch(getDoctorStart());
     const response = await getDoctor(paginator , body);
-    console.log("aaaaaaaaa",response);
-    dispatch(getDoctorFailure(response.data));
+    console.log("aaaaaaaaa",response.data);
+    dispatch(getDoctorSuccess(response.data));
   } catch (err) {
     dispatch(getDoctorFailure(err.toString()));
   }

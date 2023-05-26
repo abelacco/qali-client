@@ -1,31 +1,24 @@
 import React from 'react';
 import Card from './CardContarinerComponents/Card';
+import { useSelector } from 'react-redux';
 
 function CardsContainer() {
-  const array = [1,2,3,4]
-  
+  const {doctors} = useSelector(state => state.doctor)
   return (
-    <div className='flex flex-wrap gap-8 justify-center'>
-      {array.map(element => <Card
-        name={"Gaston"}
-        image={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxUJ_kOh-4mPOy2oYS6a7fe6gNfuF17uM61Q&usqp=CAU'}
-        speciality={'Cardeologia'}
-        subSpeciality ={'malabarista'}
-        location={"nomada"}
-        rating={3}
-      />)}
+
+    <div className='flex flex-wrap gap-8 justify-center '>
+      {doctors.data?.map(element => <Card
+        id={element._id}
+        name={`${element.name} ${element.lastName}`}
+        image={element.image}
+        speciality={element.speciality}
+        subSpeciality={element.sub_speciality}
+        location={element.location}
+        rating={element.rating}
+        key={element._id}
+      />)} 
     </div>
   )
 }
-
-// "_id": "646e31bf155d2c0b7174a0ac",
-// "name": "gaston",
-// "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxUJ_kOh-4mPOy2oYS6a7fe6gNfuF17uM61Q&usqp=CAU",
-// "lastName": "Cito",
-// "email": "juandoctorcito@hotmail.com",
-// "speciality": "Cardeologia",
-// "sub_speciality": "Malabarista",
-// "location": "Nomada",
-// "rating": 0,
 
 export default CardsContainer;

@@ -1,13 +1,13 @@
 import axios from 'axios';
+import { URL } from '../../../utils/constantes';
 
 export const createDoctor = (doctor) => {
-  return axios.post('https://qali-api-production.up.railway.app/doctor', doctor);
+  return axios.post(URL.DOCTOR, doctor);
 };
 
 export const getDoctor = (paginator , body = null) => {
-    let limit = paginator.limit;
-    let page = paginator.page;
-    return axios.get(`https://qali-api-production.up.railway.app/doctor?quantity=${limit}&page=${page}`, body);
+    const {limit, page} = paginator;
+    return axios.get(`${URL.DOCTOR}?quantity=${limit}&page=${page}`, body);
   };
 
 

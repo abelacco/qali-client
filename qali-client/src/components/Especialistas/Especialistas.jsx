@@ -6,12 +6,13 @@ import CardsContainer from './EspecialistasComponents/CardContainer/CardsContain
 
 function Especialistas() {
     return (
-        <Layout main={"max-w-screen-xl flex-grow m-auto"}>
-            <GoBackButton />
-            <TitleAndFilter/>
-            <CardsContainer/>
-            
-        </Layout>
+        <div className='min-h-screen'>
+            <Layout main={"max-w-screen-xl flex-grow m-auto flex flex-col gap-6 py-6"}>
+                <GoBackButton />
+                <TitleAndFilter />
+                <CardsContainer />
+            </Layout>
+        </div>
     )
 }
 
