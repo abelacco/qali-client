@@ -7,7 +7,8 @@ export default {
         'qaliBlue': '#132B5B',
         'qaliGreen': '#0FFFA9',
         'qaliLightGrey': '#D4D6E4',
-        'qaliGrey': '#969696'
+        'qaliGrey': '#969696',
+        'qaliHover': '#041655E5'
       }
     },
   },
