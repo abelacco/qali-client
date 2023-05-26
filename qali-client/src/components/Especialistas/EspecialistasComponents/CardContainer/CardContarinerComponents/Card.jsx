@@ -36,11 +36,11 @@ function Card({ name, image, speciality, location, price, date, rating }) {
     }, [bindMouseEnterListener, bindMouseLeaveListener, unbindMouseEnterListener, unbindMouseLeaveListener]);
 
     return (
-        <div className='w-64 h-96 bg-slate-600 flex flex-col'>
+        <div className='w-64 h-96 border border-qaliLightGrey shadow-md hover:transition-transform hover:scale-105 duration-500 flex flex-col rounded-xl'>
             <div className='relative' ref={elementRef}>
 
                 <div  >
-                    <img src={image} alt="foto" className='h-64' />
+                    <img src={image} alt="foto" className='h-64 rounded-t-xl' />
                 </div>
 
                 {hover ? <InfoHover
@@ -53,11 +53,24 @@ function Card({ name, image, speciality, location, price, date, rating }) {
 
             </div>
 
-            <div>{name}</div>
+            <div className='border-b border-qaliLightGrey mx-2'>
+                <h2 className='text-xl'>{name}</h2>
+            </div>
 
-            <div>
-                <Button label='Ver detalle' />
-                <Button label='Sacar cita' />
+            <div className='flex flex-col justify-center flex-grow self-center px-2 gap-1 w-9/12'>
+                <Button size='small' className='verDetalleButton'>
+                    <div className='flex justify-evenly items-center flex-grow '>
+                        <p>Ver detalle</p>
+                        <i className='pi pi-search text-qaliGreen'></i>
+                    </div>
+                </Button>
+
+                <Button size='small' className='sacarCitaButton'>
+                    <div className='flex justify-evenly items-center flex-grow '>
+                        <p>Sacar cita</p>
+                        <i className='pi pi-angle-double-right text-qaliGreen'></i>
+                    </div>
+                </Button>
             </div>
 
         </div>

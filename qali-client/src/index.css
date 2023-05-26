@@ -51,7 +51,26 @@
 /* Start Card */
 .ratingCard .p-rating-item-active svg {
     color: #0FFFA9 !important;
+}
 
+.verDetalleButton {
+    background-color: #969696;
+    border: none;
+    padding: 5px 0 5px 0 !important;
+}
+
+.verDetalleButton:hover {
+    background-color: #132B5B !important;
+}
+
+.sacarCitaButton {
+    background-color: #969696;
+    border: none;
+    padding: 5px 0 5px 0 !important;
+}
+
+.sacarCitaButton:hover {
+    background-color: #132B5B!important;
 }
 
 /* End Card */
