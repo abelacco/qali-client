@@ -32,11 +32,7 @@ export const doctorSlice = createSlice({
   },
 });
 
-<<<<<<< HEAD
 export const { createDoctorStart, createDoctorSuccess, createDoctorFailure, getDoctorStart, getDoctorSuccess, getDoctorFailure } = doctorSlice.actions;
-=======
-export const { getDoctorStart, getDoctorSuccess, getDoctorFailure } = doctorSlice.actions;
->>>>>>> 1e4ef1b173fbdceadd52b45c59df350dea030774
 
  export const createDoctorAsync = (doctor) => async (dispatch) => {
    try {
