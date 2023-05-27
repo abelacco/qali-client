@@ -162,7 +162,7 @@ const FormDoctor = () => {
                   Foto de Perfil
                 </label>
                 {avatar ? (
-                  <img src={avatar} alt="Avatar" className="h-28 w-28" />
+                  <img src={avatar} alt="Avatar" className="h-28 w-28 rounded-full" />
                 ) : (
                   <svg
                     className="h-28 w-28 text-gray-300"
