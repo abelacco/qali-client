@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import { Button } from "primereact/button";
@@ -10,15 +10,21 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Dialog } from "primereact/dialog";
 import { classNames } from "primereact/utils";
-import { CITIES, SPECIALTIES, PREFIJO } from "../../utils/constantes";
-import { useDispatch } from 'react-redux';
+import { CITIES, SPECIALTIES, PREFIJO, STATUS_API } from "../../utils/constantes";
+import { useDispatch, useSelector } from 'react-redux';
 import {createDoctorAsync } from '../../redux/store/doctor/doctorSlice';
+import { ProgressSpinner } from 'primereact/progressspinner';
+        
+
+
 
 const FormDoctor = () => {
   const [formData, setFormData] = useState({});
   const [showMessage, setShowMessage] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
+  const confirmacion = useSelector(state => state.doctor.status);
+ /*  useEffect(() => {console.log(confirmacion)},[]) */
 
   const handleFileUpload = (event) => {
     const file = event.currentTarget.files[0];
@@ -79,9 +85,16 @@ const FormDoctor = () => {
       return errors;
     },
     onSubmit: (data) => {
+      console.log("entre")
       setFormData(data);
-      setShowMessage(true);
       dispatch(createDoctorAsync(data));
+      console.log(confirmacion)
+      if(confirmacion == STATUS_API.SUCCEEDED) {
+        setShowMessage(true);
+      } else {
+        setShowMessage(false);
+      }
+      
 
       formik.resetForm();
     },
@@ -126,11 +139,17 @@ const FormDoctor = () => {
     <>
       <Navbar />
       <br></br>
-
+    
       <h1 className="bg-qaliBlue text-4xl text-white font-bold inline-block woff2 rounded-r-full p-4">
         Registrarme como
       </h1>
-      <div className="min-w-[450px]">
+      <div>
+        {
+        !STATUS_API.LOADING?
+        (
+        <ProgressSpinner />
+        ):(
+          <div className="min-w-[450px]">
         <Dialog
           visible={showMessage}
           onHide={() => setShowMessage(false)}
@@ -249,15 +268,15 @@ const FormDoctor = () => {
               </label>
 
               <Dropdown
-                id="especialidad"
-                name="especialidad"
+                id="speciality"
+                name="speciality"
                 options={SPECIALTIES}
                 onChange={formik.handleChange}
                 value={formik.values.speciality}
                 placeholder="Especialidad"
                 className="w-80"
               />
-              {getFormErrorMessage("especialidad")}
+              {getFormErrorMessage("speciality")}
             </div>
             <div className="flex gap-2">
               <div className="sm:col-span-3">
@@ -330,8 +349,8 @@ const FormDoctor = () => {
               </label>
 
               <Dropdown
-                id="ciudad"
-                name="ciudad"
+                id="location"
+                name="location"
                 options={CITIES}
                 onChange={formik.handleChange}
                 value={formik.values.location}
@@ -528,7 +547,13 @@ const FormDoctor = () => {
           </div>
         </form>
       </div>
+        )
 
+      }
+
+      </div>
+      
+      
       <Footer />
     </>
   );
