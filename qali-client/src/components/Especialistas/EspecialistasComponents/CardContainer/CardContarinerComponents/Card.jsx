@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'primereact/button'
 import { useEventListener } from 'primereact/hooks';
 import InfoHover from './CardComponents/InfoHover';
-import ModalCitas from './CardComponents/ModalCitas';
+import ModalCitas from './CardComponents/ModalCitas/ModalCitas';
 
 
 function Card({ name, image, speciality, location, price, date, rating }) {
