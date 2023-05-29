@@ -9,8 +9,8 @@ function Home() {
     //informacion que luego sera enviada al back
     const filtersValue = useState({
         modalidad: "",
-        especialidad: "",
-        ciudad: "",
+        speciality: "",
+        location: "",
     });
 
     return (

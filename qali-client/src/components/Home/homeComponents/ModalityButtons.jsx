@@ -18,7 +18,7 @@ function ModalityButtons({ filtersValue }) {
             //para asi limpiar el filtro.
             setSelected('');
             setFValues({ ...fValues, modalidad: '' })
-        }else{
+        } else {
             setSelected(PRESENCIAL)
             setFValues({ ...fValues, modalidad: PRESENCIAL })
         }
@@ -28,7 +28,7 @@ function ModalityButtons({ filtersValue }) {
         if (selected === ONLINE) {
             setSelected('');
             setFValues({ ...fValues, modalidad: '' })
-        }else{
+        } else {
             setSelected(ONLINE)
             setFValues({ ...fValues, modalidad: ONLINE })
         }
