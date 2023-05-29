@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useFormik } from 'formik';
 import { InputText } from "primereact/inputtext";
@@ -79,8 +78,9 @@ function PersonalData({ information }) {
                             value={formik.values.name}
                             onChange={(e) => {
                                 formik.setFieldValue('name', e.target.value);
-                                handleInfo(e)
+                                handleInfo(e);
                             }}
+                            onBlur={formik.handleBlur}
                             className={classNames({ 'p-invalid': isFormFieldInvalid('name') })}
                         />
                         <label htmlFor="input_name">Name</label>
@@ -96,6 +96,7 @@ function PersonalData({ information }) {
                                 formik.setFieldValue('lastName', e.target.value);
                                 handleInfo(e)
                             }}
+                            onBlur={formik.handleBlur}
                             className={classNames({ 'p-invalid': isFormFieldInvalid('lastName') })}
                         />
                         <label htmlFor="input_lastName">LastName</label>
@@ -111,6 +112,7 @@ function PersonalData({ information }) {
                                 formik.setFieldValue('dni', e.target.value);
                                 handleInfo(e)
                             }}
+                            onBlur={formik.handleBlur}
                             className={classNames({ 'p-invalid': isFormFieldInvalid('dni') })}
                         />
                         <label htmlFor="input_name">DNI</label>
@@ -126,6 +128,7 @@ function PersonalData({ information }) {
                                 formik.setFieldValue('email', e.target.value);
                                 handleInfo(e)
                             }}
+                            onBlur={formik.handleBlur}
                             className={classNames({ 'p-invalid': isFormFieldInvalid('email') })}
                         />
                         <label htmlFor="input_name">Email</label>
@@ -141,14 +144,13 @@ function PersonalData({ information }) {
                                 formik.setFieldValue('phone', e.target.value);
                                 handleInfo(e)
                             }}
+                            onBlur={formik.handleBlur}
                             className={classNames({ 'p-invalid': isFormFieldInvalid('phone') })}
                         />
                         <label htmlFor="input_name">Phone</label>
                     </span>
                     {getFormErrorMessage('phone')}
 
-
-                    <Button type="submit" label="Submit" />
                 </form>
             </div>
             <div>
