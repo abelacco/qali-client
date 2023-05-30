@@ -5,6 +5,7 @@ import Home from "./components/Home/Home";
 import Especialistas from "./components/Especialistas/Especialistas";
 import  FormDoctor  from "./components/FormDoctor/FormDoctor.jsx";
 import FormPatient from "./components/FormPatient/FormPatient";
+import Dashboard from "./components/dashboard/Home";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/Especialistas" element={<Especialistas/>}/>
         <Route exact path="/register" element={<FormDoctor/>}/>
         <Route exact path="/register/patient" element={<FormPatient/>}/>
+        <Route exact path="/dashboard" element={<Dashboard/>} />
       </Routes>
     </>
   )
