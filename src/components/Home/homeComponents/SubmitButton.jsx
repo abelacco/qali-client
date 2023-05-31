@@ -16,9 +16,8 @@ function SubmitButton({ filtersValue }) {
       page: 1,
       limit: 10,
     }, fValue))
+    localStorage.setItem('filtrosHome', JSON.stringify(fValue));
     navigate("/especialistas")
-
-
   };
 
   return (
