@@ -35,6 +35,7 @@ const FormDoctor = () => {
   const formik = useFormik({
     initialValues: {
       name: "",
+      lastname: "",
       email: "",
       password: "",
       phone: "",
@@ -53,6 +54,10 @@ const FormDoctor = () => {
 
       if (!data.name) {
         errors.name = "Nombres requeridos.";
+      }
+
+      if (!data.lastname) {
+        errors.lastname = "Apellidos requeridos.";
       }
 
       if (!data.email) {
@@ -141,13 +146,13 @@ const FormDoctor = () => {
       <br></br>
 
       <h1 className="bg-qaliBlue text-4xl text-white font-bold inline-block woff2 rounded-r-full p-4">
-        Registrarme como
+        Registrarme como Especialista
       </h1>
       <div>
         {
-          STATUS_API.LOADING == confirmacion ?
+          STATUS_API.LOADING !== confirmacion ?
             (
-              <ProgressSpinner/>
+              <ProgressSpinner className="flex"/>
             ) : (
               <div className="min-w-[450px]">
                 <Dialog
@@ -176,7 +181,7 @@ const FormDoctor = () => {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="mt-6 space-y-6 p-4">
                     <>
-                      <div className="flex flex-col items-center gap-2">
+                      {/* <div className="flex flex-col items-center gap-2">
                         <label className="block text-3xl leading-6 text-gray-40 ">
                           Foto de Perfil
                         </label>
@@ -210,9 +215,9 @@ const FormDoctor = () => {
                             onChange={handleFileUpload}
                           />
                         </label>
-                      </div>
+                      </div> }
 
-                      <div className="flex items-center gap-x-3 font-bold">
+                      {/* <div className="flex items-center gap-x-3 font-bold">
                         <input
                           id="push-especialista"
                           name="push-especialista"
@@ -253,12 +258,73 @@ const FormDoctor = () => {
                         >
                           Paciente
                         </label>
-                      </div>
+                      </div> */}
                     </>
                   </div>
                   {/*  text-qaliLightGrey  */}
-                  <br></br>
                   <div className="flex gap-2 p-2">
+                    <div className="flex gap-2">
+                      <div className="sm:col-span-3">
+                        <label
+                          htmlFor="name"
+                          className={classNames(
+                            "block",
+
+                            "text-3xl",
+                            "leading-6",
+                            "text-gray-900",
+                            "p-4",
+                            { "p-error": isFormFieldValid("name") }
+                          )}
+                        >
+                          Nombres
+                        </label>
+
+                        <InputText
+                          id="name"
+                          name="name"
+                          value={formik.values.name}
+                          onChange={formik.handleChange}
+                          placeholder="Nombres"
+                          autoComplete="name"
+                          className={classNames("w-80", {
+                            "p-invalid": isFormFieldValid("name"),
+                          })}
+                        />
+                        {getFormErrorMessage("name")}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="sm:col-span-3">
+                        <label
+                          htmlFor="lastname"
+                          className={classNames(
+                            "block",
+
+                            "text-3xl",
+                            "leading-6",
+                            "text-gray-900",
+                            "p-4",
+                            { "p-error": isFormFieldValid("lastname") }
+                          )}
+                        >
+                          Apellidos
+                        </label>
+
+                        <InputText
+                          id="lastname"
+                          name="lastname"
+                          value={formik.values.lastname}
+                          onChange={formik.handleChange}
+                          placeholder="Apellidos"
+                          autoComplete="lastname"
+                          className={classNames("w-80", {
+                            "p-invalid": isFormFieldValid("lastname"),
+                          })}
+                        />
+                        {getFormErrorMessage("lastname")}
+                      </div>
+                    </div>
                     <div className="sm:col-span-3">
                       <label
                         htmlFor="especialidad"
@@ -278,38 +344,6 @@ const FormDoctor = () => {
                       />
                       {getFormErrorMessage("speciality")}
                     </div>
-                    <div className="flex gap-2">
-                      <div className="sm:col-span-3">
-                        <label
-                          htmlFor="name"
-                          className={classNames(
-                            "block",
-
-                            "text-3xl",
-                            "leading-6",
-                            "text-gray-900",
-                            "p-4",
-                            { "p-error": isFormFieldValid("name") }
-                          )}
-                        >
-                          Nombre y Apellido
-                        </label>
-
-                        <InputText
-                          id="name"
-                          name="name"
-                          value={formik.values.name}
-                          onChange={formik.handleChange}
-                          placeholder="Nombres"
-                          autoComplete="name"
-                          className={classNames("w-80", {
-                            "p-invalid": isFormFieldValid("name"),
-                          })}
-                        />
-                        {getFormErrorMessage("name")}
-                      </div>
-                    </div>
-
                     <div className="flex gap-2">
                       <div className="sm:col-span-3">
                         <label
@@ -340,7 +374,6 @@ const FormDoctor = () => {
                       </div>
                     </div>
                   </div>
-                  <br></br>
 
                   <div className="flex gap-2 p-2">
                     <div className="sm:col-span-3">
@@ -363,7 +396,7 @@ const FormDoctor = () => {
                         <label className="block  text-3xl leading-6 text-gray-900 p-4">
                           Teléfono Móvil
                         </label>
-                        <Dropdown
+                        {/* <Dropdown
                           id="prefijo"
                           name="prefijo"
                           options={PREFIJO}
@@ -371,13 +404,23 @@ const FormDoctor = () => {
                           value={formik.values.prefijo}
                           placeholder="Cod-área"
                           className="w-40"
-                        />
+                        /> */}
+                        <div className="block  text-3xl leading-6 text-gray-900 ">
+                          <InputText
+                            id="phone"
+                            name="phone"
+                            onChange={formik.handleChange}
+                            value={formik.values.phone}
+                            placeholder="+51999888555"
+                            className="w-80"
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    {/* <div className="flex gap-2">
                       <div className="sm:col-span-3">
                         <label className="block  text-3xl leading-6 text-gray-900 p-7">
-                          {/* vacio para mantener el eje con los inputs */}
+                     
                         </label>
                         <div className="block  text-3xl leading-6 text-gray-900 ">
                           <InputText
@@ -390,9 +433,8 @@ const FormDoctor = () => {
                           />
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
-                  <br></br>
 
                   <div className="flex gap-2 p-2">
                     <div className="sm:col-span-3">
@@ -458,7 +500,6 @@ const FormDoctor = () => {
                     </div>
                   </div>
 
-                  <br></br>
 
                   <div className="sm:col-span-3 sm:col-start-1">
                     <h1 className=" text-3xl leading-6 text-gray-900 p-4">
@@ -554,7 +595,7 @@ const FormDoctor = () => {
       </div>
 
 
-      <Footer />
+      <Footer className="w-full"/>
     </>
   );
 };
