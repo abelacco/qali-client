@@ -8,14 +8,14 @@ import { Checkbox } from 'primereact/checkbox';
 function PersonalData({ information }) {
 
     const [info, setInfo] = information;
-    const { datos } = info;
+    const { data } = info;
 
     const handleInfo = (event) => {
         const { name, value } = event.target;
         setInfo({
             ...info,
-            datos: {
-                ...datos,
+            data: {
+                ...data,
                 [name]:value
             }
         })
@@ -66,11 +66,11 @@ function PersonalData({ information }) {
     return (
         <>
             <div>
-                <Button label='Es para mi' />
-                <Button label='Es para otra persona' />
+                <Button label='Es para mi' size="small"/>
+                <Button label='Es para otra persona' size="small"/>
             </div>
             <div className="card">
-                <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
+                <form onSubmit={formik.handleSubmit} className="flex flex-col">
                     <span className="p-float-label">
                         <InputText
                             id="name"
@@ -160,4 +160,4 @@ function PersonalData({ information }) {
     )
 }
 
-export default PersonalData
+export default PersonalData;
