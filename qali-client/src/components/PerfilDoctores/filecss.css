@@ -1,0 +1,30 @@
+.p-inputnumber-input {
+  background-color: #bbf7d0;
+  color: rgb(118, 118, 118);
+  border-color: none;
+  border: none;
+  font-weight: bold;
+}
+.p-fileupload .p-button {
+  background-color: #bbf7d0;
+  color: rgb(118, 118, 118);
+  border-color: none;
+  border: none;
+  min-width: 30rem;
+}
+.p-fileupload .p-button:hover {
+  background-color: #95f4b6 !important;
+  color: rgb(118, 118, 118) !important;
+}
+.btnSubmit {
+  background-color: #bbf7d0;
+  color: #2d2d2d;
+  border: none;
+  box-shadow: 2px 2px #2d2d2d;
+  width: 13rem;
+}
+.btnSubmit:hover {
+  background-color: #bbf7d0 !important;
+  color: initial !important;
+  box-shadow: 1px 1px #2d2d2d;
+}
