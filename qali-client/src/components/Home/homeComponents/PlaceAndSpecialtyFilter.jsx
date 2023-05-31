@@ -13,13 +13,13 @@ function PlaceAndSpecialtyFilter({ filtersValue }) {
   const handleSpecialty = (event) => {
     const value = event.target.value;
     setSpecialty(value);
-    setFValue({ ...fValue, especialidad: value });
+    setFValue({ ...fValue, speciality: value });
   };
 
   const handlePlace = (event) => {
     const value = event.target.value;
     setPlace(value);
-    setFValue({ ...fValue, ciudad: value });
+    setFValue({ ...fValue, location: value });
   };
 
   return (
