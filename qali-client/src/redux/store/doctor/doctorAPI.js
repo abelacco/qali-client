@@ -7,7 +7,8 @@ export const createDoctor = (doctor) => {
 
 export const getDoctor = (paginator , body = null) => {
     const {limit, page} = paginator;
-    return axios.get(`${URL.DOCTOR}?quantity=${limit}&page=${page}`, body);
+    console.log(body);
+    return axios.post(`${URL.DOCTOR}?quantity=${limit}&page=${page}`, body);
   };
 
 

@@ -4,36 +4,46 @@ import { Dialog } from 'primereact/dialog';
 import StepsInfo from "./components/Steps";
 import Date from "./components/Date/Date";
 import PersonalData from "./components/Date/PersonalData";
+import BankData from "./components/Date/BankData";
+import ConfirmInfo from "./components/Date/ConfirmInfo";
 
-const ModalCitas = () => {
+const ModalCitas = ({ id }) => {
     const [visible, setVisible] = useState(false);
 
     const info = useState({
+        id: id,
         page: 0,
         turno: {
             fecha: '',
             horario: ''
         },
-        datos: {
-            name:'',
-            lastName:'',
-            dni:'',
-            email:'',
-            phone:''
+        data: {
+            name: '',
+            lastName: '',
+            dni: '',
+            email: '',
+            phone: ''
         },
-        datosBancarios: {}
+        bankData: {
+            cardNumber: '',
+            expiration: '',
+            cvv: '',
+            holderName: ''
+        }
     })
 
     const SECTION = {
         0: <Date information={info} />,
         1: <PersonalData information={info} />,
-
+        2: <BankData information={info} />,
+        3: <ConfirmInfo />
     }
 
     const HEADER = {
         0: "Escoge tu turno",
         1: "Ingresa tus datos",
-
+        2: "Ingresa tus datos bancarios",
+        3: "Tu cita esta agendada"
     }
 
     return (
@@ -44,15 +54,13 @@ const ModalCitas = () => {
                     <i className='pi pi-angle-double-right text-qaliGreen'></i>
                 </div>
             </Button>
-            <div className="card flex justify-content-center ">
+            <div >
                 <Dialog header={HEADER[info[0].page]} visible={visible} onHide={() => setVisible(false)}
-                    style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
-                    <section className="flex flex-col">
-                        {
-                            SECTION[info[0].page]
-                        }
-                        <StepsInfo information={info} />
-                    </section>
+                    style={{ width: '30vw'}}>
+                    <div className="flex flex-col">
+                        {SECTION[info[0].page]}
+                        <StepsInfo information={info} setVisible={setVisible} />
+                    </div>
                 </Dialog>
             </div>
         </>
