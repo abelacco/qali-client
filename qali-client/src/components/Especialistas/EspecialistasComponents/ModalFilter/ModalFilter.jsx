@@ -38,7 +38,7 @@ const ModalFilter = () => {
                         <Calificacion filterValues={filterValues} />
                         <Disponibilidad filterValues={filterValues} />
                     </div>
-                    <CleanAndSubmit filterValues={filterValues} />
+                    <CleanAndSubmit filterValues={filterValues} setVisible={setVisible}/>
                 </div>
             </Dialog>
         </div>

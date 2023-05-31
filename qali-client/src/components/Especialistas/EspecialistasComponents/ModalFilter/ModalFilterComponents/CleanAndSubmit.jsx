@@ -3,7 +3,7 @@ import { Button } from 'primereact/button';
 import { useDispatch } from 'react-redux';
 import { getDoctorAsync } from '../../../../../redux/store/doctor/doctorSlice';
 
-function CleanAndSubmit({ filterValues }) {
+function CleanAndSubmit({ filterValues, setVisible }) {
 
     const [fValues, setFValues] = filterValues;
     const dispatch = useDispatch();
@@ -17,6 +17,8 @@ function CleanAndSubmit({ filterValues }) {
             sub_speciality: "",
             rating: false
         })
+
+        setVisible(false)
     }
 
     const handleSubmit = () => {
@@ -26,6 +28,8 @@ function CleanAndSubmit({ filterValues }) {
             page: 1,
             limit: 10,
         }, filtros))
+
+        setVisible(false)
     }
 
     return (
