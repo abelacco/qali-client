@@ -145,9 +145,9 @@ const FormDoctor = () => {
       </h1>
       <div>
         {
-          !STATUS_API.LOADING ?
+          STATUS_API.LOADING == confirmacion ?
             (
-              <ProgressSpinner />
+              <ProgressSpinner/>
             ) : (
               <div className="min-w-[450px]">
                 <Dialog
