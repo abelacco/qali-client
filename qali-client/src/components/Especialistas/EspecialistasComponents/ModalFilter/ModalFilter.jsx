@@ -17,11 +17,11 @@ const ModalFilter = () => {
     const [visible, setVisible] = useState(false);
 
     const filterValues = useState({
-        precio: 0,
+        price: 0,
         disponibilidad: null,
         distrito: "",
-        subEspecialidad: "",
-        calificacion: false
+        sub_speciality: "",
+        rating: false
     })
 
     return (
