@@ -251,7 +251,7 @@ const PerfilDoctores = () => {
                   mode="basic"
                   name="demo[]"
                   url="/api/upload"
-                  accept="image/*"
+                  accept="*/*"
                   maxFileSize={1000000}
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
@@ -261,7 +261,7 @@ const PerfilDoctores = () => {
                   mode="basic"
                   name="demo[]"
                   url="/api/upload"
-                  accept="image/*"
+                  accept="*/*"
                   maxFileSize={1000000}
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
@@ -271,7 +271,7 @@ const PerfilDoctores = () => {
                   mode="basic"
                   name="demo[]"
                   url="/api/upload"
-                  accept="image/*"
+                  accept="*/*"
                   maxFileSize={1000000}
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
@@ -281,7 +281,7 @@ const PerfilDoctores = () => {
                   mode="basic"
                   name="demo[]"
                   url="/api/upload"
-                  accept="image/*"
+                  accept="*/*"
                   maxFileSize={1000000}
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
@@ -291,7 +291,7 @@ const PerfilDoctores = () => {
                   mode="basic"
                   name="demo[]"
                   url="/api/upload"
-                  accept="image/*"
+                  accept="*/*"
                   maxFileSize={1000000}
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
