@@ -49,6 +49,14 @@ export const NodeService = {
           type: 'Folder',
         },
       },
+      {
+        key: '0',
+        data: {
+          day: 'Exepciones',
+          horarios: 'No disponible',
+          type: 'Folder',
+        },
+      },
     ]
   },
 

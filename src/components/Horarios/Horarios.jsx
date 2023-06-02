@@ -30,7 +30,7 @@ const Horarios = () => {
               disabled={showHorarios}
               onClick={handleClickHorarios}
               label='Personalizar horario'
-              className='w-full bg-qaliBlue text-white'
+              className='w-full bg-[#172554] disabled:bg-qaliBlue/95 text-white'
             />
           </div>
           <div className='w-full'>
@@ -38,7 +38,7 @@ const Horarios = () => {
               disabled={showAgenda}
               onClick={handleClickAgenda}
               label='Ver mi agenda'
-              className='w-full bg-qaliBlue text-white'
+              className='w-full bg-[#172554] disabled:bg-qaliBlue/95 text-white'
             />
           </div>
         </div>
