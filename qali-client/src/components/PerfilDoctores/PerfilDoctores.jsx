@@ -6,11 +6,12 @@ import { RadioButton } from "primereact/radiobutton";
 import { Avatar } from "primereact/avatar";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
-import { InputNumber } from 'primereact/inputnumber';
+import { InputNumber } from "primereact/inputnumber";
+import { Button } from "primereact/button";
+import { InputTextarea } from "primereact/inputtextarea";
 import instragram from "../../assets/instagram.png";
 import linkedin from "../../assets/logotipo-de-linkedin (1).png";
 import tiktok from "../../assets/tik-tok.png";
-import { Button } from "primereact/button";
 import "./filecss.css";
 
 const PerfilDoctores = () => {
@@ -26,6 +27,31 @@ const PerfilDoctores = () => {
   const [selectedProfesion, setSelectedProfesion] = useState(null);
   const profesion = [
     { name: "Psicologia", code: "PSIC" },
+    { name: "Psiquiatria", code: "PSIQ" },
+    { name: "Nutricionista", code: "NUT" },
+    { name: "Nefrologio", code: "NEF" },
+    { name: "Odontologia", code: "ODO" },
+  ];
+  const [selectedSubEspecialidad, setSelectedSubEspecialidad] = useState(null);
+  const subEspecialidad = [
+    { name: "Psicologia", code: "PSIC" },
+    { name: "Psiquiatria", code: "PSIQ" },
+    { name: "Nutricionista", code: "NUT" },
+    { name: "Nefrologio", code: "NEF" },
+    { name: "Odontologia", code: "ODO" },
+  ];
+  const isLarge = selectedSubEspecialidad?.length >= 3;
+  const [selectedCiudad, setSelectedCiudad] = useState(null);
+  const ciudad = [
+    { name: "Lima", code: "PSIC" },
+    { name: "Psiquiatria", code: "PSIQ" },
+    { name: "Nutricionista", code: "NUT" },
+    { name: "Nefrologio", code: "NEF" },
+    { name: "Odontologia", code: "ODO" },
+  ];
+  const [selectedDistrito, setSelectedDistrito] = useState(null);
+  const distrito = [
+    { name: "Ancon", code: "PSIC" },
     { name: "Psiquiatria", code: "PSIQ" },
     { name: "Nutricionista", code: "NUT" },
     { name: "Nefrologio", code: "NEF" },
@@ -81,7 +107,7 @@ const PerfilDoctores = () => {
         </div>
         <div className="flex flex-grow justify-center">
           <form className="grid grid-cols-2 gap-40 ">
-            <div className="flex flex-col mt-6 ml-11 gap-2 font-bold w-[30rem] ">
+            <div className="flex flex-col mt-16 ml-11 gap-2 font-bold w-[30rem] ">
               <label htmlFor="nombres">Nombres</label>
               <InputText
                 id="nombres"
@@ -109,31 +135,71 @@ const PerfilDoctores = () => {
                 maxSelectedLabels={1}
                 className="w-full md:w-20rem bg-green-200 border-none font-bold"
               />
-              <label htmlFor="profesion">Profesion</label>
+              <label htmlFor="especialidad">Especialidad</label>
               <MultiSelect
                 value={selectedProfesion}
                 onChange={(e) => setSelectedProfesion(e.value)}
                 options={profesion}
                 optionLabel="name"
-                placeholder="Profesion"
+                placeholder="Especialidad"
                 maxSelectedLabels={1}
                 className="w-full md:w-20rem bg-green-200 border-none font-bold"
               />
-              <label htmlFor="nombreDePerfil">Nombre de Perfil</label>
+              <label htmlFor="subespecialidad">Sub Especialidad</label>
+              <MultiSelect
+                value={selectedSubEspecialidad}
+                onChange={(e) => setSelectedSubEspecialidad(e.value)}
+                options={subEspecialidad}
+                display="chip"
+                optionLabel="name"
+                placeholder="Sub Especialidad"
+                maxSelectedLabels={5}
+                className={
+                  isLarge
+                    ? "w-full md:w-20rem h-20 bg-green-200 border-none font-bold inline-block"
+                    : "w-full md:w-20rem  bg-green-200 border-none font-bold"
+                }
+              />
+              <label htmlFor="colegiatura">Codigo de Colegiatura</label>
               <InputText
-                id="nombreDePerfil"
-                placeholder="LUCIADR85"
+                id="colegiatura"
+                placeholder="123"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className="bg-green-200 border-none font-bold"
+                className="bg-green-200 border-none font-bold "
               />
+              <div className="flex justify-center gap-6 mt-2">
+                <div className="flex flex-col flex-grow">
+                  <label htmlFor="Ciudad">Ciudad</label>
+                  <MultiSelect
+                    value={selectedCiudad}
+                    onChange={(e) => setSelectedCiudad(e.value)}
+                    options={ciudad}
+                    optionLabel="name"
+                    placeholder="Ciudad"
+                    maxSelectedLabels={1}
+                    className="w-full md:w-20rem bg-green-200 border-none font-bold "
+                  />
+                </div>
+                <div className="flex flex-col flex-grow">
+                  <label htmlFor="Distrito">Distrito</label>
+                  <MultiSelect
+                    value={selectedDistrito}
+                    onChange={(e) => setSelectedDistrito(e.value)}
+                    options={distrito}
+                    optionLabel="name"
+                    placeholder="Distrito"
+                    maxSelectedLabels={1}
+                    className="w-full md:w-20rem bg-green-200 border-none font-bold "
+                  />
+                </div>
+              </div>
               <label htmlFor="dni">DNI</label>
               <InputNumber
                 id="number-input"
                 value={value}
                 onValueChange={(e) => setValue(e.value)}
                 placeholder="11.111.111"
-                
               />
 
               <label htmlFor="cel">Celular</label>
@@ -144,16 +210,7 @@ const PerfilDoctores = () => {
                 onChange={(e) => setValue(e.target.value)}
                 className="bg-green-200 border-none font-bold "
               />
-              <label htmlFor="colegiatura">Codigo de Colegiatura</label>
-              <MultiSelect
-                value={selectedProfesion}
-                onChange={(e) => setSelectedProfesion(e.value)}
-                options={profesion}
-                optionLabel="name"
-                placeholder="Codigo de Colegiatura"
-                maxSelectedLabels={1}
-                className="w-full md:w-20rem bg-green-200 border-none font-bold"
-              />
+
               <label htmlFor="seguro">¿Trabajas con seguro de Salud?</label>
               <MultiSelect
                 value={selectedSeguro}
@@ -164,32 +221,7 @@ const PerfilDoctores = () => {
                 maxSelectedLabels={1}
                 className="w-full md:w-20rem bg-green-200 border-none font-bold"
               />
-              <div className="flex justify-center gap-6 mt-2">
-                <div className="flex flex-col flex-grow">
-                  <label htmlFor="Ciudad">Ciudad</label>
-                  <MultiSelect
-                    value={selectedProfesion}
-                    onChange={(e) => setSelectedProfesion(e.value)}
-                    options={profesion}
-                    optionLabel="name"
-                    placeholder="Ciudad"
-                    maxSelectedLabels={1}
-                    className="w-full md:w-20rem bg-green-200 border-none font-bold "
-                  />
-                </div>
-                <div className="flex flex-col flex-grow">
-                  <label htmlFor="Distrito">Distrito</label>
-                  <MultiSelect
-                    value={selectedProfesion}
-                    onChange={(e) => setSelectedProfesion(e.value)}
-                    options={profesion}
-                    optionLabel="name"
-                    placeholder="Distrito"
-                    maxSelectedLabels={1}
-                    className="w-full md:w-20rem bg-green-200 border-none font-bold "
-                  />
-                </div>
-              </div>
+
               <div className="flex justify-center gap-6 mt-2">
                 <div className="flex flex-col gap-3 ">
                   <label htmlFor="Modalidad de Atencion">
@@ -243,7 +275,24 @@ const PerfilDoctores = () => {
                   image="https://img.freepik.com/foto-gratis/hermosa-joven-doctora-mirando-camara-oficina_1301-7807.jpg?w=740&t=st=1685559315~exp=1685559915~hmac=2656fe85619448e1303afe4495e6839d7879a463f98228faf3a5dcf57c1fcaf7"
                 />
               </div>
-
+              <label htmlFor="descripcion">Descripcion</label>
+              <InputTextarea
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                rows={3}
+                cols={30}
+                className="bg-green-200 border-none font-bold "
+              />
+              <label htmlFor="tarifa">Tarifa</label>
+              <InputNumber
+                inputId="currency-us"
+                value={value}
+                onValueChange={(e) => setValue(e.value)}
+                mode="currency"
+                currency="USD"
+                locale="en-US"
+                placeholder="$"
+              />
               <div className="flex flex-col gap-2 w-80">
                 <Toast ref={toast}></Toast>
                 <label htmlFor="curriculum">Curriculum Vitae</label>
