@@ -1,41 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { RadioButton } from 'primereact/radiobutton'
 import { CascadeSelect } from 'primereact/CascadeSelect'
-import { TreeTable } from 'primereact/treetable'
-import { Column } from 'primereact/column'
-import { Button } from 'primereact/button'
-import { NodeService } from '../services/NodeService'
+
+import CalendarHorarios from './CalendarHorarios'
+
 const PersonalizarHorario = () => {
   const [ingredient, setIngredient] = useState('')
-  const [nodes, setNodes] = useState([])
-
-  useEffect(() => {
-    NodeService.getTreeTableNodes().then((data) => setNodes(data))
-  }, [])
-
-  const actionTemplate = () => {
-    return (
-      <div className='flex flex-wrap gap-2'>
-        <Button
-          type='button'
-          className='bg-[#0FFFA9]'
-          icon='pi pi-plus'
-          severity='success'
-          rounded
-        ></Button>
-        <Button type='button' className='bg-[#172554]' icon='pi pi-copy' rounded></Button>
-      </div>
-    )
-  }
 
   return (
-    <section className=' h-full mx-auto  flex flex-col items-start gap-10'>
-      <section className='card'>
-        <TreeTable value={nodes} tableStyle={{ minWidth: '50rem' }} className='max-w-full'>
-          <Column className='text-sm' field='day' header='Dia' expander></Column>
-          <Column className='text-sm' field='horarios' header='Horarios'></Column>
-          <Column className='text-sm' body={actionTemplate} headerClassName='w-10rem' />
-        </TreeTable>
+    <section className=' h-full mx-auto  flex flex-col items-start w-full gap-10'>
+      <section className='flex  flex-col w-full gap-3  divide-y divide-gray-300'>
+        <CalendarHorarios day='Lun' />
+        <CalendarHorarios day='Mar' />
+        <CalendarHorarios day='Mier' />
+        <CalendarHorarios day='Jue' />
+        <CalendarHorarios day='Vie' />
+        <CalendarHorarios day='Sab' />
+        <CalendarHorarios day='Dom' />
       </section>
 
       <section className='flex flex-col items-start gap-5 w-full'>
