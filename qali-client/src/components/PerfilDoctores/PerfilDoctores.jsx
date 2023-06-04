@@ -2,7 +2,6 @@ import Navbar from "../Navbar/Navbar";
 import { useState, useRef } from "react";
 import { InputText } from "primereact/inputtext";
 import { MultiSelect } from "primereact/multiselect";
-import { RadioButton } from "primereact/radiobutton";
 import { Avatar } from "primereact/avatar";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
@@ -63,21 +62,19 @@ const PerfilDoctores = () => {
     { name: "No", code: "NO" },
   ];
 
-  const categories = [
+  const [selectedModalidad, setSelectedModalidad] = useState(null);
+  const Modalidad = [
     { name: "A Domicilio", key: "A" },
     { name: "Prescencial", key: "M" },
     { name: "Online", key: "P" },
   ];
-  const [selectedCategory, setSelectedCategory] = useState(categories[1]);
+  const [selectedNumAfiliado, setSelectedNumAfiliado] = useState(null);
   const numAfiliado = [
     { name: "Rimac", key: "RI" },
     { name: "Maphre", key: "MA" },
     { name: "Pacifico", key: "PA" },
     { name: "Otros", key: "OT" },
   ];
-  const [selectedNumAfiliado, setSelectedNumAfiliado] = useState(
-    numAfiliado[1]
-  );
   const toast = useRef(null);
 
   const Upload = () => {
@@ -221,8 +218,27 @@ const PerfilDoctores = () => {
                 maxSelectedLabels={1}
                 className="w-full md:w-20rem bg-green-200 border-none font-bold"
               />
-
-              <div className="flex justify-center gap-6 mt-2">
+              <label htmlFor="ModAtencion">Modalidad de Atencion</label>
+              <MultiSelect
+                value={selectedModalidad}
+                onChange={(e) => setSelectedModalidad(e.value)}
+                options={Modalidad}
+                optionLabel="name"
+                placeholder="Modalidad de Atencion"
+                maxSelectedLabels={3}
+                className="w-full md:w-20rem bg-green-200 border-none font-bold"
+              />
+              <label htmlFor="ModAtencion">Numero de Afiliado</label>
+              <MultiSelect
+                value={selectedNumAfiliado}
+                onChange={(e) => setSelectedNumAfiliado(e.value)}
+                options={numAfiliado}
+                optionLabel="name"
+                placeholder="Numero de Afiliado"
+                maxSelectedLabels={3}
+                className="w-full md:w-20rem bg-green-200 border-none font-bold"
+              />
+              {/* <div className="flex justify-center gap-6 mt-2">
                 <div className="flex flex-col gap-3 ">
                   <label htmlFor="Modalidad de Atencion">
                     Modalidad de Atencion
@@ -266,12 +282,12 @@ const PerfilDoctores = () => {
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col mt-6 gap-2 font-bold w-[30rem]">
               <div className="flex justify-center mb-3">
                 <Avatar
-                  className="w-52 h-48"
+                  className="avatar-container"
                   image="https://img.freepik.com/foto-gratis/hermosa-joven-doctora-mirando-camara-oficina_1301-7807.jpg?w=740&t=st=1685559315~exp=1685559915~hmac=2656fe85619448e1303afe4495e6839d7879a463f98228faf3a5dcf57c1fcaf7"
                 />
               </div>
@@ -283,7 +299,7 @@ const PerfilDoctores = () => {
                 cols={30}
                 className="bg-green-200 border-none font-bold "
               />
-              <label htmlFor="tarifa">Tarifa</label>
+              {/* <label htmlFor="tarifa">Tarifa</label>
               <InputNumber
                 inputId="currency-us"
                 value={value}
@@ -292,20 +308,26 @@ const PerfilDoctores = () => {
                 currency="USD"
                 locale="en-US"
                 placeholder="$"
-              />
+              /> */}
               <div className="flex flex-col gap-2 w-80">
                 <Toast ref={toast}></Toast>
-                <label htmlFor="curriculum">Curriculum Vitae</label>
-                <FileUpload
-                  mode="basic"
-                  name="demo[]"
-                  url="/api/upload"
-                  accept="*/*"
-                  maxFileSize={1000000}
-                  onUpload={Upload}
-                  chooseLabel="Seleccionar Archivo"
-                />
+                  <label htmlFor="curriculum">Curriculum Vitae</label>
+                <div className="flex flex-row gap-2">
+                  <FileUpload
+                    mode="basic"
+                    name="demo[]"
+                    url="/api/upload"
+                    accept="*/*"
+                    maxFileSize={1000000}
+                    onUpload={Upload}
+                    chooseLabel="Seleccionar Archivo"
+                   
+                  >
+                  </FileUpload>
+                    <Button className="btnVer" label="ver" />
+                </div>
                 <label htmlFor="Titulo">Titulo de Especialidad</label>
+                <div className="flex flex-row gap-2">
                 <FileUpload
                   mode="basic"
                   name="demo[]"
@@ -315,7 +337,10 @@ const PerfilDoctores = () => {
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
                 />
+                <Button className="btnVer" label="ver" />
+                </div>
                 <label htmlFor="certificados">Otros Certificados</label>
+                <div className="flex flex-row gap-2">
                 <FileUpload
                   mode="basic"
                   name="demo[]"
@@ -325,7 +350,10 @@ const PerfilDoctores = () => {
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
                 />
+                <Button className="btnVer" label="ver" />
+                </div>
                 <label htmlFor="TituloCol">Titulo de Colegiatura</label>
+                <div className="flex flex-row gap-2">
                 <FileUpload
                   mode="basic"
                   name="demo[]"
@@ -335,7 +363,10 @@ const PerfilDoctores = () => {
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
                 />
+                 <Button className="btnVer" label="ver" />
+                </div>
                 <label htmlFor="CertLic">Certificado de Licencia</label>
+                <div className="flex flex-row gap-2">
                 <FileUpload
                   mode="basic"
                   name="demo[]"
@@ -345,6 +376,8 @@ const PerfilDoctores = () => {
                   onUpload={Upload}
                   chooseLabel="Seleccionar Archivo"
                 />
+                 <Button className="btnVer" label="ver" />
+                </div>
               </div>
               <div className="flex flex-col items-center mt-4 gap-4 w-[30rem]">
                 <div className="flex flex-row items-center gap-4 w-full">
