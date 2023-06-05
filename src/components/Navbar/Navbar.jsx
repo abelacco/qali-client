@@ -1,16 +1,34 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import FormDoctorModal from "../FormDoctor/FormDoctorModal";
 
 const Navbar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState({
+    primaryModal : false,
+    specialistModal : false
+  });
   const modalRef = useRef(null);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openModal = (modal) => {
+    if(modal == "primary"){
+      setIsModalOpen({
+        primaryModal: true,
+        specialistModal: false
+      })
+    }
+    else if(modal == "specialist"){
+      setIsModalOpen({
+        primaryModal: false,
+        specialistModal: true
+      })
+    }
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+      setIsModalOpen({
+        primaryModal: false,
+        specialistModal: false
+      })
   };
 
   useEffect(() => {
@@ -53,7 +71,7 @@ const Navbar = () => {
           LOGIN
         </a>
         <button
-          onClick={openModal}
+          onClick={()=>openModal("primary")}
           className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
         >
           CREAR CUENTA
@@ -61,7 +79,7 @@ const Navbar = () => {
       </div>
 
       {/* modal */}
-      {isModalOpen && (
+      {(isModalOpen.primaryModal || isModalOpen.specialistModal) && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen px-4 text-center">
             <div className="fixed inset-0 transition-opacity">
@@ -69,44 +87,50 @@ const Navbar = () => {
             </div>
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
             &#8203;
-            <div 
-            ref={modalRef}
-            className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">
-                      Crear cuenta
-                    </h3>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Seleccione qué cuenta desea crear
-                      </p>
+            {isModalOpen.primaryModal && (
+              <div 
+              ref={modalRef}
+              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900">
+                        Crear cuenta
+                      </h3>
+                      <div className="mt-2">
+                        <p className="text-sm text-gray-500">
+                          Seleccione qué cuenta desea crear
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                {/* <button
-                  onClick={closeModal}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Cerrar
-                </button> */}
-                <div className="flex justify-center w-full sm:flex-row">
-                <Link to="/register/patient">
-                  <button className="mt-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                    Paciente
-                  </button>
-                  </Link>
-                  <Link to="/register">
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  {/* <button
+                    onClick={closeModal}
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Cerrar
+                  </button> */}
+                  <div className="flex justify-center w-full sm:flex-row">
                     <button className="mt-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                      Paciente
+                    </button>
+                    <button
+                      onClick={()=>openModal("specialist")}
+                      className="mt-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
                       Especialista
                     </button>
-                  </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {isModalOpen.specialistModal && (
+              <div className="z-10" ref={modalRef}>
+                <FormDoctorModal/>
+              </div>
+            )}
           </div>
         </div>
       )}
