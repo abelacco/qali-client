@@ -5,7 +5,7 @@ import InfoHover from './CardComponents/InfoHover';
 import ModalCitas from './CardComponents/ModalCitas/ModalCitas';
 
 
-function Card({ name, image, speciality, location, price, date, rating }) {
+function Card({ name, image, speciality, location, price, date, rating, id }) {
 
     const [hover, setHover] = useState(false);
     const elementRef = useRef(null);
@@ -65,14 +65,7 @@ function Card({ name, image, speciality, location, price, date, rating }) {
                         <i className='pi pi-search text-qaliGreen'></i>
                     </div>
                 </Button>
-
-                {/* <Button size='small' className='sacarCitaButton'>
-                    <div className='flex justify-evenly items-center flex-grow '>
-                        <p>Sacar cita</p>
-                        <i className='pi pi-angle-double-right text-qaliGreen'></i>
-                    </div>
-                </Button> */}
-                <ModalCitas/>
+                <ModalCitas id={id}/>
             </div>
 
         </div>

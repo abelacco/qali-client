@@ -5,25 +5,36 @@ import { Calendar } from 'primereact/calendar';
 function Date({ information }) {
 
   const [info, setInfo] = information;
+  console.log(info.turno);
+
+  const handleDate = (event) => {
+    const value = event.value;
+    setInfo({
+      ...info,
+      turno: {
+        ...info.turno,
+        fecha: value
+      }
+    })
+  }
 
   return (
     <>
-      <div>
-        <h2>Escoge tu turno</h2>
-        <div>
-          <Button />
-          <Button />
+      <div className='flex flex-col gap-3'>
+        <div className='flex gap-4 flex-grow my-2'>
+          <Button label='Online' />
+          <Button label='Presencial' />
         </div>
-      </div>
-      <div>
-        <Calendar value={info.turno} onChange={(e) => setInfo({ ...info, turno:{...info.turno, fecha:e.value} })} inline showWeek />
-        <div>
-          {/* aca se deberian mostrar los horarios y modificar el objeto info.turno.horario */}
-          Horarios disponibles en el dia elegido.
+        <div className='flex flex-col flex-grow'>
+          <Calendar value={info.turno.fecha} onChange={(e) => handleDate(e)} placeholder='Seleccione una fecha' inline/>
+          <div>
+            {/* aca se deberian mostrar los horarios y modificar el objeto info.turno.horario */}
+            Horarios disponibles en el dia elegido.
+          </div>
         </div>
       </div>
     </>
   )
 }
 
-export default Date
+export default Date;
