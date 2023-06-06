@@ -5,8 +5,8 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
         
 
-const FormDoctorModal = ({closeModal})=>{
-    
+const FormPatientModal = ({closeModal})=>{
+
     const formik = useFormik({
         initialValues:{
             name: "",
@@ -14,7 +14,6 @@ const FormDoctorModal = ({closeModal})=>{
             email: "",
             location: null,
             password: "",
-            speciality: "",
             phone:""
         },
         validate: (data)=>{
@@ -36,9 +35,6 @@ const FormDoctorModal = ({closeModal})=>{
               }
             if (!data.location) {
                 errors.location = "Ciudad es requerida";
-            }
-            if (!data.speciality) {
-                errors.speciality = "Especialidad es requerida";
             }
             if(!data.password) {
                 errors.password = "Contraseña es requerida";
@@ -69,13 +65,7 @@ const FormDoctorModal = ({closeModal})=>{
     } 
     
     return(
-        <Dialog 
-            header="Crear cuenta de Especialista" 
-            visible={true} 
-            style={{ width: '500px'}} 
-            className={"flex justify-center"} 
-            onHide={() => closeModal()
-        }>
+        <Dialog header="Crear cuenta de Paciente" visible={true} style={{ width: '500px'}} onHide={() => closeModal()}>
             <form onSubmit={formik.handleSubmit} className="flex justify-center">
                 <div className="w-10/12 m-3">
                     <div className="flex justify-between">
@@ -85,7 +75,7 @@ const FormDoctorModal = ({closeModal})=>{
                                 id="name" 
                                 aria-describedby="username-help" 
                                 onBlur={formik.handleBlur} 
-                                className={` mb-2 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('name') })}`} 
+                                className={` mb-3 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('name') })}`} 
                                 value={formik.values.name} 
                                 onChange={formik.handleChange}
                             />
@@ -96,14 +86,14 @@ const FormDoctorModal = ({closeModal})=>{
                                 id="lastName" 
                                 aria-describedby="username-help" 
                                 onBlur={formik.handleBlur} 
-                                className={` mb-2 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('lastName') })}`}
+                                className={` mb-3 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('lastName') })}`}
                                 value={formik.values.lastName} 
                                 onChange={formik.handleChange}
                             />
                         </div>
                     </div>
                     <div className="flex justify-between">
-                        <div className=" flex flex-col mb-2">
+                        <div className=" flex flex-col mb-3">
                             <label htmlFor="email" className="w-max">Email</label>
                             <InputText 
                                 id="email" 
@@ -119,7 +109,7 @@ const FormDoctorModal = ({closeModal})=>{
                                 id="phone" 
                                 aria-describedby="username-help" 
                                 onBlur={formik.handleBlur} 
-                                className={`mb-2 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('phone') })}`} 
+                                className={`mb-3 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('phone') })}`} 
                                 value={formik.values.phone} 
                                 onChange={formik.handleChange}
                             />
@@ -131,19 +121,8 @@ const FormDoctorModal = ({closeModal})=>{
                             id="location" 
                             aria-describedby="username-help" 
                             onBlur={formik.handleBlur} 
-                            className={`mb-2 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('location') })}`} 
+                            className={`mb-3 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('location') })}`} 
                             value={formik.values.location} 
-                            onChange={formik.handleChange}
-                        />
-                    </div>
-                    <div className=" flex flex-col">
-                        <label htmlFor="speciality" className="w-max">Especialidad</label>
-                        <InputText 
-                            id="speciality" 
-                            aria-describedby="username-help" 
-                            onBlur={formik.handleBlur} 
-                            className={`mb-2 p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('speciality') })}`} 
-                            value={formik.values.speciality} 
                             onChange={formik.handleChange}
                         />
                     </div>
@@ -172,7 +151,7 @@ const FormDoctorModal = ({closeModal})=>{
                         >
                             Aceptar
                         </button>   
-                    </div>      
+                    </div>
                 </div>
             </form>
         </Dialog>
@@ -180,7 +159,4 @@ const FormDoctorModal = ({closeModal})=>{
     )
 }
 
-export default FormDoctorModal;
-        
-        
-
+export default FormPatientModal;

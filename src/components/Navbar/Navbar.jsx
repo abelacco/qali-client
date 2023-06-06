@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FormDoctorModal from "../FormDoctor/FormDoctorModal";
+import FormPatientModal from "../FormPatient/FormPatientModal";
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState({
     primaryModal : false,
-    specialistModal : false
+    specialistModal : false,
+    patientModal : false
   });
   const modalRef = useRef(null);
 
@@ -13,13 +15,22 @@ const Navbar = () => {
     if(modal == "primary"){
       setIsModalOpen({
         primaryModal: true,
-        specialistModal: false
+        specialistModal: false,
+        patientModal : false
       })
     }
     else if(modal == "specialist"){
       setIsModalOpen({
         primaryModal: false,
-        specialistModal: true
+        specialistModal: true,
+        patientModal : false
+      })
+    }
+    else if(modal == "patient"){
+      setIsModalOpen({
+        primaryModal: false,
+        specialistModal: false,
+        patientModal : true
       })
     }
   };
@@ -27,7 +38,8 @@ const Navbar = () => {
   const closeModal = () => {
       setIsModalOpen({
         primaryModal: false,
-        specialistModal: false
+        specialistModal: false,
+        patientModal : false
       })
   };
 
@@ -79,7 +91,7 @@ const Navbar = () => {
       </div>
 
       {/* modal */}
-      {(isModalOpen.primaryModal || isModalOpen.specialistModal) && (
+      {(isModalOpen.primaryModal || isModalOpen.specialistModal || isModalOpen.patientModal) && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen px-4 text-center">
             <div className="fixed inset-0 transition-opacity">
@@ -113,7 +125,10 @@ const Navbar = () => {
                     Cerrar
                   </button> */}
                   <div className="flex justify-center w-full sm:flex-row">
-                    <button className="mt-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button
+                      onClick={()=>openModal("patient")}
+                      className="mt-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
                       Paciente
                     </button>
                     <button
@@ -127,8 +142,13 @@ const Navbar = () => {
               </div>
             )}
             {isModalOpen.specialistModal && (
-              <div className="z-10" ref={modalRef}>
-                <FormDoctorModal/>
+              <div id="spModal" className="z-10" ref={modalRef}>
+                <FormDoctorModal closeModal={closeModal}/>
+              </div>
+            )}
+            {isModalOpen.patientModal && (
+              <div className="z-10" >
+                <FormPatientModal closeModal={closeModal}/>
               </div>
             )}
           </div>
