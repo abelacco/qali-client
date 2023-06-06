@@ -5,7 +5,7 @@ import Home from './components/Home/Home'
 import Especialistas from './components/Especialistas/Especialistas'
 import FormDoctor from './components/FormDoctor/FormDoctor.jsx'
 import FormPatient from './components/FormPatient/FormPatient'
-import Horarios from './components/Horarios/Horarios'
+import Horarios from './components/controlPanelDoctor/Horarios/Horarios'
 
 function App() {
   return (
