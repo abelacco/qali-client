@@ -2,6 +2,7 @@ import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { useState } from 'react'
 import { addLocale } from 'primereact/api'
+import CitasElement from './CitasElement'
 
 const Agenda = () => {
   const [date, setDate] = useState(null)
@@ -107,20 +108,7 @@ const Agenda = () => {
         </h2>
         <section className='flex py-5 flex-col items-start gap-3'>
           {citas.map((cita) => {
-            return (
-              <div
-                key={cita.turno}
-                className='w-full flex justify-between items-center gap-2 bg-[#0FFFA9]/20 rounded-md'
-              >
-                <div className=' px-5 flex justify-start w-full items-center gap-5'>
-                  <span className='font-bold text-xl'>{cita.turno}</span>
-                  <p className='uppercase font-bold text-lg text-qaliBlue'>
-                    {cita.name} - {cita.hora}
-                  </p>
-                </div>
-                <Button label={'>'} size='small' severity='success' />
-              </div>
-            )
+            return <CitasElement cita={cita} key={cita.turno} />
           })}
         </section>
       </section>
