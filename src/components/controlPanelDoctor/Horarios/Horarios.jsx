@@ -1,6 +1,5 @@
-import LayoutDashboard from '../Layouts/LayoutDashboard'
 import { Button } from 'primereact/button'
-
+import LayoutDashboard from '../../Layouts/LayoutDashboard'
 import Agenda from './components/Agenda'
 import PersonalizarHorario from './components/PersonalizarHorario'
 import { useCallback, useState } from 'react'
