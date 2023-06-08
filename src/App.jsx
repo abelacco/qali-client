@@ -6,6 +6,7 @@ import Especialistas from './components/Especialistas/Especialistas'
 import FormDoctor from './components/FormDoctor/FormDoctor.jsx'
 import FormPatient from './components/FormPatient/FormPatient'
 import Horarios from './components/controlPanelDoctor/Horarios/Horarios'
+import Resumen from './components/controlPanelDoctor/Resumen/Resumen'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path='/register' element={<FormDoctor />} />
         <Route exact path='/register/patient' element={<FormPatient />} />
         <Route exact path='/horarios' element={<Horarios />} />
+        <Route exact path='/resumen' element={<Resumen />} />
       </Routes>
     </>
   )
