@@ -7,6 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';    
 import { classNames } from 'primereact/utils';
 import {createPatientAsync  } from '../../redux/store/patient/patientSlice';
+import styles from './FormPatientModal.module.css';
         
 
 const FormPatientModal = ({closeModal})=>{
@@ -64,6 +65,7 @@ const FormPatientModal = ({closeModal})=>{
     })
 
     const isFormFieldInvalid = (name) => !!(formik.touched[name] && formik.errors[name]);
+    console.log("formik.touched", formik.touched)
     
     const formCompletedOk = ()=> {
         const isFormModified = !!(Object.values(formik.touched).every(value => value) && Object.values(formik.touched).length);
@@ -137,17 +139,29 @@ const FormPatientModal = ({closeModal})=>{
                                 onChange={formik.handleChange}
                             />
                         </div>
-                        <div className=" flex flex-col">
-                            <label htmlFor="password" className="w-max">Contraseña</label>
-                            <Password 
-                                id="password"
-                                onBlur={formik.handleBlur} 
-                                className={`p-inputtext-sm ${classNames({ 'p-invalid': isFormFieldInvalid('password') })} flex`} 
-                                value={formik.values.password}
-                                onChange={(e)=> formik.setFieldValue('password', e.target.value)}
-                                toggleMask
-                                feedback={false}
-                            />
+                        <div className=" flex items-end">
+                            <div className=" flex flex-col">
+                                <label htmlFor="password" className="w-max">Contraseña</label>
+                                <div className="flex">
+                                    <Password 
+                                        id="password"
+                                        name="password"
+                                        onBlur={formik.handleBlur} 
+                                        className={`p-inputtext-sm ${styles.passwordCenterIcon} ${classNames({ 'p-invalid': isFormFieldInvalid('password') })}`} 
+                                        value={formik.values.password}
+                                        onChange={(e)=> formik.setFieldValue('password', e.target.value)}
+                                        toggleMask
+                                        feedback={false}
+                                    />
+                                    {
+                                        formik.errors.password ?
+                                        <small id="username-help" className=" flex items-center ml-2.5 text-red-500 ">
+                                            {formik.errors.password}
+                                        </small> :
+                                        <></>
+                                    }
+                                </div>
+                            </div>
                         </div>
                         <div className="flex justify-center">
                             <button
