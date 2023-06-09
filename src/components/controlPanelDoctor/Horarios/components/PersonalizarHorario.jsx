@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { RadioButton } from 'primereact/radiobutton'
-import { CascadeSelect } from 'primereact/CascadeSelect'
+import { CascadeSelect } from 'primereact/cascadeselect'
 
 import CalendarHorarios from './CalendarHorarios'
 
