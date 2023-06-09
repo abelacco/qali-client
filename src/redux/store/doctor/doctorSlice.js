@@ -16,6 +16,7 @@ export const doctorSlice = createSlice({
     },
     createDoctorFailure: (state, action) => {
       state.status = STATUS_API.FAILED;
+      console.log(action)
       state.error = action.payload;
     },
     getDoctorStart: (state) => {
@@ -50,6 +51,7 @@ export const getDoctorAsync = (paginator, body) => async (dispatch) => {
     const response = await getDoctor(paginator, body);
     dispatch(getDoctorSuccess(response.data));
   } catch (err) {
+    console.log(err);
     dispatch(getDoctorFailure(err.toString()));
   }
 };

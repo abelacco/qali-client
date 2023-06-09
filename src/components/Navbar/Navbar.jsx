@@ -141,7 +141,7 @@ const Navbar = () => {
               </div>
             )}
             {isModalOpen.specialistModal && (
-              <div id="spModal" className="z-10" ref={modalRef}>
+              <div id="spModal" className="z-10">
                 <FormDoctorModal closeModal={closeModal}/>
               </div>
             )}
