@@ -39,7 +39,7 @@ export const createPatientAsync = (patient) => async (dispatch) => {
     const response = await createPatient(patient);
     dispatch(createPatientSuccess(response.data));
   } catch (err) {
-    dispatch(createPatientFailure(err.toString()));
+    dispatch(createPatientFailure(err.response.data.message));
   }
 };
 

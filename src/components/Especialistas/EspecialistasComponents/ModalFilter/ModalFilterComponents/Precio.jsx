@@ -11,7 +11,7 @@ function Precio({ filterValues }) {
         setSliderValue(value);
         setFValues({
             ...fValues,
-            precio: value
+            price: value
         })
     }
 
