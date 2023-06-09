@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Card from './CardContarinerComponents/Card';
 import { useSelector } from 'react-redux';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -11,7 +10,7 @@ function CardsContainer() {
 
     <div className='flex flex-wrap gap-8 justify-center '>
       {
-        doctors.data ? doctors.data?.map(element => <Card
+        doctors ? doctors?.map(element => <Card
           id={element._id}
           name={`${element.name} ${element.lastName}`}
           image={element.image}

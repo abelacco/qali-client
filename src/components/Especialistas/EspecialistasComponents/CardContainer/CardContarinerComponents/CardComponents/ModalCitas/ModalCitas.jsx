@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import StepsInfo from "./components/Steps";
@@ -56,7 +56,7 @@ const ModalCitas = ({ id }) => {
             </Button>
             <div >
                 <Dialog header={HEADER[info[0].page]} visible={visible} onHide={() => setVisible(false)}
-                    style={{ width: '30vw'}}>
+                    style={{ width: '600px' , height:'600px'}}>
                     <div className="flex flex-col">
                         {SECTION[info[0].page]}
                         <StepsInfo information={info} setVisible={setVisible} />
