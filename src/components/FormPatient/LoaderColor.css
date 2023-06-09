@@ -1,0 +1,23 @@
+.p-progress-spinner-circle{
+    stroke-dasharray:89,200;
+    stroke-dashoffset:0;
+    stroke:rgb(15, 255, 169);
+    animation:p-progress-spinner-dash 1.5s ease-in-out infinite;
+    stroke-linecap:round
+}
+
+@keyframes p-progress-spinner-rotate{
+    100%{transform:rotate(360deg)}
+}
+
+@keyframes p-progress-spinner-dash{
+    0%{
+        stroke-dasharray:1,200;stroke-dashoffset:0
+    }
+    50%{
+        stroke-dasharray:89,200;stroke-dashoffset:-35px
+    }
+    100%{
+        stroke-dasharray:89,200;stroke-dashoffset:-124px
+    }
+}
