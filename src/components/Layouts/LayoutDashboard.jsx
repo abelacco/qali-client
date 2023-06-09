@@ -1,7 +1,7 @@
 import React from 'react'
 import FooterDashBoard from '../FooterDashBoard/FooterDashBoard'
 import Navbar from '../Navbar/Navbar'
-import SideNav from '../controlPanelDoctor/Horarios/SideNav/SideNav'
+import SideNav from '../SideNav/SideNav'
 
 const LayoutDashboard = ({ children }) => {
   return (
