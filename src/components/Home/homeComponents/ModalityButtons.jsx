@@ -33,6 +33,7 @@ function ModalityButtons({ filtersValue }) {
             setFValues({ ...fValues, modalidad: ONLINE })
         }
     }
+    
     return (
         <div className='flex gap-2'>
 

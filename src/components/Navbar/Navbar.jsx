@@ -46,39 +46,38 @@ const Navbar = () => {
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        closeModal();
+        closeModal()
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick)
 
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
-
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [])
 
   return (
-    <nav className="bg-blue-950 w-full flex justify-between">
-      <div className="flex items-center ml-2">
-        <Link to="/#">
+    <nav className='bg-qaliBlue w-full flex justify-between'>
+      <div className='flex items-center ml-2'>
+        <Link to='/#'>
           <img
-            src="https://media.discordapp.net/attachments/1107828744804122664/1109682491339591762/image.png"
-            alt="Logo"
-            className="h-12 w-16 mr-2"
+            src='https://media.discordapp.net/attachments/1107828744804122664/1109682491339591762/image.png'
+            alt='Logo'
+            className='h-12 w-16 mr-2'
           />
         </Link>
       </div>
-      <div className="flex items-center justify-end mr-10">
+      <div className='flex items-center justify-end mr-10'>
         <Link
-          to="/"
-          className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+          to='/'
+          className='text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
         >
           HOME
         </Link>
         <a
-          href="#"
-          className="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+          href='#'
+          className='text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
         >
           LOGIN
         </a>
@@ -97,7 +96,7 @@ const Navbar = () => {
             <div className="fixed inset-0 transition-opacity">
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+            <span className='hidden sm:inline-block sm:align-middle sm:h-screen'></span>
             &#8203;
             {isModalOpen.primaryModal && (
               <div 
@@ -155,7 +154,7 @@ const Navbar = () => {
         </div>
       )}
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

@@ -10,7 +10,7 @@ function Calificacion({ filterValues }) {
         setChecked(!checked);
         setFValues({
             ...fValues,
-            calificacion: checked
+            rating: checked
         })
     }
 

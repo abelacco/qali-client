@@ -12,17 +12,12 @@ function SubmitButton({ filtersValue }) {
 
 
   const handleSubmit = () => {
-    if (fValue.speciality) {
-      dispatch(getDoctorAsync({
-        page: 1,
-        limit: 10,
-      }, fValue))
-      navigate("/especialistas")
-    } else {
-      //dispara una alerta que indique que necesita al menos
-      //elegir una especialidad
-    }
-
+    dispatch(getDoctorAsync({
+      page: 1,
+      limit: 10,
+    }, fValue))
+    localStorage.setItem('filtrosHome', JSON.stringify(fValue));
+    navigate("/especialistas")
   };
 
   return (
