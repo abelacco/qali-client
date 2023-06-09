@@ -48,7 +48,7 @@ export const getDoctorAsync = (paginator, body) => async (dispatch) => {
   try {
     dispatch(getDoctorStart());
     const response = await getDoctor(paginator, body);
-    dispatch(getDoctorSuccess(response.data));
+    dispatch(getDoctorSuccess(response.data.data));
   } catch (err) {
     dispatch(getDoctorFailure(err.toString()));
   }

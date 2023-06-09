@@ -19,7 +19,7 @@ function PlaceAndSpecialtyFilter({ filtersValue }) {
   const handlePlace = (event) => {
     const value = event.target.value;
     setPlace(value);
-    setFValue({ ...fValue, location: value });
+    setFValue({ ...fValue, city: value });
   };
 
   return (

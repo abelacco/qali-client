@@ -25,12 +25,42 @@ function Date({ information }) {
           <Button label='Online' />
           <Button label='Presencial' />
         </div>
-        <div className='flex flex-col flex-grow'>
-          <Calendar value={info.turno.fecha} onChange={(e) => handleDate(e)} placeholder='Seleccione una fecha' inline/>
-          <div>
-            {/* aca se deberian mostrar los horarios y modificar el objeto info.turno.horario */}
-            Horarios disponibles en el dia elegido.
+        <div className='flex gap-3 flex-grow'>
+          <div className='overflow-hidden'>
+             <Calendar className='overflow-hidden' value={info.turno.fecha} onChange={(e) => handleDate(e)} placeholder='Seleccione una fecha' inline/>
           </div>
+          <div className='flex flex-col gap-2 w-1/2'>
+             <div>
+              Horarios disponibles en el dia elegido.
+             </div>
+             <div className='flex flex-row  flex-wrap gap-1'>
+                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>
+                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>
+                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>
+                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>
+                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>
+                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>
+                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>                <div className='bg-red-400 h-15 w-20 text-center text-base'>
+                    <span>08:00 a.m</span>
+                </div>
+             </div>
+           
+          </div>
+
         </div>
       </div>
     </>
