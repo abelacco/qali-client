@@ -1,16 +1,17 @@
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Calendar } from 'primereact/calendar'
 import { Button } from 'primereact/button'
+import { Toast } from 'primereact/toast'
 
 const FormAddHorario = ({ startTime, endTime, interval }) => {
   const [addHora, setAddHora] = useState(false)
   const [timeInicio, setTimeInicio] = useState(null)
-  const [timefin, setTimeFin] = useState(null)
+  const [timeFin, setTimeFin] = useState(null)
   const [horarios, setHorarios] = useState([])
+  const toast = useRef(null)
 
   useEffect(() => {
     setHorarios([
-      ...horarios,
       {
         inicio: startTime,
         fin: endTime,
@@ -19,51 +20,49 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
     ])
   }, [startTime, endTime, interval])
 
-  console.log({ horarios })
-
   const handleAdd = () => {
     setAddHora(true)
     if (!horarios.length > 1)
       setHorarios(() => [
         {
           inicio: timeInicio,
-          fin: timefin,
+          fin: timeFin,
         },
       ])
   }
 
-  const handleChange = (e) => {
-    const time = new Date(e.value)
+  const handleChange = (e, name) => {
+    const value = e.value
+    const time = new Date(value)
+    time.setMinutes(Math.ceil(time.getMinutes() / 30) * 30) // Redondear a la hora más cercana
+    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
-    const hours = time.getHours().toString().padStart(2, '0')
-    const minutes = time.getMinutes().toString().padStart(2, '0')
-
-    const formattedTime = `${hours}:${minutes}`
-
-    if (e.target.getAttribute('name') === 'inicio') setTimeInicio(formattedTime)
-    if (e.target.getAttribute('name') === 'fin') setTimeFin(formattedTime)
+    if (name === 'inicio') setTimeInicio(formattedTime)
+    if (name === 'fin') setTimeFin(formattedTime)
   }
 
   const addHorario = () => {
-    if (horarios.length >= 1) {
-      setHorarios((old) => [
-        ...old,
-        {
-          inicio: timeInicio,
-          fin: timefin,
-        },
-      ])
-    } else {
-      setHorarios(() => [
-        {
-          inicio: timeInicio,
-          fin: timefin,
-        },
-      ])
+    if (!timeInicio || !timeFin) {
+      showWarningToast('Por favor, ingresa tanto el tiempo de inicio como el tiempo de fin.')
+      return
     }
+
+    if (horarios.some((horario) => horario.inicio === timeInicio && horario.fin === timeFin)) {
+      showWarningToast('Los horarios ya están ocupados. Por favor, selecciona otros tiempos.')
+      return
+    }
+
+    setHorarios((old) => [
+      ...old,
+      {
+        inicio: timeInicio,
+        fin: timeFin,
+      },
+    ])
+
     setAddHora(false)
-    setTimeInicio('')
-    setTimeFin('')
+    setTimeInicio(null)
+    setTimeFin(null)
   }
 
   const deleteHorario = (inicio, fin) => {
@@ -85,6 +84,10 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
     return date
   }
 
+  const showWarningToast = (message) => {
+    toast.current.show({ severity: 'warn', summary: 'Advertencia', detail: message, life: 3000 })
+  }
+
   return (
     <>
       <div className='w-1/3 justify-center flex gap-2 items-center'>
@@ -95,20 +98,24 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
           {addHora && (
             <div className='flex items-center gap-3'>
               <Calendar
+                hourFormat='24'
+                stepMinute={30}
                 placeholder='Inicia'
                 id='calendar-timeonly'
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => handleChange(e, 'inicio')}
                 timeOnly
-                value={timeInicio}
+                value={convertToTime(timeInicio)}
                 name='inicio'
                 className='w-36 m-0 p-0 max-w-max'
               />
               <Calendar
+                hourFormat='24'
+                stepMinute={30}
                 placeholder='Finaliza'
                 id='calendar-timeonly'
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => handleChange(e, 'fin')}
                 timeOnly
-                value={timefin}
+                value={convertToTime(timeFin)}
                 name='fin'
                 className='w-36 m-0 p-0 max-w-max'
               />
@@ -124,13 +131,14 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
             </div>
           )}
           {horarios.map((hora, index) => {
-            console.log(hora)
             return (
               <div key={hora._id || index} className='flex items-center gap-3'>
                 <Calendar
+                  hourFormat='24'
+                  stepMinute={30}
                   placeholder='Inicia'
                   id='calendar-timeonly'
-                  onChange={handleChange}
+                  onChange={(e) => handleChange(e, 'inicio')}
                   name='inicio'
                   value={convertToTime(hora.inicio)}
                   timeOnly
@@ -139,9 +147,11 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                 />
 
                 <Calendar
+                  hourFormat='24'
+                  stepMinute={30}
                   placeholder='fin'
                   id='calendar-timeonly'
-                  onChange={handleChange}
+                  onChange={(e) => handleChange(e, 'fin')}
                   name='fin'
                   value={convertToTime(hora.fin)}
                   timeOnly
@@ -169,6 +179,7 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
         ></Button>
         <Button type='button' className='bg-[#172554]' icon='pi pi-copy' rounded></Button>
       </div>
+      <Toast ref={toast} />
     </>
   )
 }
