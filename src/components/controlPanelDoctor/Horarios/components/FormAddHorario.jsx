@@ -45,23 +45,40 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
     if (name === 'fin') setTimeFin(formattedTime)
   }
 
-  const addHorario = () => {
+  const addHorario = (name) => {
+    console.log(name)
+    if (name == 'eliminar') {
+      return setAddHora(false)
+    } else {
+      setAddHora(true)
+    }
+
     if (!timeInicio || !timeFin) {
       showWarningToast('Por favor, ingresa tanto el tiempo de inicio como el tiempo de fin.')
       return
     }
-  
+
+    if (timeInicio === timeFin) {
+      showWarningToast('El horario de inicio y fin no pueden ser el mismo.')
+      return
+    }
+
     if (
       horarios.some(
         (horario) =>
-          (horario.inicio === timeInicio && horario.fin === timeFin) &&
-          !(horarioEdit && horario.inicio === horarioEdit.inicio && horario.fin === horarioEdit.fin)
+          horario.inicio === timeInicio &&
+          horario.fin === timeFin &&
+          !(
+            horarioEdit &&
+            horario.inicio === horarioEdit.inicio &&
+            horario.fin === horarioEdit.fin
+          ),
       )
     ) {
       showWarningToast('Los horarios ya están ocupados. Por favor, selecciona otros tiempos.')
       return
     }
-  
+
     if (horarioEdit) {
       const updatedHorarios = horarios.map((horario) => {
         if (horario.inicio === horarioEdit.inicio && horario.fin === horarioEdit.fin) {
@@ -72,7 +89,7 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
         }
         return horario
       })
-  
+
       setHorarios(updatedHorarios)
       setHorarioEdit(null)
       setAddHora(false)
@@ -91,7 +108,7 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
       setTimeFin(null)
     }
   }
-  
+
   const handleEdit = (inicio, fin) => {
     setHorarioEdit({
       inicio,
@@ -166,9 +183,16 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                     <Button
                       text='Añadir'
                       type='button'
-                      icon='pi pi-plus'
+                      icon='pi pi-check'
                       rounded
-                      onClick={addHorario}
+                      onClick={() => addHorario('add')}
+                    />
+                    <Button
+                      text='Añadir'
+                      type='button'
+                      icon='pi pi-trash'
+                      rounded
+                      onClick={() => addHorario('eliminar')}
                     />
                   </div>
                 )}
