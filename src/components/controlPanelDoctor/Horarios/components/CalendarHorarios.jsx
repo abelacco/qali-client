@@ -2,7 +2,16 @@ import { useEffect, useState } from 'react'
 import { Checkbox } from 'primereact/checkbox'
 import FormAddHorario from './FormAddHorario'
 
-const CalendarHorarios = ({ dias, day, horarios, startTime, endTime, interval }) => {
+const CalendarHorarios = ({
+  dias,
+  day,
+  horarios,
+  startTime,
+  endTime,
+  interval,
+  intervalo,
+  updateAllHorarios,
+}) => {
   const [checked, setChecked] = useState(false)
 
   useEffect(() => {
@@ -27,7 +36,14 @@ const CalendarHorarios = ({ dias, day, horarios, startTime, endTime, interval })
       </div>
 
       {checked || horarios ? (
-        <FormAddHorario startTime={startTime} endTime={endTime} interval={interval} />
+        <FormAddHorario
+          day={day}
+          updateAllHorarios={updateAllHorarios}
+          intervalo={intervalo}
+          startTime={startTime}
+          endTime={endTime}
+          interval={interval}
+        />
       ) : (
         <div>
           <p>Cerrado</p>

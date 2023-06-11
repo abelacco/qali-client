@@ -3,31 +3,45 @@ import { Calendar } from 'primereact/calendar'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 
-const FormAddHorario = ({ startTime, endTime, interval }) => {
+const FormAddHorario = ({ startTime, endTime, interval, intervalo, day, updateAllHorarios }) => {
   const [addHora, setAddHora] = useState(false)
   const [timeInicio, setTimeInicio] = useState(null)
   const [timeFin, setTimeFin] = useState(null)
   const [horarios, setHorarios] = useState([])
   const [horarioEdit, setHorarioEdit] = useState(null)
+  const [openEdit, setOpenEdit] = useState(false)
   const toast = useRef(null)
+
+  useEffect(() => {
+    updateAllHorarios(horarios)
+  }, [horarios, updateAllHorarios])
 
   useEffect(() => {
     setHorarios([
       {
-        inicio: startTime,
-        fin: endTime,
-        interval,
+        day: day,
+        startTime: startTime,
+        endTime: endTime,
+        interval: intervalo,
       },
     ])
-  }, [startTime, endTime, interval])
+  }, [startTime, endTime, intervalo, day])
+
+  /*   useEffect(() => {
+    if (horarios.length) {
+      updateAllHorarios(horarios)
+    }
+  }, [horarios]) */
 
   const handleAdd = () => {
     setAddHora(true)
     if (!horarios.length > 1) {
       setHorarios([
         {
-          inicio: timeInicio,
-          fin: timeFin,
+          startTime: timeInicio,
+          endTime: timeFin,
+          interval: intervalo,
+          day,
         },
       ])
     }
@@ -46,7 +60,6 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
   }
 
   const addHorario = (name) => {
-    console.log(name)
     if (name == 'eliminar') {
       return setAddHora(false)
     } else {
@@ -66,12 +79,12 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
     if (
       horarios.some(
         (horario) =>
-          horario.inicio === timeInicio &&
-          horario.fin === timeFin &&
+          horario.startTime === timeInicio &&
+          horario.endTime === timeFin &&
           !(
             horarioEdit &&
-            horario.inicio === horarioEdit.inicio &&
-            horario.fin === horarioEdit.fin
+            horario.startTime === horarioEdit.startTime &&
+            horario.endTime === horarioEdit.endTime
           ),
       )
     ) {
@@ -81,10 +94,17 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
 
     if (horarioEdit) {
       const updatedHorarios = horarios.map((horario) => {
-        if (horario.inicio === horarioEdit.inicio && horario.fin === horarioEdit.fin) {
+        console.log(horario)
+        console.log(horarioEdit)
+        if (
+          horario.startTime === horarioEdit.startTime &&
+          horario.endTime === horarioEdit.endTime
+        ) {
           return {
-            inicio: timeInicio,
-            fin: timeFin,
+            day: horario.day,
+            startTime: timeInicio,
+            endTime: timeFin,
+            interval: horario.interval,
           }
         }
         return horario
@@ -99,20 +119,25 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
       setHorarios((old) => [
         ...old,
         {
-          inicio: timeInicio,
-          fin: timeFin,
+          day,
+          startTime: timeInicio,
+          endTime: timeFin,
+          interval: intervalo,
         },
       ])
       setAddHora(false)
       setTimeInicio(null)
       setTimeFin(null)
     }
+
+    updateAllHorarios(horarios)
   }
 
   const handleEdit = (inicio, fin) => {
+    setOpenEdit(true)
     setHorarioEdit({
-      inicio,
-      fin,
+      startTime: inicio,
+      endTime: fin,
     })
     setAddHora(true)
     setTimeInicio(inicio)
@@ -121,7 +146,7 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
 
   const deleteHorario = (inicio, fin) => {
     const filterHorarios = horarios.filter(
-      (horario) => horario.inicio !== inicio || horario.fin !== fin,
+      (horario) => horario.startTime !== inicio || horario.endTime !== fin,
     )
     setHorarios(filterHorarios)
   }
@@ -141,6 +166,12 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
     toast.current.show({ severity: 'warn', summary: 'Advertencia', detail: message, life: 3000 })
   }
 
+  const handleCancelEdit = () => {
+    setOpenEdit(false)
+    setAddHora(false)
+    setHorarioEdit(null)
+  }
+
   return (
     <>
       <div className='w-1/3 justify-center flex gap-2 items-center'>
@@ -150,7 +181,7 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
         <div className='flex flex-col items-center gap-3'>
           {addHora && (
             <div className='flex items-center gap-3 flex-col'>
-              {horarioEdit && (
+              {openEdit && (
                 <h2 className='font-light text-gray-400'>
                   Editar este horario y haz click en el icono de guardar
                 </h2>
@@ -162,7 +193,6 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                   onChange={(e) => handleChange(e, 'inicio')}
                   timeOnly
                   stepMinute={30}
-                  hourFormat='24'
                   value={convertToTime(timeInicio)}
                   name='inicio'
                   className='w-36 m-0 p-0 max-w-max'
@@ -173,13 +203,12 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                   onChange={(e) => handleChange(e, 'fin')}
                   timeOnly
                   stepMinute={30}
-                  hourFormat='24'
                   value={convertToTime(timeFin)}
                   name='fin'
                   className='w-36 m-0 p-0 max-w-max'
                 />
-                {!horarioEdit && (
-                  <div>
+                {!openEdit && (
+                  <>
                     <Button
                       text='Añadir'
                       type='button'
@@ -194,14 +223,35 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                       rounded
                       onClick={() => addHorario('eliminar')}
                     />
-                  </div>
+                  </>
+                )}
+                {openEdit && (
+                  <>
+                    <Button
+                      text='Edit'
+                      type='button'
+                      icon='pi pi-check'
+                      rounded
+                      onClick={() => addHorario('add')}
+                    />
+                    <Button
+                      text='Cancel Edit'
+                      type='button'
+                      icon='pi pi-times'
+                      rounded
+                      onClick={() => handleCancelEdit()}
+                    />
+                  </>
                 )}
               </div>
             </div>
           )}
           {horarios.map((hora, index) => {
             const isEditing =
-              horarioEdit && horarioEdit.inicio === hora.inicio && horarioEdit.fin === hora.fin
+              openEdit &&
+              horarioEdit &&
+              horarioEdit.startTime === hora.startTime &&
+              horarioEdit.endTime === hora.endTime
 
             return (
               <div key={hora._id || index} className='flex items-center gap-3'>
@@ -210,11 +260,9 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                   id={`calendar-timeonly-${index}`}
                   onChange={(e) => handleChange(e, 'inicio')}
                   name='inicio'
-                  value={convertToTime(hora.inicio)}
+                  value={convertToTime(hora.startTime)}
                   timeOnly
                   stepMinute={30}
-                  hourFormat='24'
-                  dateFormat='dd/mm/yy'
                   className='w-36 m-0 p-0 max-w-max'
                   disabled={isEditing}
                 />
@@ -224,11 +272,9 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                   id={`calendar-timeonly-${index}`}
                   onChange={(e) => handleChange(e, 'fin')}
                   name='fin'
-                  value={convertToTime(hora.fin)}
+                  value={convertToTime(hora.endTime)}
                   timeOnly
                   stepMinute={30}
-                  hourFormat='24'
-                  dateFormat='dd/mm/yy'
                   className='w-36 m-0 p-0 max-w-max'
                   disabled={isEditing}
                 />
@@ -248,7 +294,7 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                       type='button'
                       icon='pi pi-pencil'
                       rounded
-                      onClick={() => handleEdit(hora.inicio, hora.fin)}
+                      onClick={() => handleEdit(hora.startTime, hora.endTime)}
                     />
                   )}
                   <Button
@@ -256,7 +302,7 @@ const FormAddHorario = ({ startTime, endTime, interval }) => {
                     type='button'
                     icon='pi pi-trash'
                     rounded
-                    onClick={() => deleteHorario(hora.inicio, hora.fin)}
+                    onClick={() => deleteHorario(hora.startTime, hora.endTime)}
                   />
                 </div>
               </div>

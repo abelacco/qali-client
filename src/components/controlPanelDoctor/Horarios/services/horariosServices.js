@@ -16,3 +16,4 @@ export const getAllHorarios = async () => {
     return { error }
   }
 }
+
