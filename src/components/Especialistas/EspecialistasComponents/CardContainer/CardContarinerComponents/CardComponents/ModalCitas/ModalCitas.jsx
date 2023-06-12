@@ -56,8 +56,8 @@ const ModalCitas = ({ id }) => {
             </Button>
             <div >
                 <Dialog header={HEADER[info[0].page]} visible={visible} onHide={() => setVisible(false)}
-                    style={{ width: '600px' , height:'600px'}}>
-                    <div className="flex flex-col">
+                    style={{ width: '660px' , height:'600px' , padding: "0px"}}>
+                    <div className="flex flex-col h-full">
                         {SECTION[info[0].page]}
                         <StepsInfo information={info} setVisible={setVisible} />
                     </div>

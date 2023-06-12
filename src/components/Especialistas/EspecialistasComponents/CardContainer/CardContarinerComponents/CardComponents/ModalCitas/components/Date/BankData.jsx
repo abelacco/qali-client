@@ -57,7 +57,7 @@ function BankData({ information }) {
     };
 
     return (
-        <>
+        <div className="h-full">
             <div className="card">
                 <form onSubmit={formik.handleSubmit} className="flex flex-col">
                     <span className="p-float-label">
@@ -131,7 +131,7 @@ function BankData({ information }) {
 
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 
