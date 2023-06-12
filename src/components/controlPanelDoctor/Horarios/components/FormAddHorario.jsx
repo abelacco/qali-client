@@ -22,10 +22,10 @@ const FormAddHorario = ({ startTime, endTime, interval, intervalo, day, updateAl
         day: day,
         startTime: startTime,
         endTime: endTime,
-        interval: intervalo,
+        interval: interval,
       },
     ])
-  }, [startTime, endTime, intervalo, day])
+  }, [startTime, endTime, interval, day])
 
   /*   useEffect(() => {
     if (horarios.length) {
@@ -170,79 +170,88 @@ const FormAddHorario = ({ startTime, endTime, interval, intervalo, day, updateAl
     setOpenEdit(false)
     setAddHora(false)
     setHorarioEdit(null)
+    setTimeInicio('')
+    setTimeFin('')
   }
 
   return (
     <>
-      <div className='w-1/3 justify-center flex gap-2 items-center'>
+      <div className='w-2/3 justify-center flex gap-2 items-center'>
         {!horarios.length && !addHora && (
           <div className='font-light text-gray-500'>No disponible</div>
         )}
-        <div className='flex flex-col items-center gap-3'>
+        <div className='flex flex-col items-center w-full gap-3'>
           {addHora && (
-            <div className='flex items-center gap-3 flex-col'>
+            <div className='flex items-center gap-3 flex-col w-full'>
               {openEdit && (
                 <h2 className='font-light text-gray-400'>
                   Editar este horario y haz click en el icono de guardar
                 </h2>
               )}
-              <div className='flex items-center gap-3'>
-                <Calendar
-                  placeholder='Inicia'
-                  id='calendar-timeonly'
-                  onChange={(e) => handleChange(e, 'inicio')}
-                  timeOnly
-                  stepMinute={30}
-                  value={convertToTime(timeInicio)}
-                  name='inicio'
-                  className='w-36 m-0 p-0 max-w-max'
-                />
-                <Calendar
-                  placeholder='Finaliza'
-                  id='calendar-timeonly'
-                  onChange={(e) => handleChange(e, 'fin')}
-                  timeOnly
-                  stepMinute={30}
-                  value={convertToTime(timeFin)}
-                  name='fin'
-                  className='w-36 m-0 p-0 max-w-max'
-                />
-                {!openEdit && (
-                  <>
-                    <Button
-                      text='Añadir'
-                      type='button'
-                      icon='pi pi-check'
-                      rounded
-                      onClick={() => addHorario('add')}
-                    />
-                    <Button
-                      text='Añadir'
-                      type='button'
-                      icon='pi pi-trash'
-                      rounded
-                      onClick={() => addHorario('eliminar')}
-                    />
-                  </>
-                )}
-                {openEdit && (
-                  <>
-                    <Button
-                      text='Edit'
-                      type='button'
-                      icon='pi pi-check'
-                      rounded
-                      onClick={() => addHorario('add')}
-                    />
-                    <Button
-                      text='Cancel Edit'
-                      type='button'
-                      icon='pi pi-times'
-                      rounded
-                      onClick={() => handleCancelEdit()}
-                    />
-                  </>
-                )}
+              <div className='flex w-full justify-between items-center gap-3'>
+                <div className='w-2/3 flex'>
+                  <Calendar
+                    placeholder='Inicia'
+                    id='calendar-timeonly'
+                    onChange={(e) => handleChange(e, 'inicio')}
+                    timeOnly
+                    stepMinute={30}
+                    value={convertToTime(timeInicio)}
+                    name='inicio'
+                    className='w-36 m-0 p-0 max-w-max'
+                  />
+                  <Calendar
+                    placeholder='Finaliza'
+                    id='calendar-timeonly'
+                    onChange={(e) => handleChange(e, 'fin')}
+                    timeOnly
+                    stepMinute={30}
+                    value={convertToTime(timeFin)}
+                    name='fin'
+                    className='w-36 m-0 p-0 max-w-max'
+                  />
+                </div>
+                <div className='flex items-center justify-center'>
+                  <p className='text-gray-600 text-sm font-light'>Cita de: {intervalo} minutos</p>
+                </div>
+                <div>
+                  {!openEdit && (
+                    <>
+                      <Button
+                        text='Añadir'
+                        type='button'
+                        icon='pi pi-check'
+                        rounded
+                        onClick={() => addHorario('add')}
+                      />
+                      <Button
+                        text='Añadir'
+                        type='button'
+                        icon='pi pi-trash'
+                        rounded
+                        onClick={() => addHorario('eliminar')}
+                      />
+                    </>
+                  )}
+                  {openEdit && (
+                    <>
+                      <Button
+                        text='Edit'
+                        type='button'
+                        icon='pi pi-check'
+                        rounded
+                        onClick={() => addHorario('add')}
+                      />
+                      <Button
+                        text='Cancel Edit'
+                        type='button'
+                        icon='pi pi-times'
+                        rounded
+                        onClick={() => handleCancelEdit()}
+                      />
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -254,32 +263,42 @@ const FormAddHorario = ({ startTime, endTime, interval, intervalo, day, updateAl
               horarioEdit.endTime === hora.endTime
 
             return (
-              <div key={hora._id || index} className='flex items-center gap-3'>
-                <Calendar
-                  placeholder='Inicia'
-                  id={`calendar-timeonly-${index}`}
-                  onChange={(e) => handleChange(e, 'inicio')}
-                  name='inicio'
-                  value={convertToTime(hora.startTime)}
-                  timeOnly
-                  stepMinute={30}
-                  className='w-36 m-0 p-0 max-w-max'
-                  disabled={isEditing}
-                />
+              <div
+                key={hora._id || index}
+                className='flex items-center gap-3  justify-between  w-full'
+              >
+                <div className='w-2/3 flex items-center gap-3'>
+                  <Calendar
+                    placeholder='Inicia'
+                    id={`calendar-timeonly-${index}`}
+                    onChange={(e) => handleChange(e, 'inicio')}
+                    name='inicio'
+                    value={convertToTime(hora.startTime)}
+                    timeOnly
+                    stepMinute={30}
+                    className='w-36 m-0 p-0 max-w-max'
+                    disabled={isEditing}
+                  />
 
-                <Calendar
-                  placeholder='fin'
-                  id={`calendar-timeonly-${index}`}
-                  onChange={(e) => handleChange(e, 'fin')}
-                  name='fin'
-                  value={convertToTime(hora.endTime)}
-                  timeOnly
-                  stepMinute={30}
-                  className='w-36 m-0 p-0 max-w-max'
-                  disabled={isEditing}
-                />
+                  <Calendar
+                    placeholder='fin'
+                    id={`calendar-timeonly-${index}`}
+                    onChange={(e) => handleChange(e, 'fin')}
+                    name='fin'
+                    value={convertToTime(hora.endTime)}
+                    timeOnly
+                    stepMinute={30}
+                    className='w-36 m-0 p-0 max-w-max'
+                    disabled={isEditing}
+                  />
+                </div>
 
-                <div>
+                <div className='flex items-center justify-center'>
+                  <p className='text-gray-600 text-sm font-light'>
+                    Cita de: {hora.interval} minutos
+                  </p>
+                </div>
+                <div className=''>
                   {isEditing ? (
                     <Button
                       text='Guardar'
