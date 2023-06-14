@@ -2,11 +2,13 @@ import { Button } from 'primereact/button'
 import LayoutDashboard from '../../Layouts/LayoutDashboard'
 import Agenda from './components/Agenda'
 import PersonalizarHorario from './components/PersonalizarHorario'
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
+import { getAllHorarios } from './services/horariosServices'
 
 const Horarios = () => {
   const [showAgenda, setShowAgenda] = useState(false)
   const [showHorarios, setShowHorarios] = useState(true)
+  const [horarios, setHorarios] = useState([])
 
   const handleClickHorarios = useCallback(() => {
     setShowAgenda(false)
@@ -17,6 +19,11 @@ const Horarios = () => {
     setShowHorarios(false)
     setShowAgenda(!showAgenda)
   }, [showAgenda])
+  useEffect(() => {
+    getAllHorarios().then((response) => {
+      setHorarios(response.data.data)
+    })
+  }, [showHorarios])
 
   return (
     <LayoutDashboard>
@@ -41,7 +48,7 @@ const Horarios = () => {
 
       {showAgenda && !showHorarios && <Agenda />}
 
-      {showHorarios && !showAgenda && <PersonalizarHorario />}
+      {showHorarios && !showAgenda && <PersonalizarHorario horarios={horarios} />}
     </LayoutDashboard>
   )
 }
