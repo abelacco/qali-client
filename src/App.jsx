@@ -8,6 +8,7 @@ import FormPatient from "./components/FormPatient/FormPatient";
 import PerfilDoctores from "./components/PerfilDoctores/PerfilDoctores";
 import Horarios from './components/controlPanelDoctor/Horarios/Horarios'
 import Resumen from './components/controlPanelDoctor/Resumen/Resumen'
+import Patient from './components/controlPanelDoctor/Patient/Patient'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path='/' element={<Home />} />
         <Route exact path='/horarios' element={<Horarios />} />
         <Route exact path='/resumen' element={<Resumen />} />
+        <Route exact path='/pacientes' element={<Patient />} />
       </Routes>
     </>
   )
