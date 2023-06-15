@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 const NavBarDashboard = () => {
@@ -15,7 +14,7 @@ const NavBarDashboard = () => {
       </div>
       <div className='flex items-center justify-evenly flex-grow'>
         <button className='bg-[#0FFFA926] hover:bg-qaliGrey transition-all duration-200 rounded-lg px-8 py-3'>
-          <Link to='/controlPanelDoctor' className='text-white uppercase font-bold'>
+          <Link to='/' className='text-white uppercase font-bold'>
             IR A <span className='text-qaliGreen'>Q</span>AL
             <span className='text-qaliGreen'>I</span>
           </Link>

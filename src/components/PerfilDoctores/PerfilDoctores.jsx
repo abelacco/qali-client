@@ -12,6 +12,8 @@ import instragram from "../../assets/instagram.png";
 import linkedin from "../../assets/logotipo-de-linkedin (1).png";
 import tiktok from "../../assets/tik-tok.png";
 import "./filecss.css";
+import Layout from "../Layouts/LayoutCliente";
+import LayoutDashboard from "../Layouts/LayoutDashboard";
 
 const PerfilDoctores = () => {
   const [value, setValue] = useState("");
@@ -95,13 +97,8 @@ const PerfilDoctores = () => {
   };
   return (
     <>
-      <Navbar />
+      <LayoutDashboard>
       <body className="flex">
-        <div className="flex flex-col min-h-screen">
-          <aside className="bg-blue-950 flex-grow  w-[132px] rounded">
-            <h2 className="text-white">Side Bar</h2>
-          </aside>
-        </div>
         <div className="flex flex-grow justify-center">
           <form className="grid grid-cols-2 gap-40 ">
             <div className="flex flex-col mt-16 ml-11 gap-2 font-bold w-[30rem] ">
@@ -424,6 +421,7 @@ const PerfilDoctores = () => {
           </form>
         </div>
       </body>
+      </LayoutDashboard>
     </>
   );
 };
