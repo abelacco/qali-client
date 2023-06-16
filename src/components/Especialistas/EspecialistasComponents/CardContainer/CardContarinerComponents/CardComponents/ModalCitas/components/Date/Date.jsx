@@ -1,20 +1,79 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar';
+import { getHoursAvailableAsync } from '../../../../../../../../../redux/store/appointment/hoursAvailableSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import "./date.css"
 
 function Date({ information }) {
-
+  const dispatch = useDispatch();
+  const { hoursAvailable } = useSelector((state)=>state.hoursAvailable)
   const [info, setInfo] = information;
-  console.log(info.turno);
+  const [statusButton, setStatusButton] = useState({
+    online: false,
+    presential: false,
+  });
+  
+  const formatDate = (date)=>{ 
+    date = date.toString()
+    const dateSplit = date.split(' ');
+    const dictMonth = {
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12",
+    }
+    const newFormat = `${dateSplit[3]}/${dictMonth[dateSplit[1]]}/${dateSplit[2]}`
+    return newFormat;
+  }
+  const validateDate = ()=>{
+    const {fecha, horario, modalidad} = info.turno; 
+    setInfo({
+      ...info,
+      page: { 
+        ...info.page, 
+        nextPage: (fecha && horario && modalidad)
+      }
+    })
+  }
 
-  const handleDate = (event) => {
-    const value = event.value;
+  const handleDate = async (event) => {
+    const date = formatDate(event.value);
     setInfo({
       ...info,
       turno: {
         ...info.turno,
-        fecha: value
+        fecha: date,
+        horario:""
+      }
+    })
+    dispatch(getHoursAvailableAsync("648295e4f6134122d18ff2bd", date));
+    validateDate();
+  }
+  const handleHour = (hour) => {
+    setInfo({
+      ...info,
+      turno: {
+        ...info.turno,
+        horario: hour
+      }
+    })
+    validateDate();
+  }
+  const handleModality = (modality) => {
+    setInfo({
+      ...info,
+      turno: {
+        ...info.turno,
+        modalidad: modality
       }
     })
   }
@@ -26,12 +85,21 @@ function Date({ information }) {
           <div className='w-full flex justify-center mb-5'>
             <div className='w-3/4 flex justify-around'>
               <button
-                  className="w-1/3 mt-1.5 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
-                  >
+                className={`w-1/3 mt-1.5 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm ${statusButton.online && "outline-none ring-2 ring-offset-2 ring-blue-500"}`}
+                onClick={()=>{
+                  setStatusButton({online: true, presential: false})
+                  handleModality("online")
+                }}
+                // onClick={()=> dispatch(getHoursAvailableAsync("648295e4f6134122d18ff2bd", "2023/07/03")) }
+              >
                   Online
               </button>
               <button
-                  className="w-1/3 mt-1.5 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
+                  className={`w-1/3 mt-1.5 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm ${statusButton.presential && "outline-none ring-2 ring-offset-2 ring-blue-500"}`}
+                  onClick={()=> {
+                    setStatusButton({online: false, presential: true})
+                    handleModality("presencial")
+                  }}
                   >
                   Presencial
               </button>
@@ -40,7 +108,13 @@ function Date({ information }) {
             </div>
           </div>
           <div className='w-full flex justify-center'>
-            <Calendar value={info.turno.fecha} onChange={(e) => handleDate(e)} placeholder='Seleccione una fecha' inline/>
+            <Calendar 
+              value={info.turno.fecha} 
+              dateFormat='dd/mm/yy'
+              onChange={(e) => handleDate(e)} 
+              placeholder='Seleccione una fecha'
+              inline
+            />
           </div>
         </div>
         <div className='w-2/5'>
@@ -49,29 +123,17 @@ function Date({ information }) {
               Horarios disponibles en el dia elegido:
             </div>
             <div className='flex flex-wrap'>
-              <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>
-              <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>
-              <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>
-              <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>
-              <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>
-              <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>
-              <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>                <div className='m-1 bg-red-400 h-15 w-18 text-center text-base'>
-                  <span>08:00 a.m</span>
-              </div>
+              {hoursAvailable.map((element)=>{
+                return(
+                  <div className={`m-1 border-2 rounded-md bg-blue-950 text-white px-1.5 h-7 w-18 text-center text-base ${info.turno.horario == element ? "outline-none ring-2 ring-offset-1/2 ring-blue-500" : ""}`}>
+                      <button
+                        id={element}
+                        onClick={({target})=>handleHour(target.id)}>
+                        {element}
+                      </button>
+                  </div>
+                )
+              })}
             </div>          
           </div>
         </div>

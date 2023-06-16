@@ -12,10 +12,15 @@ const ModalCitas = ({ id }) => {
 
     const info = useState({
         id: id,
-        page: 0,
+        page:{
+            currentPage: 0,
+            previousPage: false,
+            nextPage: false
+        },
         turno: {
             fecha: '',
-            horario: ''
+            horario: '',
+            modalidad: ''
         },
         data: {
             name: '',
@@ -55,10 +60,10 @@ const ModalCitas = ({ id }) => {
                 </div>
             </Button>
             <div >
-                <Dialog header={HEADER[info[0].page]} visible={visible} onHide={() => setVisible(false)}
+                <Dialog header={HEADER[info[0].page.currentPage]} visible={visible} onHide={() => setVisible(false)}
                     style={{ width: '660px' , height:'600px' , padding: "0px"}}>
                     <div className="flex flex-col h-full">
-                        {SECTION[info[0].page]}
+                        {SECTION[info[0].page.currentPage]}
                         <StepsInfo information={info} setVisible={setVisible} />
                     </div>
                 </Dialog>

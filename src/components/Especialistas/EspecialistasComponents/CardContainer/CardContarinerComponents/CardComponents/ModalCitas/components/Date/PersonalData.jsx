@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from 'formik';
 import { InputText } from "primereact/inputtext";
-import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
 import { Checkbox } from 'primereact/checkbox';
 
@@ -20,6 +19,8 @@ function PersonalData({ information }) {
             }
         })
     }
+
+    console.log(info)
 
     const formik = useFormik({
         initialValues: {
@@ -66,7 +67,7 @@ function PersonalData({ information }) {
     return (
         <div className="w-full h-full flex flex-col items-center">
             <div className="w-10/12 flex justify-around">
-                <button
+                {/* <button
                     className="w-1/3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
                 >
                     Es para mi
@@ -75,7 +76,7 @@ function PersonalData({ information }) {
                     className="w-1/3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
                 >
                     Es para otra persona
-                </button>
+                </button> */}
                 {/* <Button label='Es para mi' size="small"/>
                 <Button label='Es para otra persona' size="small"/> */}
             </div>
