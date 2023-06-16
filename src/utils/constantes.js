@@ -13,5 +13,6 @@ export const STATUS_API = {
 export const URL = {
     BASE: "https://qali-api-production.up.railway.app/",
     DOCTOR:"https://qali-api-production.up.railway.app/doctor",
-    PATIENT:"https://qali-api-production.up.railway.app/patient"
+    PATIENT:"https://qali-api-production.up.railway.app/patient",
+    APPOINTMENT:"https://qali-api-production.up.railway.app/appointment"
 };
