@@ -1,9 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const createPatient = (patient) => {
-  return axios.post('https://qali-api-production.up.railway.app/patient', patient);
+  return axios.post(
+    "http://localhost:3000/patient" ||
+      "https://qali-api-production.up.railway.app/patient",
+    patient
+  );
 };
 
-export const getPatient = (id) => {
-  return axios.post('https://qali-api-production.up.railway.app/patient', id);
+export const getPatient = () => {
+  return axios.get(
+    "http://localhost:3000/patient" ||
+      "https://qali-api-production.up.railway.app/patient"
+  );
 };

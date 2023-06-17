@@ -11,8 +11,8 @@ import { Password } from "primereact/password";
 import { Dialog } from "primereact/dialog";
 import { classNames } from "primereact/utils";
 import { CITIES, PREFIJO } from "../../utils/constantes";
-import { useDispatch } from 'react-redux';
-import {createPatientAsync  } from '../../redux/store/patient/patientSlice';
+import { useDispatch } from "react-redux";
+import { createPatientAsync } from "../../redux/store/patient/patientSlice";
 
 const FormPatient = () => {
   const [formData, setFormData] = useState({});
@@ -25,7 +25,7 @@ const FormPatient = () => {
 
     setAvatar(URL.createObjectURL(file));
   };
-  
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -74,7 +74,6 @@ const FormPatient = () => {
       return errors;
     },
     onSubmit: (data) => {
-
       // if (data.password !== data.confirmPassword) {
       //   //si no coinciden ver de dejar un mensaje de error o realizar alguna acción
       //   return;
@@ -150,12 +149,12 @@ const FormPatient = () => {
             </p>
           </div>
         </Dialog>
-  
+
         {/* diseño form */}
         <form onSubmit={formik.handleSubmit}>
           <div className="mt-6 space-y-6 p-4">
             <>
-            <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-2">
                 <label className="block text-3xl leading-6 text-gray-40 ">
                   Foto de Perfil
                 </label>
@@ -225,7 +224,7 @@ const FormPatient = () => {
                 >
                   Nombre y Apellido
                 </label>
-  
+
                 <InputText
                   id="name"
                   name="name"
@@ -242,13 +241,13 @@ const FormPatient = () => {
             </div>
           </div>
           <br></br>
-  
+
           <div className="flex gap-2 p-2">
             <div className="sm:col-span-3">
               <label className="block  text-3xl leading-6 text-gray-900 p-4">
                 Ciudad
               </label>
-  
+
               <Dropdown
                 id="ciudad"
                 name="ciudad"
@@ -294,13 +293,13 @@ const FormPatient = () => {
             </div>
           </div>
           <br></br>
-  
+
           <div className="flex gap-2 p-2">
             <div className="sm:col-span-3">
               <label className="block  text-3xl leading-6 text-gray-900 p-4">
                 Correo electrónico
               </label>
-  
+
               <InputText
                 id="email"
                 name="email"
@@ -312,75 +311,74 @@ const FormPatient = () => {
               {getFormErrorMessage("email")}
             </div>
           </div>
-  
-          <br></br>
-  
-          <div className="flex gap-2 p-2">
-  <div className="sm:col-span-3">
-    <div className="flex justify-between">
-      <div className="mr-12">
-        <label
-          htmlFor="password"
-          className={classNames(
-            "block",
-            "text-3xl",
-            "leading-6",
-            "text-gray-900",
-            "p-4",
-            { "p-error": isFormFieldValid("password") }
-          )}
-        >
-          Contraseña*
-        </label>
-        <Password
-          id="password"
-          name="password"
-          onChange={formik.handleChange}
-          toggleMask
-          value={formik.values.password}
-          placeholder="***************"
-          className={classNames({
-            "p-invalid": isFormFieldValid("password"),
-          })}
-          header={passwordHeader}
-          footer={passwordFooter}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="confirmPassword"
-          className={classNames(
-            "block",
-            "text-3xl",
-            "leading-6",
-            "text-gray-900",
-            "p-4",
-            { "p-error": isFormFieldValid("confirmPassword") }
-          )}
-        >
-          Confirmar Contraseña*
-        </label>
-        <Password
-          id="confirmPassword"
-          name="confirmPassword"
-          onChange={formik.handleChange}
-          toggleMask
-          value={formik.values.confirmPassword}
-          placeholder="***************"
-          className={classNames({
-            "p-invalid": isFormFieldValid("confirmPassword"),
-          })}
-          header={passwordHeader}
-          footer={passwordFooter}
-        />
-      </div>
-    </div>
-  </div>
-</div>
 
-  
           <br></br>
-  
+
+          <div className="flex gap-2 p-2">
+            <div className="sm:col-span-3">
+              <div className="flex justify-between">
+                <div className="mr-12">
+                  <label
+                    htmlFor="password"
+                    className={classNames(
+                      "block",
+                      "text-3xl",
+                      "leading-6",
+                      "text-gray-900",
+                      "p-4",
+                      { "p-error": isFormFieldValid("password") }
+                    )}
+                  >
+                    Contraseña*
+                  </label>
+                  <Password
+                    id="password"
+                    name="password"
+                    onChange={formik.handleChange}
+                    toggleMask
+                    value={formik.values.password}
+                    placeholder="***************"
+                    className={classNames({
+                      "p-invalid": isFormFieldValid("password"),
+                    })}
+                    header={passwordHeader}
+                    footer={passwordFooter}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="confirmPassword"
+                    className={classNames(
+                      "block",
+                      "text-3xl",
+                      "leading-6",
+                      "text-gray-900",
+                      "p-4",
+                      { "p-error": isFormFieldValid("confirmPassword") }
+                    )}
+                  >
+                    Confirmar Contraseña*
+                  </label>
+                  <Password
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    onChange={formik.handleChange}
+                    toggleMask
+                    value={formik.values.confirmPassword}
+                    placeholder="***************"
+                    className={classNames({
+                      "p-invalid": isFormFieldValid("confirmPassword"),
+                    })}
+                    header={passwordHeader}
+                    footer={passwordFooter}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br></br>
+
           <div className="mt-6 space-y-6 p-4">
             <>
               <div className="flex items-center gap-x-3 font-bold">
@@ -430,7 +428,7 @@ const FormPatient = () => {
               </div>
             </>
           </div>
-  
+
           <div className="flex gap-2 mb-5 mr-3">
             <Button
               label="Finalizar"
@@ -441,11 +439,10 @@ const FormPatient = () => {
           </div>
         </form>
       </div>
-  
+
       <Footer />
     </>
   );
-  
 };
 
 export default FormPatient;
