@@ -1,9 +1,79 @@
 .p-calendar{
-    width: 250px;
-    height: 250px;
+    width: 260px;
+    height: 265px;
+}
+.p-datepicker-group{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.p-datepicker-header{
+    width: 224px;
+    padding: 0px !important;
+    margin: 0px;
+}
+.p-datepicker-header button{
+    padding: 0px !important;
+    margin: 0px;
 }
 
-.p-datepicker-calendario{
-    background-color: green;
-    width: 50px;
+.p-datepicker-calendar{
+    display: flex;
+    flex-direction: column;
+    width: 224px !important;
+
+}
+.p-datepicker-calendar thead tr{
+    display: flex;
+    background-color: rgba(216, 216, 216, 0.831);
+    width: 224px;
+}
+.p-datepicker-calendar thead tr th{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px !important;
+    height: 28px;
+    margin: 0px !important;
+    padding: 5px !important;
+}
+.p-datepicker-calendar thead tr th span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px !important;
+    height: 28px;
+    margin: 0px !important;
+    padding: 5px !important;
+}
+.p-datepicker-calendar tbody tr td{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 28px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.p-datepicker-other-month{
+    width: 32px !important;
+    height: 28px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+.p-datepicker-calendar tbody{
+    display: flex;
+    flex-wrap: wrap;
+    width: 224px;
+}
+.p-datepicker-calendar tbody tr{
+    display: flex;
+    flex-wrap: wrap;
+    width: 224px;
+}
+.p-datepicker table td>span {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 20%;
 }
