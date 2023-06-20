@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar';
 import { getHoursAvailableAsync } from '../../../../../../../../../redux/store/appointment/hoursAvailableSlice';
@@ -13,7 +13,18 @@ function Date({ information }) {
     online: false,
     presential: false,
   });
-  
+
+  // useEffect(()=>{
+  //   const {date, hour, modality} = info.turn;
+  //   setInfo({...info, 
+  //     page:{
+  //     currentPage: 0,
+  //     previousPage: false,
+  //     nextPage: (!!date && !!hour && !!modality)
+  //     } 
+  //   })
+  // })
+
   const formatDate = (date)=>{ 
     date = date.toString()
     const dateSplit = date.split(' ');
@@ -34,50 +45,54 @@ function Date({ information }) {
     const newFormat = `${dateSplit[3]}/${dictMonth[dateSplit[1]]}/${dateSplit[2]}`
     return newFormat;
   }
-  const validateDate = ()=>{
-    const {fecha, horario, modalidad} = info.turno; 
-    setInfo({
-      ...info,
-      page: { 
-        ...info.page, 
-        nextPage: (fecha && horario && modalidad)
-      }
-    })
-  }
 
   const handleDate = async (event) => {
     const date = formatDate(event.value);
+    const {hour, modality} = info.turn;
     setInfo({
       ...info,
-      turno: {
-        ...info.turno,
-        fecha: date,
-        horario:""
+      turn: {
+        ...info.turn,
+        date: date,
+        hour:""
+      },
+      page: {
+        ...info.page,
+        previousPage: false,
+        nextPage: (!!date && !!hour && !!modality)
       }
     })
     dispatch(getHoursAvailableAsync("648295e4f6134122d18ff2bd", date));
-    validateDate();
   }
   const handleHour = (hour) => {
+    const {date, modality} = info.turn;
     setInfo({
       ...info,
-      turno: {
-        ...info.turno,
-        horario: hour
+      turn: {
+        ...info.turn,
+        hour: hour
+      },
+      page: {
+        ...info.page,
+        nextPage: (!!date && !!hour && !!modality)
       }
     })
-    validateDate();
   }
   const handleModality = (modality) => {
+    const {date, hour} = info.turn;
     setInfo({
       ...info,
-      turno: {
-        ...info.turno,
-        modalidad: modality
+      turn: {
+        ...info.turn,
+        modality: modality
+      },
+      page: {
+        ...info.page,
+        nextPage: (!!date && !!hour && !!modality)
       }
     })
   }
-
+  console.log(info);
   return (
     <div className='h-full'>
       <div className='flex mb-5'>
@@ -109,7 +124,7 @@ function Date({ information }) {
           </div>
           <div className='w-full flex justify-center'>
             <Calendar 
-              value={info.turno.fecha} 
+              value={info.turn.date} 
               dateFormat='dd/mm/yy'
               onChange={(e) => handleDate(e)} 
               placeholder='Seleccione una fecha'
@@ -125,7 +140,7 @@ function Date({ information }) {
             <div className='flex flex-wrap'>
               {hoursAvailable.map((element)=>{
                 return(
-                  <div className={`m-1 border-2 rounded-md bg-blue-950 text-white px-1.5 h-7 w-18 text-center text-base ${info.turno.horario == element ? "outline-none ring-2 ring-offset-1/2 ring-blue-500" : ""}`}>
+                  <div className={`m-1 border-2 rounded-md bg-blue-950 text-white px-1.5 h-7 w-18 text-center text-base ${info.turn.hour == element ? "outline-none ring-2 ring-offset-1/2 ring-blue-500" : ""}`}>
                       <button
                         id={element}
                         onClick={({target})=>handleHour(target.id)}>

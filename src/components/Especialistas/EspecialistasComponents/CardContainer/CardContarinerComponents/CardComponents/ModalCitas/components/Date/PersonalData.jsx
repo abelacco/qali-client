@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from 'formik';
 import { InputText } from "primereact/inputtext";
 import { classNames } from 'primereact/utils';
@@ -8,6 +8,15 @@ function PersonalData({ information }) {
 
     const [info, setInfo] = information;
     const { data } = info;
+
+    // useEffect(()=>{
+    //     setInfo({
+    //         ...info,
+    //         page:{
+    //             previousPage: true
+    //         }
+    //     })
+    // })
 
     const handleInfo = (event) => {
         const { name, value } = event.target;

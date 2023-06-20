@@ -17,10 +17,10 @@ const ModalCitas = ({ id }) => {
             previousPage: false,
             nextPage: false
         },
-        turno: {
-            fecha: '',
-            horario: '',
-            modalidad: ''
+        turn: {
+            date: '',
+            hour: '',
+            modality: ''
         },
         data: {
             name: '',

@@ -4,7 +4,7 @@ import { Button } from 'primereact/button';
 
 const StepsInfo = ({ information, setVisible }) => {
     const [info, setInfo] = information;
-    const { currentPage, previousPage, nextPage } = info.page;
+    const { currentPage, nextPage } = info.page;
     const items = [
         {
             label: 'Fecha'
@@ -21,7 +21,7 @@ const StepsInfo = ({ information, setVisible }) => {
     ];
 
     const handlePageUp = () => {
-        if (currentPage < 3) {setInfo({ ...info, page:{...info.page, currentPage: currentPage + 1} })}
+        if (currentPage < 3) {setInfo({ ...info, page:{...info.page, currentPage: currentPage + 1, nextPage: false} })}
 
     }
 
@@ -34,11 +34,13 @@ const StepsInfo = ({ information, setVisible }) => {
         //hacer el dispatch de la info del modal
     }
 
+    console.log(currentPage != 0)
+
     return (
         <div className="card flex justify-between flex-grow items-center">
             <button
-                className={`inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white sm:text-sm ${previousPage ? "hover:bg-gray-700":"bg-opacity-50"}`}                
-                disabled={ !previousPage } 
+                className={`inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white sm:text-sm ${(currentPage != 0) ? "hover:bg-gray-700":"bg-opacity-50"}`}                
+                disabled={ currentPage == 0 } 
                 onClick={handlePageDown}
                 >
                 <i className='pi pi-angle-left'/>
