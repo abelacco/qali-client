@@ -1,10 +1,9 @@
 import React from 'react';
 import { Steps } from 'primereact/steps';
-import { Button } from 'primereact/button';
 
-const StepsInfo = ({ information, setVisible }) => {
-    const [info, setInfo] = information;
-    const { currentPage, nextPage } = info.page;
+const StepsInfo = ({ stateInfoPage, setVisible }) => {
+    const [infoPage, setInfoPage] = stateInfoPage;
+    const { currentPage, nextPage } = infoPage;
     const items = [
         {
             label: 'Fecha'
@@ -21,20 +20,18 @@ const StepsInfo = ({ information, setVisible }) => {
     ];
 
     const handlePageUp = () => {
-        if (currentPage < 3) {setInfo({ ...info, page:{...info.page, currentPage: currentPage + 1, nextPage: false} })}
+        if (currentPage < 3) { setInfoPage({...infoPage, currentPage: currentPage + 1, nextPage: false })}
 
     }
 
     const handlePageDown = () => {
-        if (currentPage > 0) { setInfo({ ...info, page:{...info.page, currentPage: currentPage - 1} })}
+        if (currentPage > 0) { setInfoPage({...infoPage, currentPage: currentPage - 1})}
     }
 
     const handleInfo = () => {
         setVisible(false)
         //hacer el dispatch de la info del modal
     }
-
-    console.log(currentPage != 0)
 
     return (
         <div className="card flex justify-between flex-grow items-center">
