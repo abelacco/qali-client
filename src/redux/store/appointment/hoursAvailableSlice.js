@@ -6,7 +6,6 @@ export const hoursAvailableSlice = createSlice({
     initialState: {hoursAvailable: []},
     reducers: {
         hoursAvailable: (state, action)=>{
-          console.log("action.payload", action.payload)
         state.hoursAvailable = action.payload;
       }
     }

@@ -10,13 +10,15 @@ import { useFormik } from 'formik';
 
 const ModalCitas = ({ id }) => {
     const [visible, setVisible] = useState(false);
-
-    const stateInfoPage = useState({
-            currentPage: 0,
-            previousPage: false,
-            nextPage: false
-        })
-    const [infoPage, setInfoPage] = stateInfoPage;
+    const stateCurrentPage = useState(0);
+    const stateButtonsPage = useState({
+        previousPage: false,
+        nextPage: false
+    });
+    //Creo un estado independiente para guardar la fecha seleccionada en el calendar del componente Date
+    //Porque necesitamos guardar la fecha en 2 formatos, uno para ReactPrime y otro para el backend.
+    const stateDateCalendar = useState("");
+    const [currentPage, setCurrentPage] = stateCurrentPage;
     const formik = useFormik({ 
         initialValues: {
             id: id,
@@ -33,33 +35,32 @@ const ModalCitas = ({ id }) => {
                 email: '',
                 phone: ''
             },
-            bankData: {
-                cardNumber: '',
-                expiration: '',
-                cvv: '',
-                holderName: ''
-            }
+            pay: false
         },
         validate: (data) => {
             let errors = {};
 
             if (!data.data.name) {
-                errors.name = 'Name is required.';
+                errors.name = 'El nombre es requerido';
             }
             if (!data.data.lastName) {
-                errors.lastName = 'Last Name is required.';
+                errors.lastName = 'El apellido es requerido';
             }
             if (!data.data.dni) {
-                errors.dni = 'dni is required';
+                errors.dni = 'El DNI es requerido';
             }
-            if (
+            if(!data.data.email){
+                errors.email = 'El email es requerido'
+            }else if(
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.data.email)
-            ) {
-                errors.email = 'Email is required'
+              ) {
+                errors.email =
+                  "E-mail no válido. P.ej. ejemplo@email.com";
             }
-
             if (!data.data.phone) {
-                errors.phone = 'phone is required';
+                errors.phone = 'El Teléfono es requerido';
+            }else if ((data.data.phone.length!=11)){
+                errors.phone = 'El numero ingresado no es valido';
             }
             return errors;
         },
@@ -71,9 +72,9 @@ const ModalCitas = ({ id }) => {
 
 
     const SECTION = {
-        0: <Date stateInfoPage={stateInfoPage} formik={formik} />,
-        1: <PersonalData stateInfoPage={stateInfoPage} formik={formik} />,
-        2: <BankData stateInfoPage={stateInfoPage} formik={formik} />,
+        0: <Date stateButtonsPage={stateButtonsPage} stateDateCalendar={stateDateCalendar} formik={formik} />,
+        1: <PersonalData stateButtonsPage={stateButtonsPage} formik={formik} />,
+        2: <BankData stateButtonsPage={stateButtonsPage} formik={formik} />,
         // 3: <ConfirmInfo />
     }
 
@@ -93,11 +94,11 @@ const ModalCitas = ({ id }) => {
                 </div>
             </Button>
             <div >
-                <Dialog header={HEADER[infoPage.currentPage]} visible={visible} onHide={() => setVisible(false)}
+                <Dialog header={HEADER[currentPage]} visible={visible} onHide={() => setVisible(false)}
                     style={{ width: '660px' , height:'600px' , padding: "0px"}}>
                     <div className="flex flex-col h-full">
-                        {SECTION[infoPage.currentPage]}
-                        <StepsInfo stateInfoPage={stateInfoPage} setVisible={setVisible} />
+                        {SECTION[currentPage]}
+                        <StepsInfo stateCurrentPage={stateCurrentPage} stateButtonsPage={stateButtonsPage} setVisible={setVisible} />
                     </div>
                 </Dialog>
             </div>

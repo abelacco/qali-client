@@ -1,12 +1,17 @@
-import React from "react";
-import Product from "../../../../../../../../MercadoPago/mercadopago.jsx" 
+import React, { useEffect } from "react";
+import Product from "../../../../../../../../MercadoPago/mercadopago.jsx" ;
+        
 
-function BankData({ stateInfoPage, formik }) {
+function BankData({ stateButtonsPage, formik }) {
 
-    const [infoPage, setInfoPage] = stateInfoPage;
-    const {date, hour, duration} = formik.values.turn;
+    const [buttonsPage, setButtonsPage] = stateButtonsPage;
+    const {date, hour, duration, modality} = formik.values.turn;
+    const { pay } = formik.values;
     const {id} = formik.values.id;
     
+    useEffect(()=>{
+        setButtonsPage({...buttonsPage, nextPage: pay});
+    },[])
     const endTimeCalculator = (startTime, duration)=>{
         //Esta funcion calcula el horario de finalización del turno en función de la hora de inicio 
         // en el formato (hh:mm) y la duración del turno en minutos (Ej.: 130m, 30m, 60m)
@@ -28,14 +33,17 @@ function BankData({ stateInfoPage, formik }) {
         endDate: `${date}T${endTimeCalculator(hour, duration)}`,
     } 
     return (
-        <div className="flex flex-col justify-center items-center w-full h-full">
-            <div className="w-full h-1/3 bg-slate-50 rounded-md">
+        <div className="flex flex-col justify-center items-center w-full h-full bg-slate-50 rounded-md">
+            <div className="w-full h-1/3 bg-slate-200 rounded-md">
                 <p className="p-1">{`Por favor realice el pago de $${data.amount} para agendar su cita`} </p>
                 <p className="p-1">Al hacer click en el boton "Pagar" será redirigido a la plataforma de Mercado Pago para realizar su pago.</p>
                 <p className="p-1">Luego podrá continuar con el paso de 4 para confirmar su cita</p>
             </div>
+            <div className="w-full mt-2 p-1 bg-slate-200 rounded-md font-medium">
+                <p>{`Su cita será el día ${date} a las ${hour} de forma ${modality}.`}</p>
+            </div>
             <div className="flex justify-center items-center w-full h-2/3">
-                <Product items={data}/>
+                <Product items={data}/>  
             </div>           
         </div>
     )

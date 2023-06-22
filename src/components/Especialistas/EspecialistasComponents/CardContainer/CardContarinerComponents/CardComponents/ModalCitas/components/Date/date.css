@@ -77,3 +77,14 @@
     height: 1.6rem;
     border-radius: 20%;
 }
+/* Esta clase corresponde al día de hoy */
+.p-datepicker-today span{
+    background-color: rgb(255,255,255) !important;
+}
+.p-highlight {
+    background-color: rgb(23, 37, 84) !important;
+    color: rgb(255,255,255) !important;
+}
+.p-steps-item{
+    background-color: rgb(255,255,255) !important;
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ProgressSpinner } from 'primereact/progressspinner';
 import axios from "axios";
 
 const FORM_ID = "payment-form";
@@ -15,22 +16,26 @@ const FORM_ID = "payment-form";
 
 export default function Product({ items }) {
   const [preferenceId, setPreferenceId] = useState(null);
+  const [renderButton, setRenderButton] = useState(false);
 
   useEffect(() => {
     // luego de montarse el componente, le pedimos al backend el preferenceId
-
-    axios
-      .post(
-        "https://qali-api-production.up.railway.app/payment/create-order",
-        items
-      )
-      .then((order) => {
-        setPreferenceId(order.data.data);
-      });
+    console.log("useEffect1")
+    if(!renderButton){
+      axios
+        .post(
+          "https://qali-api-production.up.railway.app/payment/create-order",
+          items
+        )
+        .then((order) => {
+          setPreferenceId(order.data.data);
+        });
+    }
   }, []);
 
   useEffect(() => {
-    if (preferenceId) {
+    if (preferenceId && !renderButton) {
+      console.log("useEffect2")
       // con el preferenceId en mano, inyectamos el script de mercadoPago
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -39,8 +44,14 @@ export default function Product({ items }) {
       script.setAttribute("data-preference-id", preferenceId);
       const form = document.getElementById(FORM_ID);
       form.appendChild(script);
+      setRenderButton(true);
     }
   }, [preferenceId]);
 
-  return <form id={FORM_ID} method="GET" />;
+  return(
+    <>
+      { !renderButton && <ProgressSpinner className="w-14"/> }
+      <form id={FORM_ID} method="GET"/>
+    </>
+  )
 }

@@ -3,9 +3,9 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from 'primereact/utils';
 import { Checkbox } from 'primereact/checkbox';
 
-function PersonalData({ stateInfoPage, formik }) {
+function PersonalData({ stateButtonsPage, formik }) {
 
-    const [infoPage, setInfoPage] = stateInfoPage;
+    const [buttonsPage, setButtonsPage] = stateButtonsPage;
 
     const isFormFieldInvalid = (prop)=>{
         const isTouched = !!formik.touched[prop];
@@ -14,14 +14,27 @@ function PersonalData({ stateInfoPage, formik }) {
     } 
     
     const formCompletedOk = ()=>{
-        const { name, lastName, dni, email, phone } = formik.values.data;
+        const { values, errors } = formik;
+        const status ={
+            name: (!!values.data.name && !errors.name),
+            lastName: (!!values.data.lastName && !errors.lastName),
+            dni: (!!values.data.dni && !errors.dni),
+            email: (!!values.data.email && !errors.email),
+            phone: (!!values.data.phone && !errors.phone),
+        }
+        const {name, lastName, dni, email, phone} = status;
         const completedOk = (!!name && !!lastName && !!dni && !!email && !!phone);
-        setInfoPage({
-            ...infoPage,
+        setButtonsPage({
+            ...buttonsPage,
             nextPage: completedOk
-          })
-      }
-
+        })
+        return completedOk;
+    }
+    useEffect(()=>{
+        const form = formCompletedOk();
+        console.log(form)
+    },[formik.values.data, formik.errors]);
+    
     return (
         <div className="w-full h-full flex flex-col items-center">
             <div className="w-10/12 flex justify-around">
@@ -49,7 +62,6 @@ function PersonalData({ stateInfoPage, formik }) {
                                 value={formik.values.data.name}
                                 onChange={(e) => {
                                     formik.setFieldValue('data', {...formik.values.data, name: e.target.value} );
-                                    formCompletedOk();
                                 }}
                                 onBlur={formik.handleBlur}
                                 className={`p-inputtext-sm m-2 mb-0 ${classNames({ 'p-invalid': isFormFieldInvalid('name') })}`}
@@ -66,7 +78,6 @@ function PersonalData({ stateInfoPage, formik }) {
                                 value={formik.values.data.dni}
                                 onChange={(e) => {
                                     formik.setFieldValue('data', {...formik.values.data, dni: e.target.value});
-                                    formCompletedOk();
                                 }}
                                 onBlur={formik.handleBlur}
                                 className={`p-inputtext-sm m-2 ${classNames({ 'p-invalid': isFormFieldInvalid('dni')})}`}
@@ -83,7 +94,6 @@ function PersonalData({ stateInfoPage, formik }) {
                                 value={formik.values.data.phone}
                                 onChange={(e) => {
                                     formik.setFieldValue('data', {...formik.values.data, phone: e.target.value});
-                                    formCompletedOk();
                                     }}
                                 onBlur={formik.handleBlur}
                                 className={`p-inputtext-sm m-2 ${classNames({ 'p-invalid': isFormFieldInvalid('phone')})}`}
@@ -130,9 +140,6 @@ function PersonalData({ stateInfoPage, formik }) {
                         </span>
                     </div>
                 </form>
-                <div className="w-9/12 pl-2">
-                    <Checkbox />
-                </div>
             </div>
         </div>
     )

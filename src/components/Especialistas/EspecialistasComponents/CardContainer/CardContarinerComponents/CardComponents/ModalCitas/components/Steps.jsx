@@ -1,9 +1,10 @@
 import React from 'react';
 import { Steps } from 'primereact/steps';
 
-const StepsInfo = ({ stateInfoPage, setVisible }) => {
-    const [infoPage, setInfoPage] = stateInfoPage;
-    const { currentPage, nextPage } = infoPage;
+const StepsInfo = ({ stateCurrentPage, stateButtonsPage, setVisible }) => {
+    const [currentPage, setCurrentPage] = stateCurrentPage;
+    const [buttonsPage, setButtonsPage] = stateButtonsPage;
+    const {nextPage, previousPage} = buttonsPage;
     const items = [
         {
             label: 'Fecha'
@@ -20,12 +21,12 @@ const StepsInfo = ({ stateInfoPage, setVisible }) => {
     ];
 
     const handlePageUp = () => {
-        if (currentPage < 3) { setInfoPage({...infoPage, currentPage: currentPage + 1, nextPage: false })}
+        if (currentPage < 3) { setCurrentPage(currentPage + 1)}
 
     }
 
     const handlePageDown = () => {
-        if (currentPage > 0) { setInfoPage({...infoPage, currentPage: currentPage - 1})}
+        if (currentPage > 0) { setCurrentPage(currentPage - 1)}
     }
 
     const handleInfo = () => {
@@ -61,9 +62,6 @@ const StepsInfo = ({ stateInfoPage, setVisible }) => {
                     >
                     <i className='pi pi-check'></i>
                 </button>
-                // page < 3 
-                // ? <Button size='small' onClick={handlePageUp}><i className='pi pi-angle-right'></i></Button>
-                // : <Button size='small' onClick={handleInfo}><i className='pi pi-check'></i></Button>
             }
         </div>
     )
