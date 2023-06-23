@@ -1,69 +1,40 @@
-import React from "react";
-import { useFormik } from 'formik';
+import React, { useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import { classNames } from 'primereact/utils';
 import { Checkbox } from 'primereact/checkbox';
 
-function PersonalData({ information }) {
+function PersonalData({ stateButtonsPage, formik }) {
 
-    const [info, setInfo] = information;
-    const { data } = info;
+    const [buttonsPage, setButtonsPage] = stateButtonsPage;
 
-    const handleInfo = (event) => {
-        const { name, value } = event.target;
-        setInfo({
-            ...info,
-            data: {
-                ...data,
-                [name]:value
-            }
-        })
-    }
-
-    console.log(info)
-
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            lastName: '',
-            dni: '',
-            email: '',
-            phone: ''
-        },
-        validate: (data) => {
-            let errors = {};
-
-            if (!data.name) {
-                errors.name = 'Name is required.';
-            }
-            if (!data.lastName) {
-                errors.lastName = 'Last Name is required.';
-            }
-            if (!data.dni) {
-                errors.dni = 'dni is required';
-            }
-            if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)
-            ) {
-                errors.email = 'Email is required'
-            }
-
-            if (!data.phone) {
-                errors.phone = 'phone is required';
-            }
-            return errors;
-        },
-        onSubmit: () => {
-            formik.resetForm();
+    const isFormFieldInvalid = (prop)=>{
+        const isTouched = !!formik.touched[prop];
+        const error = !!formik.errors[prop];
+        return(isTouched && error);
+    } 
+    
+    const formCompletedOk = ()=>{
+        const { values, errors } = formik;
+        const status ={
+            name: (!!values.data.name && !errors.name),
+            lastName: (!!values.data.lastName && !errors.lastName),
+            dni: (!!values.data.dni && !errors.dni),
+            email: (!!values.data.email && !errors.email),
+            phone: (!!values.data.phone && !errors.phone),
         }
-    });
-
-    const isFormFieldInvalid = (name) => !!(formik.touched[name] && formik.errors[name]);
-
-    const getFormErrorMessage = (name) => {
-        return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]}</small> : <small className="p-error">&nbsp;</small>;
-    };
-
+        const {name, lastName, dni, email, phone} = status;
+        const completedOk = (!!name && !!lastName && !!dni && !!email && !!phone);
+        setButtonsPage({
+            ...buttonsPage,
+            nextPage: completedOk
+        })
+        return completedOk;
+    }
+    useEffect(()=>{
+        const form = formCompletedOk();
+        console.log(form)
+    },[formik.values.data, formik.errors]);
+    
     return (
         <div className="w-full h-full flex flex-col items-center">
             <div className="w-10/12 flex justify-around">
@@ -83,88 +54,92 @@ function PersonalData({ information }) {
             <div className="card mt-4 w-10/12 flex flex-wrap items-center h-full bg-slate-50 rounded-md">
                 <form onSubmit={formik.handleSubmit} className=" flex w-full h-fit felx-wrap">
                     <div className="w-1/2 flex flex-col items-center">
-                        <span className="p-float-label">
+                        <span className="flex flex-col items-center w-full">
+                            <label className="ml-9 self-start" htmlFor="input_name">Nombre</label>
                             <InputText
                                 id="name"
                                 name="name"
-                                value={formik.values.name}
+                                value={formik.values.data.name}
                                 onChange={(e) => {
-                                    formik.setFieldValue('name', e.target.value);
-                                    handleInfo(e);
+                                    formik.setFieldValue('data', {...formik.values.data, name: e.target.value} );
                                 }}
                                 onBlur={formik.handleBlur}
-                                className={`p-inputtext-sm m-2 ${classNames({ 'p-invalid': isFormFieldInvalid('name') })}`}
+                                className={`p-inputtext-sm m-2 mb-0 ${classNames({ 'p-invalid': isFormFieldInvalid('name') })}`}
                             />
-                            <label htmlFor="input_name">Nombre</label>
+                            <span className="w-3/4 m-0 ml-2 h-6 text-red-500 text-sm" >
+                                { isFormFieldInvalid("name") ? formik.errors.name : "" }
+                            </span>
                         </span>
-                        {getFormErrorMessage('name')}
-                        <span className="p-float-label">
+                        <span className="flex flex-col items-center w-full">
+                            <label className="ml-9 self-start" htmlFor="input_name">DNI</label>
                             <InputText
                                 id="dni"
                                 name="dni"
-                                value={formik.values.dni}
+                                value={formik.values.data.dni}
                                 onChange={(e) => {
-                                    formik.setFieldValue('dni', e.target.value);
-                                    handleInfo(e)
+                                    formik.setFieldValue('data', {...formik.values.data, dni: e.target.value});
                                 }}
                                 onBlur={formik.handleBlur}
                                 className={`p-inputtext-sm m-2 ${classNames({ 'p-invalid': isFormFieldInvalid('dni')})}`}
                             />
-                            <label htmlFor="input_name">DNI</label>
+                            <span className="w-3/4 m-0 ml-2 h-6 text-red-500 text-sm" >
+                                { isFormFieldInvalid("dni") ? formik.errors.dni : "" }
+                            </span>
                         </span>
-                        {getFormErrorMessage('dni')}
-                        <span className="p-float-label">
+                        <span className="flex flex-col items-center w-full">
+                            <label className="ml-9 self-start" htmlFor="input_name">Teléfono</label>
                             <InputText
                                 id="phone"
                                 name="phone"
-                                value={formik.values.phone}
+                                value={formik.values.data.phone}
                                 onChange={(e) => {
-                                    formik.setFieldValue('phone', e.target.value);
-                                    handleInfo(e)
-                                }}
+                                    formik.setFieldValue('data', {...formik.values.data, phone: e.target.value});
+                                    }}
                                 onBlur={formik.handleBlur}
                                 className={`p-inputtext-sm m-2 ${classNames({ 'p-invalid': isFormFieldInvalid('phone')})}`}
                             />
-                            <label htmlFor="input_name">Teléfono</label>
+                            <span className="w-3/4 m-0 ml-2 h-6 text-red-500 text-sm" >
+                                { isFormFieldInvalid("phone") ? formik.errors.phone : "" }
+                            </span>
                         </span>
-                    {getFormErrorMessage('phone')}
                     </div>
                     <div className="w-1/2 flex flex-col items-center">
-                        <span className="p-float-label">
+                        <span className="flex flex-col items-center w-full">
+                            <label className="ml-9 self-start" htmlFor="input_lastName">Apellido</label>
                             <InputText
                                 id="lastName"
                                 name="lastName"
-                                value={formik.values.lastName}
+                                value={formik.values.data.lastName}
                                 onChange={(e) => {
-                                    formik.setFieldValue('lastName', e.target.value);
-                                    handleInfo(e)
+                                    formik.setFieldValue('data', {...formik.values.data, lastName: e.target.value});
+                                    formCompletedOk();
                                 }}
                                 onBlur={formik.handleBlur}
                                 className={`p-inputtext-sm m-2 ${classNames({ 'p-invalid': isFormFieldInvalid('lastName')})}`}
                             />
-                            <label htmlFor="input_lastName">Apellido</label>
+                            <span className="w-3/4 m-0 ml-2 h-6 text-red-500 text-sm" >
+                                { isFormFieldInvalid("lastName") ? formik.errors.lastName : "" }
+                            </span>
                         </span>
-                        {getFormErrorMessage('lastName')}
-                        <span className="p-float-label">
+                        <span className="flex flex-col items-center w-full">
+                            <label className="ml-9 self-start" htmlFor="input_name">E-mail</label>
                             <InputText
                                 id="email"
                                 name="email"
-                                value={formik.values.email}
+                                value={formik.values.data.email}
                                 onChange={(e) => {
-                                    formik.setFieldValue('email', e.target.value);
-                                    handleInfo(e)
-                                }}
+                                    formik.setFieldValue('data', {...formik.values.data, email: e.target.value});
+                                    formCompletedOk();
+                                    }}
                                 onBlur={formik.handleBlur}
                                 className={`p-inputtext-sm m-2 ${classNames({ 'p-invalid': isFormFieldInvalid('email')})}`}
                             />
-                            <label htmlFor="input_name">E-mail</label>
+                            <span className="w-3/4 m-0 ml-2 h-6 text-red-500 text-sm" >
+                                { isFormFieldInvalid("email") ? formik.errors.email : "" }
+                            </span> 
                         </span>
-                        {getFormErrorMessage('email')}
                     </div>
                 </form>
-                <div className="w-9/12 pl-2">
-                    <Checkbox />
-                </div>
             </div>
         </div>
     )

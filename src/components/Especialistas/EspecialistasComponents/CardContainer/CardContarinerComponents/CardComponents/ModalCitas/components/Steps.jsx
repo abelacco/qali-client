@@ -1,10 +1,10 @@
 import React from 'react';
 import { Steps } from 'primereact/steps';
-import { Button } from 'primereact/button';
 
-const StepsInfo = ({ information, setVisible }) => {
-    const [info, setInfo] = information;
-    const { currentPage, previousPage, nextPage } = info.page;
+const StepsInfo = ({ stateCurrentPage, stateButtonsPage, setVisible }) => {
+    const [currentPage, setCurrentPage] = stateCurrentPage;
+    const [buttonsPage, setButtonsPage] = stateButtonsPage;
+    const {nextPage, previousPage} = buttonsPage;
     const items = [
         {
             label: 'Fecha'
@@ -21,12 +21,12 @@ const StepsInfo = ({ information, setVisible }) => {
     ];
 
     const handlePageUp = () => {
-        if (currentPage < 3) {setInfo({ ...info, page:{...info.page, currentPage: currentPage + 1} })}
+        if (currentPage < 3) { setCurrentPage(currentPage + 1)}
 
     }
 
     const handlePageDown = () => {
-        if (currentPage > 0) { setInfo({ ...info, page:{...info.page, currentPage: currentPage - 1} })}
+        if (currentPage > 0) { setCurrentPage(currentPage - 1)}
     }
 
     const handleInfo = () => {
@@ -37,8 +37,8 @@ const StepsInfo = ({ information, setVisible }) => {
     return (
         <div className="card flex justify-between flex-grow items-center">
             <button
-                className={`inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white sm:text-sm ${previousPage ? "hover:bg-gray-700":"bg-opacity-50"}`}                
-                disabled={ !previousPage } 
+                className={`inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-950 text-base font-medium text-white sm:text-sm ${(currentPage != 0) ? "hover:bg-gray-700":"bg-opacity-50"}`}                
+                disabled={ currentPage == 0 } 
                 onClick={handlePageDown}
                 >
                 <i className='pi pi-angle-left'/>
@@ -62,9 +62,6 @@ const StepsInfo = ({ information, setVisible }) => {
                     >
                     <i className='pi pi-check'></i>
                 </button>
-                // page < 3 
-                // ? <Button size='small' onClick={handlePageUp}><i className='pi pi-angle-right'></i></Button>
-                // : <Button size='small' onClick={handleInfo}><i className='pi pi-check'></i></Button>
             }
         </div>
     )

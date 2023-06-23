@@ -1,136 +1,50 @@
-import React from "react";
-import { useFormik } from 'formik';
-import { InputText } from "primereact/inputtext";
-import { Button } from 'primereact/button';
-import { classNames } from 'primereact/utils';
-import { Checkbox } from 'primereact/checkbox';
+import React, { useEffect } from "react";
+import Product from "../../../../../../../../MercadoPago/mercadopago.jsx" ;
+        
 
-function BankData({ information }) {
+function BankData({ stateButtonsPage, formik }) {
 
-    const [info, setInfo] = information;
-    const { bankData } = info;
-
-    const handleInfo = (event) => {
-        const { name, value } = event.target;
-        setInfo({
-            ...info,
-            bankData: {
-                ...bankData,
-                [name]: value
-            }
-        })
-    }
-
-    const formik = useFormik({
-        initialValues: {
-            cardNumber: '',
-            expiration: '',
-            cvv: '',
-            holderName: '',
-        },
-        validate: (data) => {
-            let errors = {};
-
-            if (!data.cardNumber) {
-                errors.cardNumber = 'card number is required.';
-            }
-            if (!data.expiration) {
-                errors.expiration = 'expiration date is required.';
-            }
-            if (!data.cvv) {
-                errors.cvv = 'cvv is required';
-            }
-            if (!data.holderName) {
-                errors.holderName = 'holder name is required';
-            }
-            return errors;
-        },
-        onSubmit: () => {
-            formik.resetForm();
-        }
-    });
-
-    const isFormFieldInvalid = (name) => !!(formik.touched[name] && formik.errors[name]);
-
-    const getFormErrorMessage = (name) => {
-        return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]}</small> : <small className="p-error">&nbsp;</small>;
-    };
-
+    const [buttonsPage, setButtonsPage] = stateButtonsPage;
+    const {date, hour, duration, modality} = formik.values.turn;
+    const { pay } = formik.values;
+    const {id} = formik.values.id;
+    
+    useEffect(()=>{
+        setButtonsPage({...buttonsPage, nextPage: pay});
+    },[])
+    const endTimeCalculator = (startTime, duration)=>{
+        //Esta funcion calcula el horario de finalización del turno en función de la hora de inicio 
+        // en el formato (hh:mm) y la duración del turno en minutos (Ej.: 130m, 30m, 60m)
+        duration = duration.slice(0,duration.length-1);
+        duration = parseInt(duration);
+        const durationh = Math.trunc(duration / 60);
+        const durationm = duration-(durationh * 60);
+        const startTimeh = parseInt(startTime.split(":")[0]);
+        const startTimem = parseInt(startTime.split(":")[1]);
+        let endTimem = (durationm + startTimem) - Math.trunc((durationm + startTimem)/60)*60;
+        let endTimeh = startTimeh + Math.trunc((durationm + startTimem)/60) + durationh;
+        return `${endTimeh}:${endTimem}`
+    } 
+    const data = {
+        amount: 13,
+        doctorId: id,
+        patientId: "wervwervwerv",
+        startDate: `${date}T${hour}`,
+        endDate: `${date}T${endTimeCalculator(hour, duration)}`,
+    } 
     return (
-        <div className="h-full">
-            <div className="card">
-                <form onSubmit={formik.handleSubmit} className="flex flex-col">
-                    <span className="p-float-label">
-                        <InputText
-                            id="cardNumber"
-                            name="cardNumber"
-                            value={formik.values.cardNumber}
-                            onChange={(e) => {
-                                formik.setFieldValue('cardNumber', e.target.value);
-                                handleInfo(e);
-                            }}
-                            onBlur={formik.handleBlur}
-                            className={classNames({ 'p-invalid': isFormFieldInvalid('cardNumber') })}
-                        />
-                        <label htmlFor="input_cardNumber">Numero de la Tarjeta</label>
-                    </span>
-                    {getFormErrorMessage('cardNumber')}
-
-                    <div className="flex">
-                        <div>
-                            <span className="p-float-label">
-                                <InputText
-                                    id="expiration"
-                                    name="expiration"
-                                    value={formik.values.expiration}
-                                    onChange={(e) => {
-                                        formik.setFieldValue('expiration', e.target.value);
-                                        handleInfo(e)
-                                    }}
-                                    onBlur={formik.handleBlur}
-                                    className={classNames({ 'p-invalid': isFormFieldInvalid('expiration') })}
-                                />
-                                <label htmlFor="input_expiration">Vencimiento</label>
-                            </span>
-                            {getFormErrorMessage('expiration')}
-                        </div>
-                        <div>
-                            <span className="p-float-label">
-                                <InputText
-                                    id="cvv"
-                                    name="cvv"
-                                    value={formik.values.cvv}
-                                    onChange={(e) => {
-                                        formik.setFieldValue('cvv', e.target.value);
-                                        handleInfo(e)
-                                    }}
-                                    onBlur={formik.handleBlur}
-                                    className={classNames({ 'p-invalid': isFormFieldInvalid('cvv') })}
-                                />
-                                <label htmlFor="input_cvv">CVV</label>
-                            </span>
-                            {getFormErrorMessage('cvv')}
-                        </div>
-                    </div>
-
-                    <span className="p-float-label">
-                        <InputText
-                            id="holderName"
-                            name="holderName"
-                            value={formik.values.holderName}
-                            onChange={(e) => {
-                                formik.setFieldValue('holderName', e.target.value);
-                                handleInfo(e)
-                            }}
-                            onBlur={formik.handleBlur}
-                            className={classNames({ 'p-invalid': isFormFieldInvalid('holderName') })}
-                        />
-                        <label htmlFor="input_holderName">Nombre de la/el titular</label>
-                    </span>
-                    {getFormErrorMessage('holderName')}
-
-                </form>
+        <div className="flex flex-col justify-center items-center w-full h-full bg-slate-50 rounded-md">
+            <div className="w-full h-1/3 bg-slate-200 rounded-md">
+                <p className="p-1">{`Por favor realice el pago de $${data.amount} para agendar su cita`} </p>
+                <p className="p-1">Al hacer click en el boton "Pagar" será redirigido a la plataforma de Mercado Pago para realizar su pago.</p>
+                <p className="p-1">Luego podrá continuar con el paso de 4 para confirmar su cita</p>
             </div>
+            <div className="w-full mt-2 p-1 bg-slate-200 rounded-md font-medium">
+                <p>{`Su cita será el día ${date} a las ${hour} de forma ${modality}.`}</p>
+            </div>
+            <div className="flex justify-center items-center w-full h-2/3">
+                <Product items={data}/>  
+            </div>           
         </div>
     )
 }
